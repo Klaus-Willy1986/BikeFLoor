@@ -356,6 +356,7 @@
       "signup": "Get started free"
     },
     "hero": {
+      "badge": "Get started free",
       "headline": "Your digital workshop assistant",
       "subline": "Track components, plan maintenance, never miss a service again.",
       "cta": "Get started free",
@@ -433,7 +434,7 @@
       "parts": "150+ parts in catalog",
       "categories": "10+ categories",
       "strava": "Strava-connected",
-      "free": "100% free"
+      "freeStart": "Free to start — Pro from €4.99/month"
     },
     "bottomCta": {
       "title": "Ready for the overview?",
@@ -444,6 +445,63 @@
       "copyright": "© {year} BikeFloor. All rights reserved.",
       "privacy": "Privacy",
       "imprint": "Imprint"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "back": "Back",
+    "lastUpdated": "Last updated: March 2026",
+    "overview": {
+      "title": "Overview",
+      "text": "BikeFloor takes the protection of your personal data seriously. This privacy policy informs you about what data we collect and how we use it."
+    },
+    "dataCollection": {
+      "title": "Data We Collect",
+      "text": "When you use BikeFloor, we collect the following data:",
+      "item1": "Email address and password upon registration",
+      "item2": "Bike data (type, manufacturer, model, components, mileage)",
+      "item3": "Service and maintenance records",
+      "item4": "Strava ride data (only when connected)"
+    },
+    "strava": {
+      "title": "Strava Integration",
+      "text": "When you connect your Strava account, we import ride data (distance, duration, date) to automatically update mileage. You can disconnect at any time in the settings. We do not store Strava credentials — authentication is handled via OAuth 2.0."
+    },
+    "storage": {
+      "title": "Data Storage",
+      "text": "Your data is securely stored with Supabase (EU region). Uploaded documents are stored encrypted. We do not share your data with third parties."
+    },
+    "cookies": {
+      "title": "Cookies",
+      "text": "BikeFloor only uses technically necessary cookies for authentication and session management. We do not use tracking or advertising cookies."
+    },
+    "rights": {
+      "title": "Your Rights",
+      "text": "You have the right to:",
+      "item1": "Access your stored data",
+      "item2": "Correct inaccurate data",
+      "item3": "Delete your data (delete account in settings)",
+      "item4": "Export your data (Excel export in settings)"
+    },
+    "contact": {
+      "title": "Contact",
+      "text": "For privacy-related questions, please reach us at the address provided in the imprint."
+    }
+  },
+  "imprint": {
+    "title": "Imprint",
+    "back": "Back",
+    "responsible": {
+      "title": "Responsible according to § 5 TMG",
+      "text": "[Your Name]\n[Street and Number]\n[Postal Code and City]\nGermany"
+    },
+    "contact": {
+      "title": "Contact",
+      "text": "Email: [your@email.com]\nPhone: [your phone number]"
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "text": "The contents of this app were created with the greatest care. However, we cannot guarantee the accuracy, completeness, or timeliness of the content. BikeFloor serves as a tool for maintenance planning — the actual inspection and maintenance of your bicycle is your responsibility."
     }
   }
 }

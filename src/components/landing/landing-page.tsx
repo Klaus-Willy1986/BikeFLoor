@@ -66,7 +66,7 @@ export function LandingPage() {
           <div className="max-w-2xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-              100% kostenlos
+              {t('hero.badge')}
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
               {t('hero.headline')}
@@ -232,7 +232,7 @@ export function LandingPage() {
           <StatItem label={t('stats.parts')} />
           <StatItem label={t('stats.categories')} />
           <StatItem label={t('stats.strava')} />
-          <StatItem label={t('stats.free')} />
+          <StatItem label={t('stats.freeStart')} />
         </div>
       </section>
 
@@ -272,8 +272,8 @@ export function LandingPage() {
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>
           <div className="flex gap-6 text-sm text-zinc-500">
-            <span className="cursor-default transition-colors hover:text-zinc-300">{t('footer.privacy')}</span>
-            <span className="cursor-default transition-colors hover:text-zinc-300">{t('footer.imprint')}</span>
+            <Link href="/privacy" className="transition-colors hover:text-zinc-300">{t('footer.privacy')}</Link>
+            <Link href="/imprint" className="transition-colors hover:text-zinc-300">{t('footer.imprint')}</Link>
           </div>
         </div>
       </footer>

@@ -356,6 +356,7 @@
       "signup": "Kostenlos starten"
     },
     "hero": {
+      "badge": "Kostenlos starten",
       "headline": "Dein digitaler Werkstatt-Assistent",
       "subline": "Komponenten tracken, Wartung planen, nie wieder eine Inspektion verpassen.",
       "cta": "Kostenlos starten",
@@ -433,7 +434,7 @@
       "parts": "150+ Teile im Katalog",
       "categories": "10+ Kategorien",
       "strava": "Strava-connected",
-      "free": "100% kostenlos"
+      "freeStart": "Kostenlos starten — Pro ab 4,99 €/Monat"
     },
     "bottomCta": {
       "title": "Bereit für den Überblick?",
@@ -444,6 +445,63 @@
       "copyright": "© {year} BikeFloor. Alle Rechte vorbehalten.",
       "privacy": "Datenschutz",
       "imprint": "Impressum"
+    }
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "back": "Zurück",
+    "lastUpdated": "Stand: März 2026",
+    "overview": {
+      "title": "Überblick",
+      "text": "BikeFloor nimmt den Schutz deiner persönlichen Daten ernst. Diese Datenschutzerklärung informiert dich darüber, welche Daten wir erheben und wie wir sie verwenden."
+    },
+    "dataCollection": {
+      "title": "Welche Daten wir erheben",
+      "text": "Wenn du BikeFloor nutzt, erheben wir folgende Daten:",
+      "item1": "E-Mail-Adresse und Passwort bei der Registrierung",
+      "item2": "Fahrrad-Daten (Typ, Hersteller, Modell, Komponenten, Kilometerstand)",
+      "item3": "Service- und Wartungseinträge",
+      "item4": "Strava-Fahrtdaten (nur bei aktiver Verbindung)"
+    },
+    "strava": {
+      "title": "Strava-Integration",
+      "text": "Wenn du dein Strava-Konto verbindest, importieren wir Fahrtdaten (Distanz, Dauer, Datum) um Kilometerstände automatisch zu aktualisieren. Du kannst die Verbindung jederzeit in den Einstellungen trennen. Wir speichern keine Strava-Zugangsdaten — die Authentifizierung läuft über OAuth 2.0."
+    },
+    "storage": {
+      "title": "Datenspeicherung",
+      "text": "Deine Daten werden sicher bei Supabase (EU-Region) gespeichert. Hochgeladene Dokumente werden verschlüsselt abgelegt. Wir geben deine Daten nicht an Dritte weiter."
+    },
+    "cookies": {
+      "title": "Cookies",
+      "text": "BikeFloor verwendet ausschließlich technisch notwendige Cookies für die Authentifizierung und Sitzungsverwaltung. Wir setzen keine Tracking- oder Werbe-Cookies ein."
+    },
+    "rights": {
+      "title": "Deine Rechte",
+      "text": "Du hast jederzeit das Recht auf:",
+      "item1": "Auskunft über deine gespeicherten Daten",
+      "item2": "Berichtigung unrichtiger Daten",
+      "item3": "Löschung deiner Daten (Account löschen in den Einstellungen)",
+      "item4": "Export deiner Daten (Excel-Export in den Einstellungen)"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "text": "Bei Fragen zum Datenschutz erreichst du uns unter der im Impressum angegebenen Adresse."
+    }
+  },
+  "imprint": {
+    "title": "Impressum",
+    "back": "Zurück",
+    "responsible": {
+      "title": "Angaben gemäß § 5 TMG",
+      "text": "[Dein Name]\n[Straße und Hausnummer]\n[PLZ und Ort]\nDeutschland"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "text": "E-Mail: [deine@email.de]\nTelefon: [deine Telefonnummer]"
+    },
+    "disclaimer": {
+      "title": "Haftungsausschluss",
+      "text": "Die Inhalte dieser App wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. BikeFloor dient als Hilfsmittel zur Wartungsplanung — die tatsächliche Überprüfung und Wartung deines Fahrrads obliegt dir."
     }
   }
 }
