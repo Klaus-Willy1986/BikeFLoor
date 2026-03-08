@@ -112,6 +112,7 @@
       "mtb": "Mountain Bike",
       "gravel": "Gravel",
       "city": "City Bike",
+      "tt": "Time Trial / Triathlon",
       "ebike": "E-Bike",
       "other": "Other"
     },

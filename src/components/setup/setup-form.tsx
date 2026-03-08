@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
+import { SUSPENSION_BIKE_TYPES } from '@/lib/constants';
 import { toast } from 'sonner';
 
 export function SetupForm({ bikeId }: { bikeId: string }) {
@@ -20,6 +21,22 @@ export function SetupForm({ bikeId }: { bikeId: string }) {
   const tc = useTranslations('common');
   const supabase = createClient();
   const queryClient = useQueryClient();
+
+  const { data: bike } = useQuery({
+    queryKey: ['bikes', bikeId],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('bikes')
+        .select('type')
+        .eq('id', bikeId)
+        .single();
+      return data;
+    },
+  });
+
+  const hasSuspension = SUSPENSION_BIKE_TYPES.includes(
+    (bike?.type ?? '') as any
+  );
 
   const { data: setup, isLoading } = useQuery({
     queryKey: ['bike-setup', bikeId],
@@ -93,31 +110,33 @@ export function SetupForm({ bikeId }: { bikeId: string }) {
         </CardContent>
       </Card>
 
-      {/* Suspension */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">{t('suspension')}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <h4 className="text-sm font-medium">{t('fork')}</h4>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
-            {numInput('fork_pressure', t('airPressure'), 'psi')}
-            {numInput('fork_rebound', t('rebound'))}
-            {numInput('fork_compression', t('compression'))}
-            {numInput('fork_sag_percent', t('sag'), '%')}
-            {numInput('fork_travel_mm', t('travel'), 'mm')}
-          </div>
-          <Separator />
-          <h4 className="text-sm font-medium">{t('shock')}</h4>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
-            {numInput('shock_pressure', t('airPressure'), 'psi')}
-            {numInput('shock_rebound', t('rebound'))}
-            {numInput('shock_compression', t('compression'))}
-            {numInput('shock_sag_percent', t('sag'), '%')}
-            {numInput('shock_travel_mm', t('travel'), 'mm')}
-          </div>
-        </CardContent>
-      </Card>
+      {/* Suspension — only for MTB, Gravel, E-Bike */}
+      {hasSuspension && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">{t('suspension')}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <h4 className="text-sm font-medium">{t('fork')}</h4>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+              {numInput('fork_pressure', t('airPressure'), 'psi')}
+              {numInput('fork_rebound', t('rebound'))}
+              {numInput('fork_compression', t('compression'))}
+              {numInput('fork_sag_percent', t('sag'), '%')}
+              {numInput('fork_travel_mm', t('travel'), 'mm')}
+            </div>
+            <Separator />
+            <h4 className="text-sm font-medium">{t('shock')}</h4>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+              {numInput('shock_pressure', t('airPressure'), 'psi')}
+              {numInput('shock_rebound', t('rebound'))}
+              {numInput('shock_compression', t('compression'))}
+              {numInput('shock_sag_percent', t('sag'), '%')}
+              {numInput('shock_travel_mm', t('travel'), 'mm')}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Bike Fit */}
       <Card>

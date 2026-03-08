@@ -1,4 +1,6 @@
-export const BIKE_TYPES = ['road', 'mtb', 'gravel', 'city', 'ebike', 'other'] as const;
+export const BIKE_TYPES = ['road', 'mtb', 'gravel', 'city', 'tt', 'ebike', 'other'] as const;
+
+export const SUSPENSION_BIKE_TYPES = ['mtb', 'gravel', 'ebike'] as const;
 
 export const COMPONENT_CATEGORIES = [
   'chain', 'cassette', 'brake_pads', 'brake_rotors',
