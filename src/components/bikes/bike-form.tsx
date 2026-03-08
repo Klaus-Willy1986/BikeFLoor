@@ -18,6 +18,40 @@ import { ShopSelect } from '@/components/shops/shop-select';
 import { toast } from 'sonner';
 import type { Database } from '@/types/database';
 
+const BIKE_MODELS: Record<string, string[]> = {
+  'Basso': ['Astra', 'Diamante', 'Palta', 'Venta'],
+  'BMC': ['Roadmachine', 'Teammachine', 'Kaius', 'Twostroke', 'Fourstroke', 'Speedfox'],
+  'Cannondale': ['SuperSix', 'CAAD', 'Synapse', 'Topstone', 'Scalpel', 'Habit', 'Jekyll'],
+  'Canyon': ['Aeroad', 'Ultimate', 'Endurace', 'Grail', 'Grizl', 'Spectral', 'Strive', 'Neuron', 'Lux'],
+  'Cervélo': ['R5', 'S5', 'Caledonia', 'Áspero', 'Soloist', 'P5'],
+  'Colnago': ['C68', 'V4Rs', 'G3X', 'Pressa'],
+  'Cube': ['Agree', 'Attain', 'Litening', 'Nuroad', 'Stereo', 'AMS', 'Reaction'],
+  'De Rosa': ['Merak', 'SK', 'King', 'Anima'],
+  'Factor': ['O2', 'Ostro', 'ViSTA', 'Lando'],
+  'Felt': ['FR', 'AR', 'Breed', 'Decree', 'Surplus'],
+  'Focus': ['Izalco Max', 'Paralane', 'Atlas', 'Jam', 'Thron'],
+  'Giant': ['TCR', 'Propel', 'Defy', 'Revolt', 'Trance', 'Reign', 'Anthem'],
+  'GT': ['Grade', 'Sensor', 'Force', 'Zaskar'],
+  'Kona': ['Sutra', 'Rove', 'Process', 'Hei Hei'],
+  'Lapierre': ['Xelius', 'Pulsium', 'Crosshill', 'Spicy', 'Zesty'],
+  'Liv': ['Langma', 'Avail', 'Devote', 'Intrigue', 'Pique'],
+  'Look': ['795 Blade', '785 Huez', '765 Gravel'],
+  'Merida': ['Scultura', 'Reacto', 'Silex', 'One-Twenty', 'One-Sixty'],
+  'Orbea': ['Orca', 'Avant', 'Terra', 'Occam', 'Rallon', 'Oiz', 'Rise'],
+  'Pinarello': ['Dogma', 'F', 'Paris', 'Grevil'],
+  'Radon': ['Vaillant', 'Spire', 'Slide', 'Skeen', 'Jealous'],
+  'Ridley': ['Noah', 'Helium', 'Fenix', 'Kanzo'],
+  'Rose': ['Reveal', 'Backroad', 'Ground Control', 'Root Miller'],
+  'Santa Cruz': ['Hightower', 'Megatower', 'Bronson', 'Tallboy', 'Blur', 'Stigmata'],
+  'Scott': ['Addict', 'Foil', 'Speedster', 'Spark', 'Genius', 'Ransom', 'Scale'],
+  'Specialized': ['Tarmac', 'Aethos', 'Roubaix', 'Diverge', 'Crux', 'Epic', 'Stumpjumper', 'Enduro', 'Levo'],
+  'Stevens': ['Izoard', 'Comet', 'Supreme', 'Jura'],
+  'Storck': ['Aernario', 'Fascenario', 'Grix', 'Rebel Seven'],
+  'Trek': ['Madone', 'Émonda', 'Domane', 'Checkpoint', 'Fuel EX', 'Slash', 'Top Fuel', 'Supercaliber'],
+  'Wilier': ['Filante', 'Zero', 'Granturismo', 'Jena', 'Urta'],
+  'YT Industries': ['Jeffsy', 'Capra', 'Decoy', 'Izzo', 'Szepter'],
+};
+
 type BikeRow = Database['public']['Tables']['bikes']['Row'];
 
 interface BikeFormProps {
@@ -132,7 +166,17 @@ export function BikeForm({ bike }: BikeFormProps) {
 
               <div className="space-y-2">
                 <Label htmlFor="model">{t('bikes.model')}</Label>
-                <Input id="model" {...register('model')} />
+                <Input id="model" list="models" {...register('model')} />
+                {(() => {
+                  const models = BIKE_MODELS[watch('manufacturer') ?? ''];
+                  return models ? (
+                    <datalist id="models">
+                      {models.map((m) => (
+                        <option key={m} value={m} />
+                      ))}
+                    </datalist>
+                  ) : null;
+                })()}
               </div>
 
               <div className="space-y-2">
