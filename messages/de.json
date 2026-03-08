@@ -1,0 +1,449 @@
+{
+  "common": {
+    "appName": "BikeFloor",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "create": "Erstellen",
+    "back": "Zurück",
+    "loading": "Laden...",
+    "noResults": "Keine Ergebnisse",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "all": "Alle",
+    "yes": "Ja",
+    "no": "Nein",
+    "or": "oder",
+    "and": "und",
+    "km": "km",
+    "hours": "Stunden",
+    "days": "Tage",
+    "currency": "€",
+    "upload": "Hochladen",
+    "download": "Herunterladen",
+    "preview": "Vorschau",
+    "actions": "Aktionen",
+    "status": "Status",
+    "date": "Datum",
+    "notes": "Notizen",
+    "cost": "Kosten",
+    "total": "Gesamt",
+    "description": "Beschreibung"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "bikes": "Fahrräder",
+    "components": "Komponenten",
+    "services": "Wartung",
+    "lager": "Lager",
+    "rides": "Fahrten",
+    "settings": "Einstellungen"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "logout": "Abmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "forgotPassword": "Passwort vergessen?",
+    "resetPassword": "Passwort zurücksetzen",
+    "noAccount": "Noch kein Konto?",
+    "hasAccount": "Bereits ein Konto?",
+    "loginTitle": "Willkommen zurück",
+    "loginSubtitle": "Melde dich an, um deine Flotte zu verwalten",
+    "signupTitle": "Konto erstellen",
+    "signupSubtitle": "Starte mit der Verwaltung deiner Fahrräder",
+    "forgotTitle": "Passwort vergessen",
+    "forgotSubtitle": "Wir senden dir einen Link zum Zurücksetzen",
+    "resetSent": "E-Mail gesendet! Überprüfe deinen Posteingang.",
+    "errors": {
+      "invalidCredentials": "Ungültige Anmeldedaten",
+      "emailRequired": "E-Mail ist erforderlich",
+      "passwordRequired": "Passwort ist erforderlich",
+      "passwordMinLength": "Passwort muss mindestens 8 Zeichen lang sein",
+      "passwordMismatch": "Passwörter stimmen nicht überein",
+      "generic": "Ein Fehler ist aufgetreten. Bitte versuche es erneut."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "fleetOverview": "Flottenübersicht",
+    "totalBikes": "Fahrräder",
+    "totalDistance": "Gesamtdistanz",
+    "servicesThisYear": "Wartungen dieses Jahr",
+    "totalCosts": "Gesamtkosten",
+    "maintenanceAlerts": "Wartungs-Alerts",
+    "recentRides": "Letzte Fahrten",
+    "noAlerts": "Keine anstehenden Wartungen",
+    "noBikes": "Noch keine Fahrräder angelegt",
+    "addFirstBike": "Erstes Fahrrad hinzufügen",
+    "overdue": "Überfällig",
+    "dueSoon": "Bald fällig",
+    "distance": "Distanz",
+    "thisWeek": "Diese Woche",
+    "thisMonth": "Dieser Monat",
+    "thisYear": "Dieses Jahr"
+  },
+  "bikes": {
+    "title": "Fahrräder",
+    "addBike": "Fahrrad hinzufügen",
+    "editBike": "Fahrrad bearbeiten",
+    "deleteBike": "Fahrrad löschen",
+    "deleteConfirm": "Möchtest du dieses Fahrrad wirklich löschen? Alle zugehörigen Daten werden ebenfalls gelöscht.",
+    "name": "Name",
+    "type": "Typ",
+    "manufacturer": "Hersteller",
+    "model": "Modell",
+    "year": "Baujahr",
+    "weight": "Gewicht",
+    "distance": "Kilometerstand",
+    "photo": "Foto",
+    "notes": "Notizen",
+    "overview": "Übersicht",
+    "noBikes": "Noch keine Fahrräder angelegt",
+    "types": {
+      "road": "Rennrad",
+      "mtb": "Mountainbike",
+      "gravel": "Gravel",
+      "city": "Stadtrad",
+      "ebike": "E-Bike",
+      "other": "Sonstiges"
+    },
+    "tabs": {
+      "overview": "Übersicht",
+      "components": "Komponenten",
+      "services": "Wartung",
+      "setup": "Setup",
+      "documents": "Dokumente"
+    }
+  },
+  "components": {
+    "title": "Komponenten",
+    "addComponent": "Komponente hinzufügen",
+    "editComponent": "Komponente bearbeiten",
+    "deleteComponent": "Komponente löschen",
+    "swapComponent": "Komponente tauschen",
+    "deleteConfirm": "Möchtest du diese Komponente wirklich löschen?",
+    "name": "Name",
+    "category": "Kategorie",
+    "brand": "Marke",
+    "model": "Modell",
+    "installedAt": "Eingebaut bei",
+    "currentDistance": "Aktuelle Distanz",
+    "maxDistance": "Max. Lebensdauer",
+    "wear": "Verschleiß",
+    "wearStatus": {
+      "good": "Gut",
+      "warning": "Verschleiß",
+      "critical": "Kritisch",
+      "overdue": "Überfällig"
+    },
+    "history": "Tausch-Historie",
+    "noComponents": "Noch keine Komponenten",
+    "swapTo": "Tauschen zu",
+    "selectBike": "Fahrrad auswählen",
+    "swapConfirm": "Komponente tauschen?",
+    "bulkAdd": {
+      "title": "Komponenten aus Katalog",
+      "fromCatalog": "Aus Katalog",
+      "catalogMatch": "Katalog-Komponenten für {manufacturer} {model}",
+      "defaultsFor": "Standard-Komponenten für {type}",
+      "selectAll": "Alle auswählen",
+      "deselectAll": "Alle abwählen",
+      "create": "{count} Komponenten anlegen",
+      "success": "{count} Komponenten angelegt"
+    },
+    "categories": {
+      "chain": "Kette",
+      "cassette": "Kassette",
+      "brake_pads": "Bremsbeläge",
+      "brake_rotors": "Bremsscheiben",
+      "tires_front": "Reifen (vorne)",
+      "tires_rear": "Reifen (hinten)",
+      "handlebar_tape": "Lenkerband",
+      "cables": "Züge & Leitungen",
+      "bottom_bracket": "Tretlager",
+      "headset": "Steuersatz",
+      "wheels_front": "Laufrad (vorne)",
+      "wheels_rear": "Laufrad (hinten)",
+      "fork": "Gabel",
+      "shock": "Dämpfer",
+      "dropper_post": "Sattelstütze (absenkbar)",
+      "pedals": "Pedale",
+      "saddle": "Sattel",
+      "other": "Sonstiges"
+    }
+  },
+  "services": {
+    "title": "Wartung",
+    "addInterval": "Intervall hinzufügen",
+    "addRecord": "Wartung eintragen",
+    "editInterval": "Intervall bearbeiten",
+    "deleteInterval": "Intervall löschen",
+    "deleteConfirm": "Möchtest du dieses Wartungsintervall wirklich löschen?",
+    "intervalName": "Bezeichnung",
+    "intervalType": "Intervall-Typ",
+    "intervalValue": "Intervall-Wert",
+    "lastPerformed": "Zuletzt durchgeführt",
+    "nextDue": "Nächste Fälligkeit",
+    "serviceDate": "Datum",
+    "serviceCost": "Kosten",
+    "serviceNotes": "Notizen",
+    "consumables": "Verbrauchsmaterial",
+    "noIntervals": "Keine Wartungsintervalle definiert",
+    "noRecords": "Keine Wartungseinträge",
+    "status": {
+      "ok": "OK",
+      "dueSoon": "Bald fällig",
+      "overdue": "Überfällig"
+    },
+    "types": {
+      "distance": "Alle X km",
+      "hours": "Alle X Stunden",
+      "days": "Alle X Tage"
+    }
+  },
+  "setup": {
+    "title": "Setup",
+    "tirePressure": "Reifendruck",
+    "suspension": "Federung",
+    "bikeFit": "Bike-Fit",
+    "front": "Vorne",
+    "rear": "Hinten",
+    "pressure": "Druck",
+    "width": "Breite",
+    "tireType": "Reifentyp",
+    "fork": "Gabel",
+    "shock": "Dämpfer",
+    "airPressure": "Luftdruck",
+    "rebound": "Rebound",
+    "compression": "Compression",
+    "sag": "Sag",
+    "travel": "Federweg",
+    "seatHeight": "Sattelhöhe",
+    "stemLength": "Vorbaulänge",
+    "stemAngle": "Vorbauwinkel",
+    "handlebarWidth": "Lenkerbreite",
+    "crankLength": "Kurbellänge",
+    "stack": "Stack",
+    "reach": "Reach",
+    "saved": "Setup gespeichert"
+  },
+  "documents": {
+    "title": "Dokumente",
+    "upload": "Dokument hochladen",
+    "delete": "Dokument löschen",
+    "deleteConfirm": "Möchtest du dieses Dokument wirklich löschen?",
+    "noDocuments": "Keine Dokumente",
+    "fileName": "Dateiname",
+    "fileType": "Dateityp",
+    "uploadDate": "Hochgeladen am",
+    "types": {
+      "invoice": "Rechnung",
+      "receipt": "Quittung",
+      "warranty": "Garantie",
+      "manual": "Anleitung",
+      "other": "Sonstiges"
+    }
+  },
+  "rides": {
+    "title": "Fahrten",
+    "addRide": "Fahrt eintragen",
+    "date": "Datum",
+    "distance": "Distanz",
+    "duration": "Dauer",
+    "elevation": "Höhenmeter",
+    "bike": "Fahrrad",
+    "source": "Quelle",
+    "manual": "Manuell",
+    "strava": "Strava",
+    "noRides": "Keine Fahrten"
+  },
+  "strava": {
+    "title": "Strava",
+    "connect": "Mit Strava verbinden",
+    "disconnect": "Strava trennen",
+    "connected": "Verbunden",
+    "disconnected": "Nicht verbunden",
+    "lastSync": "Letzte Synchronisation",
+    "sync": "Jetzt synchronisieren",
+    "syncing": "Synchronisiere...",
+    "gearMapping": "Gear-Zuordnung",
+    "mapGear": "Strava-Gear zuordnen",
+    "excludeIndoor": "Indoor-Fahrten ausschließen",
+    "syncSuccess": "Synchronisation erfolgreich",
+    "syncError": "Synchronisation fehlgeschlagen"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "profile": "Profil",
+    "displayName": "Anzeigename",
+    "language": "Sprache",
+    "units": "Einheiten",
+    "metric": "Metrisch (km)",
+    "imperial": "Imperial (mi)",
+    "stravaIntegration": "Strava-Integration",
+    "dataExport": "Daten-Export",
+    "exportDescription": "Exportiere alle deine Daten als Excel-Datei",
+    "exportButton": "Als Excel exportieren",
+    "dangerZone": "Gefahrenzone",
+    "deleteAccount": "Konto löschen",
+    "deleteAccountConfirm": "Möchtest du dein Konto wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+  },
+  "shops": {
+    "shop": "Werkstatt",
+    "addShop": "Werkstatt hinzufügen",
+    "editShop": "Werkstatt bearbeiten",
+    "name": "Name",
+    "phone": "Telefon",
+    "address": "Adresse",
+    "website": "Website",
+    "repairRequest": {
+      "title": "Reparatur-Anfrage",
+      "button": "Reparatur anfragen",
+      "to": "An",
+      "subjectLabel": "Betreff",
+      "subject": "Reparatur-Anfrage",
+      "greeting": "Hallo,",
+      "intro": "für mein Fahrrad {bike} ({km} km) stehen folgende Wartungen an:",
+      "overdueLabel": "Überfällig:",
+      "overdueSince": "vor {km} km fällig",
+      "dueSoonLabel": "Bald fällig:",
+      "dueIn": "in ~{km} km fällig",
+      "generalService": "Bitte um allgemeine Durchsicht.",
+      "closing": "Bitte um Terminvorschlag.\n\nViele Grüße",
+      "sendEmail": "Per E-Mail senden",
+      "copy": "Kopieren",
+      "copied": "In Zwischenablage kopiert"
+    }
+  },
+  "lager": {
+    "title": "Lager",
+    "description": "Ersatzteile und Verbrauchsmaterial verwalten",
+    "addItem": "Teil hinzufügen",
+    "editItem": "Teil bearbeiten",
+    "deleteItem": "Teil löschen",
+    "deleteConfirm": "Möchtest du dieses Teil wirklich löschen?",
+    "noItems": "Kein Lagerbestand",
+    "noItemsDescription": "Füge Ersatzteile hinzu, um den Überblick zu behalten",
+    "name": "Bezeichnung",
+    "quantity": "Menge",
+    "purchasedAt": "Kaufdatum",
+    "price": "Preis",
+    "suitableFor": "Passend für",
+    "install": "Einbauen",
+    "installTitle": "An Bike einbauen",
+    "selectBike": "Fahrrad auswählen",
+    "installSuccess": "Teil eingebaut — Komponente angelegt",
+    "catalogSearch": "Teilekatalog",
+    "catalogOpen": "Katalog durchsuchen",
+    "catalogFilter": "Filtern...",
+    "catalogPlaceholder": "z.B. Shimano Ultegra Kette, GP 5000..."
+  },
+  "export": {
+    "title": "Export",
+    "generating": "Excel wird generiert...",
+    "success": "Export erfolgreich",
+    "error": "Export fehlgeschlagen"
+  },
+  "landing": {
+    "nav": {
+      "login": "Anmelden",
+      "signup": "Kostenlos starten"
+    },
+    "hero": {
+      "headline": "Dein digitaler Werkstatt-Assistent",
+      "subline": "Komponenten tracken, Wartung planen, nie wieder eine Inspektion verpassen.",
+      "cta": "Kostenlos starten",
+      "features": "Features entdecken"
+    },
+    "features": {
+      "title": "Alles, was deine Werkstatt braucht",
+      "subtitle": "Sechs Gründe, warum BikeFloor dein Bike-Management revolutioniert.",
+      "tracking": {
+        "title": "Komponenten-Tracking",
+        "description": "Verfolge den km-basierten Verschleiß jeder einzelnen Komponente — von der Kette bis zum Reifen."
+      },
+      "maintenance": {
+        "title": "Wartungsplanung",
+        "description": "Definiere Service-Intervalle und erhalte Erinnerungen, bevor etwas überfällig wird."
+      },
+      "strava": {
+        "title": "Strava-Sync",
+        "description": "Verbinde Strava und importiere Fahrten automatisch — Kilometer zählen sich von selbst."
+      },
+      "inventory": {
+        "title": "Ersatzteillager",
+        "description": "Verwalte Ersatzteile und baue sie mit einem Klick an dein Bike ein."
+      },
+      "workshop": {
+        "title": "Werkstatt-Anbindung",
+        "description": "Hinterlege deinen Händler und sende Reparatur-Anfragen direkt aus der App."
+      },
+      "multibike": {
+        "title": "Multi-Bike",
+        "description": "Rennrad, MTB, Gravel, Pendler — verwalte alle deine Räder an einem Ort."
+      }
+    },
+    "steps": {
+      "title": "So funktioniert's",
+      "subtitle": "In drei Schritten zur vollen Kontrolle über deine Flotte.",
+      "step1": {
+        "title": "Bike anlegen",
+        "description": "Erstelle dein Fahrrad-Profil mit Typ, Hersteller und Komponenten."
+      },
+      "step2": {
+        "title": "Strava verbinden",
+        "description": "Verbinde deinen Strava-Account für automatischen Fahrten-Import."
+      },
+      "step3": {
+        "title": "Wartung im Griff",
+        "description": "BikeFloor trackt den Verschleiß und erinnert dich rechtzeitig an Services."
+      }
+    },
+    "bikeTypes": {
+      "title": "Für jedes Bike gemacht",
+      "subtitle": "Egal ob Asphalt, Trail, Schotter oder Stadtverkehr — BikeFloor passt.",
+      "road": {
+        "title": "Rennrad",
+        "description": "Kette, Kassette, Bremsbeläge — jeder Kilometer zählt."
+      },
+      "mtb": {
+        "title": "Mountainbike",
+        "description": "Gabel, Dämpfer, Dropper — komplexe Wartung, einfach gemanagt."
+      },
+      "gravel": {
+        "title": "Gravel",
+        "description": "Das Beste aus beiden Welten — mit dem passenden Service-Plan."
+      },
+      "city": {
+        "title": "City / Pendler",
+        "description": "Zuverlässig zur Arbeit — mit Reifendruck und Lichtcheck."
+      },
+      "tt": {
+        "title": "Zeitfahren / Triathlon",
+        "description": "Aero-Setup, Scheibenrad, Aufsätze — jedes Detail zählt gegen die Uhr."
+      }
+    },
+    "stats": {
+      "parts": "150+ Teile im Katalog",
+      "categories": "10+ Kategorien",
+      "strava": "Strava-connected",
+      "free": "100% kostenlos"
+    },
+    "bottomCta": {
+      "title": "Bereit für den Überblick?",
+      "subtitle": "Starte jetzt und behalte deine Bikes im Griff — komplett kostenlos.",
+      "cta": "Jetzt kostenlos starten"
+    },
+    "footer": {
+      "copyright": "© {year} BikeFloor. Alle Rechte vorbehalten.",
+      "privacy": "Datenschutz",
+      "imprint": "Impressum"
+    }
+  }
+}

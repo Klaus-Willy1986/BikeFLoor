@@ -1,0 +1,449 @@
+{
+  "common": {
+    "appName": "BikeFloor",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "loading": "Loading...",
+    "noResults": "No results",
+    "confirm": "Confirm",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and",
+    "km": "km",
+    "hours": "hours",
+    "days": "days",
+    "currency": "€",
+    "upload": "Upload",
+    "download": "Download",
+    "preview": "Preview",
+    "actions": "Actions",
+    "status": "Status",
+    "date": "Date",
+    "notes": "Notes",
+    "cost": "Cost",
+    "total": "Total",
+    "description": "Description"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "bikes": "Bikes",
+    "components": "Components",
+    "services": "Services",
+    "lager": "Inventory",
+    "rides": "Rides",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Log in",
+    "signup": "Sign up",
+    "logout": "Log out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset password",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to manage your fleet",
+    "signupTitle": "Create account",
+    "signupSubtitle": "Start managing your bikes",
+    "forgotTitle": "Forgot password",
+    "forgotSubtitle": "We'll send you a reset link",
+    "resetSent": "Email sent! Check your inbox.",
+    "errors": {
+      "invalidCredentials": "Invalid credentials",
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords don't match",
+      "generic": "An error occurred. Please try again."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "fleetOverview": "Fleet Overview",
+    "totalBikes": "Bikes",
+    "totalDistance": "Total Distance",
+    "servicesThisYear": "Services This Year",
+    "totalCosts": "Total Costs",
+    "maintenanceAlerts": "Maintenance Alerts",
+    "recentRides": "Recent Rides",
+    "noAlerts": "No pending maintenance",
+    "noBikes": "No bikes added yet",
+    "addFirstBike": "Add your first bike",
+    "overdue": "Overdue",
+    "dueSoon": "Due soon",
+    "distance": "Distance",
+    "thisWeek": "This week",
+    "thisMonth": "This month",
+    "thisYear": "This year"
+  },
+  "bikes": {
+    "title": "Bikes",
+    "addBike": "Add Bike",
+    "editBike": "Edit Bike",
+    "deleteBike": "Delete Bike",
+    "deleteConfirm": "Are you sure you want to delete this bike? All related data will be deleted too.",
+    "name": "Name",
+    "type": "Type",
+    "manufacturer": "Manufacturer",
+    "model": "Model",
+    "year": "Year",
+    "weight": "Weight",
+    "distance": "Distance",
+    "photo": "Photo",
+    "notes": "Notes",
+    "overview": "Overview",
+    "noBikes": "No bikes added yet",
+    "types": {
+      "road": "Road Bike",
+      "mtb": "Mountain Bike",
+      "gravel": "Gravel",
+      "city": "City Bike",
+      "ebike": "E-Bike",
+      "other": "Other"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "components": "Components",
+      "services": "Services",
+      "setup": "Setup",
+      "documents": "Documents"
+    }
+  },
+  "components": {
+    "title": "Components",
+    "addComponent": "Add Component",
+    "editComponent": "Edit Component",
+    "deleteComponent": "Delete Component",
+    "swapComponent": "Swap Component",
+    "deleteConfirm": "Are you sure you want to delete this component?",
+    "name": "Name",
+    "category": "Category",
+    "brand": "Brand",
+    "model": "Model",
+    "installedAt": "Installed at",
+    "currentDistance": "Current Distance",
+    "maxDistance": "Max Lifespan",
+    "wear": "Wear",
+    "wearStatus": {
+      "good": "Good",
+      "warning": "Worn",
+      "critical": "Critical",
+      "overdue": "Overdue"
+    },
+    "history": "Swap History",
+    "noComponents": "No components yet",
+    "swapTo": "Swap to",
+    "selectBike": "Select bike",
+    "swapConfirm": "Swap component?",
+    "bulkAdd": {
+      "title": "Components from Catalog",
+      "fromCatalog": "From Catalog",
+      "catalogMatch": "Catalog components for {manufacturer} {model}",
+      "defaultsFor": "Default components for {type}",
+      "selectAll": "Select all",
+      "deselectAll": "Deselect all",
+      "create": "Create {count} components",
+      "success": "{count} components created"
+    },
+    "categories": {
+      "chain": "Chain",
+      "cassette": "Cassette",
+      "brake_pads": "Brake Pads",
+      "brake_rotors": "Brake Rotors",
+      "tires_front": "Tire (front)",
+      "tires_rear": "Tire (rear)",
+      "handlebar_tape": "Handlebar Tape",
+      "cables": "Cables & Housing",
+      "bottom_bracket": "Bottom Bracket",
+      "headset": "Headset",
+      "wheels_front": "Wheel (front)",
+      "wheels_rear": "Wheel (rear)",
+      "fork": "Fork",
+      "shock": "Shock",
+      "dropper_post": "Dropper Post",
+      "pedals": "Pedals",
+      "saddle": "Saddle",
+      "other": "Other"
+    }
+  },
+  "services": {
+    "title": "Services",
+    "addInterval": "Add Interval",
+    "addRecord": "Log Service",
+    "editInterval": "Edit Interval",
+    "deleteInterval": "Delete Interval",
+    "deleteConfirm": "Are you sure you want to delete this service interval?",
+    "intervalName": "Name",
+    "intervalType": "Interval Type",
+    "intervalValue": "Interval Value",
+    "lastPerformed": "Last Performed",
+    "nextDue": "Next Due",
+    "serviceDate": "Date",
+    "serviceCost": "Cost",
+    "serviceNotes": "Notes",
+    "consumables": "Consumables",
+    "noIntervals": "No service intervals defined",
+    "noRecords": "No service records",
+    "status": {
+      "ok": "OK",
+      "dueSoon": "Due Soon",
+      "overdue": "Overdue"
+    },
+    "types": {
+      "distance": "Every X km",
+      "hours": "Every X hours",
+      "days": "Every X days"
+    }
+  },
+  "setup": {
+    "title": "Setup",
+    "tirePressure": "Tire Pressure",
+    "suspension": "Suspension",
+    "bikeFit": "Bike Fit",
+    "front": "Front",
+    "rear": "Rear",
+    "pressure": "Pressure",
+    "width": "Width",
+    "tireType": "Tire Type",
+    "fork": "Fork",
+    "shock": "Shock",
+    "airPressure": "Air Pressure",
+    "rebound": "Rebound",
+    "compression": "Compression",
+    "sag": "Sag",
+    "travel": "Travel",
+    "seatHeight": "Seat Height",
+    "stemLength": "Stem Length",
+    "stemAngle": "Stem Angle",
+    "handlebarWidth": "Handlebar Width",
+    "crankLength": "Crank Length",
+    "stack": "Stack",
+    "reach": "Reach",
+    "saved": "Setup saved"
+  },
+  "documents": {
+    "title": "Documents",
+    "upload": "Upload Document",
+    "delete": "Delete Document",
+    "deleteConfirm": "Are you sure you want to delete this document?",
+    "noDocuments": "No documents",
+    "fileName": "Filename",
+    "fileType": "File Type",
+    "uploadDate": "Upload Date",
+    "types": {
+      "invoice": "Invoice",
+      "receipt": "Receipt",
+      "warranty": "Warranty",
+      "manual": "Manual",
+      "other": "Other"
+    }
+  },
+  "rides": {
+    "title": "Rides",
+    "addRide": "Add Ride",
+    "date": "Date",
+    "distance": "Distance",
+    "duration": "Duration",
+    "elevation": "Elevation",
+    "bike": "Bike",
+    "source": "Source",
+    "manual": "Manual",
+    "strava": "Strava",
+    "noRides": "No rides"
+  },
+  "strava": {
+    "title": "Strava",
+    "connect": "Connect with Strava",
+    "disconnect": "Disconnect Strava",
+    "connected": "Connected",
+    "disconnected": "Not connected",
+    "lastSync": "Last sync",
+    "sync": "Sync now",
+    "syncing": "Syncing...",
+    "gearMapping": "Gear Mapping",
+    "mapGear": "Map Strava gear",
+    "excludeIndoor": "Exclude indoor rides",
+    "syncSuccess": "Sync successful",
+    "syncError": "Sync failed"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "displayName": "Display Name",
+    "language": "Language",
+    "units": "Units",
+    "metric": "Metric (km)",
+    "imperial": "Imperial (mi)",
+    "stravaIntegration": "Strava Integration",
+    "dataExport": "Data Export",
+    "exportDescription": "Export all your data as an Excel file",
+    "exportButton": "Export as Excel",
+    "dangerZone": "Danger Zone",
+    "deleteAccount": "Delete Account",
+    "deleteAccountConfirm": "Are you sure you want to delete your account? This action cannot be undone."
+  },
+  "shops": {
+    "shop": "Workshop",
+    "addShop": "Add Workshop",
+    "editShop": "Edit Workshop",
+    "name": "Name",
+    "phone": "Phone",
+    "address": "Address",
+    "website": "Website",
+    "repairRequest": {
+      "title": "Repair Request",
+      "button": "Request Repair",
+      "to": "To",
+      "subjectLabel": "Subject",
+      "subject": "Repair Request",
+      "greeting": "Hello,",
+      "intro": "the following services are due for my bike {bike} ({km} km):",
+      "overdueLabel": "Overdue:",
+      "overdueSince": "due {km} km ago",
+      "dueSoonLabel": "Due soon:",
+      "dueIn": "due in ~{km} km",
+      "generalService": "General service requested.",
+      "closing": "Please suggest a date.\n\nBest regards",
+      "sendEmail": "Send Email",
+      "copy": "Copy",
+      "copied": "Copied to clipboard"
+    }
+  },
+  "lager": {
+    "title": "Inventory",
+    "description": "Manage spare parts and consumables",
+    "addItem": "Add Part",
+    "editItem": "Edit Part",
+    "deleteItem": "Delete Part",
+    "deleteConfirm": "Are you sure you want to delete this part?",
+    "noItems": "No inventory",
+    "noItemsDescription": "Add spare parts to keep track of your stock",
+    "name": "Name",
+    "quantity": "Quantity",
+    "purchasedAt": "Purchase Date",
+    "price": "Price",
+    "suitableFor": "Suitable for",
+    "install": "Install",
+    "installTitle": "Install on Bike",
+    "selectBike": "Select bike",
+    "installSuccess": "Part installed — component created",
+    "catalogSearch": "Parts Catalog",
+    "catalogOpen": "Browse catalog",
+    "catalogFilter": "Filter...",
+    "catalogPlaceholder": "e.g. Shimano Ultegra chain, GP 5000..."
+  },
+  "export": {
+    "title": "Export",
+    "generating": "Generating Excel...",
+    "success": "Export successful",
+    "error": "Export failed"
+  },
+  "landing": {
+    "nav": {
+      "login": "Log in",
+      "signup": "Get started free"
+    },
+    "hero": {
+      "headline": "Your digital workshop assistant",
+      "subline": "Track components, plan maintenance, never miss a service again.",
+      "cta": "Get started free",
+      "features": "Explore features"
+    },
+    "features": {
+      "title": "Everything your workshop needs",
+      "subtitle": "Six reasons why BikeFloor revolutionizes your bike management.",
+      "tracking": {
+        "title": "Component Tracking",
+        "description": "Monitor km-based wear for every single component — from chain to tire."
+      },
+      "maintenance": {
+        "title": "Maintenance Planning",
+        "description": "Define service intervals and get reminders before anything becomes overdue."
+      },
+      "strava": {
+        "title": "Strava Sync",
+        "description": "Connect Strava and import rides automatically — kilometers count themselves."
+      },
+      "inventory": {
+        "title": "Parts Inventory",
+        "description": "Manage spare parts and install them on your bike with a single click."
+      },
+      "workshop": {
+        "title": "Workshop Connection",
+        "description": "Save your dealer and send repair requests directly from the app."
+      },
+      "multibike": {
+        "title": "Multi-Bike",
+        "description": "Road, MTB, gravel, commuter — manage all your bikes in one place."
+      }
+    },
+    "steps": {
+      "title": "How it works",
+      "subtitle": "Three steps to full control over your fleet.",
+      "step1": {
+        "title": "Add your bike",
+        "description": "Create your bike profile with type, manufacturer, and components."
+      },
+      "step2": {
+        "title": "Connect Strava",
+        "description": "Link your Strava account for automatic ride imports."
+      },
+      "step3": {
+        "title": "Maintenance under control",
+        "description": "BikeFloor tracks wear and reminds you about services in time."
+      }
+    },
+    "bikeTypes": {
+      "title": "Made for every bike",
+      "subtitle": "Whether asphalt, trail, gravel, or city traffic — BikeFloor fits.",
+      "road": {
+        "title": "Road Bike",
+        "description": "Chain, cassette, brake pads — every kilometer counts."
+      },
+      "mtb": {
+        "title": "Mountain Bike",
+        "description": "Fork, shock, dropper — complex maintenance, simply managed."
+      },
+      "gravel": {
+        "title": "Gravel",
+        "description": "The best of both worlds — with the right service plan."
+      },
+      "city": {
+        "title": "City / Commuter",
+        "description": "Reliably to work — with tire pressure and light check."
+      },
+      "tt": {
+        "title": "Time Trial / Triathlon",
+        "description": "Aero setup, disc wheels, extensions — every detail counts against the clock."
+      }
+    },
+    "stats": {
+      "parts": "150+ parts in catalog",
+      "categories": "10+ categories",
+      "strava": "Strava-connected",
+      "free": "100% free"
+    },
+    "bottomCta": {
+      "title": "Ready for the overview?",
+      "subtitle": "Start now and keep your bikes in check — completely free.",
+      "cta": "Get started free"
+    },
+    "footer": {
+      "copyright": "© {year} BikeFloor. All rights reserved.",
+      "privacy": "Privacy",
+      "imprint": "Imprint"
+    }
+  }
+}
