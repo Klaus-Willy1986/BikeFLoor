@@ -24,8 +24,20 @@ export async function proxy(request: NextRequest) {
   // Run next-intl middleware first (handles locale detection, rewrites, redirects)
   const response = intlMiddleware(request);
 
+  // If Supabase is not configured, skip auth checks
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return response;
+  }
+
   // Refresh Supabase session on the response
-  const { user } = await updateSession(request, response);
+  let user = null;
+  try {
+    const result = await updateSession(request, response);
+    user = result.user;
+  } catch {
+    // Supabase not reachable — skip auth checks
+    return response;
+  }
 
   // Determine the path without locale prefix
   const cleanPath = stripLocalePrefix(request.nextUrl.pathname);
