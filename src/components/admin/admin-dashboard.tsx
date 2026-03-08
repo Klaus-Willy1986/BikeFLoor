@@ -43,7 +43,7 @@ type AdminUser = {
   is_early_bird: boolean;
   stripe_customer_id: string | null;
   created_at: string;
-  bikes: { count: number }[];
+  bikeCount: number;
 };
 
 export function AdminDashboard() {
@@ -54,13 +54,29 @@ export function AdminDashboard() {
   const { data: users, isLoading } = useQuery({
     queryKey: ['admin-users'],
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      const { data: profiles, error } = await supabase
         .from('profiles')
-        .select('id, display_name, plan, role, subscription_status, is_early_bird, stripe_customer_id, created_at, bikes(count)')
+        .select('id, display_name, plan, role, subscription_status, is_early_bird, stripe_customer_id, created_at')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data as AdminUser[];
+
+      // Fetch bike counts per user separately
+      const { data: bikes } = await (supabase as any)
+        .from('bikes')
+        .select('user_id');
+
+      const bikeCounts: Record<string, number> = {};
+      if (bikes) {
+        for (const bike of bikes) {
+          bikeCounts[bike.user_id] = (bikeCounts[bike.user_id] || 0) + 1;
+        }
+      }
+
+      return (profiles ?? []).map((p) => ({
+        ...p,
+        bikeCount: bikeCounts[p.id] || 0,
+      })) as AdminUser[];
     },
   });
 
@@ -225,7 +241,7 @@ export function AdminDashboard() {
                       </SelectContent>
                     </Select>
                   </TableCell>
-                  <TableCell>{user.bikes?.[0]?.count ?? 0}</TableCell>
+                  <TableCell>{user.bikeCount}</TableCell>
                   <TableCell>
                     <Badge
                       variant={
