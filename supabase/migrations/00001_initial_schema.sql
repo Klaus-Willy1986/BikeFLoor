@@ -2,7 +2,7 @@
 -- All tables with RLS enabled
 
 -- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- gen_random_uuid() is built-in on Supabase Cloud (pgcrypto)
 
 -- ============================================
 -- PROFILES
@@ -25,7 +25,7 @@ CREATE POLICY "Users can insert own profile" ON profiles FOR INSERT WITH CHECK (
 -- BIKES
 -- ============================================
 CREATE TABLE bikes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
   type TEXT NOT NULL DEFAULT 'road',
@@ -54,7 +54,7 @@ CREATE POLICY "Users can delete own bikes" ON bikes FOR DELETE USING (auth.uid()
 -- COMPONENT CATEGORIES (predefined)
 -- ============================================
 CREATE TABLE component_categories (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   key TEXT NOT NULL UNIQUE,
   default_max_distance_km INTEGER,
   sort_order INTEGER NOT NULL DEFAULT 0
@@ -88,7 +88,7 @@ INSERT INTO component_categories (key, default_max_distance_km, sort_order) VALU
 -- COMPONENTS
 -- ============================================
 CREATE TABLE components (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   bike_id UUID NOT NULL REFERENCES bikes(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   category_id UUID REFERENCES component_categories(id),
@@ -118,7 +118,7 @@ CREATE POLICY "Users can delete own components" ON components FOR DELETE USING (
 -- COMPONENT HISTORY
 -- ============================================
 CREATE TABLE component_history (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   component_id UUID NOT NULL REFERENCES components(id) ON DELETE CASCADE,
   from_bike_id UUID REFERENCES bikes(id) ON DELETE SET NULL,
   to_bike_id UUID REFERENCES bikes(id) ON DELETE SET NULL,
@@ -144,7 +144,7 @@ CREATE POLICY "Users can insert own component history" ON component_history
 -- SERVICE INTERVALS
 -- ============================================
 CREATE TABLE service_intervals (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   bike_id UUID NOT NULL REFERENCES bikes(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
@@ -170,7 +170,7 @@ CREATE POLICY "Users can delete own intervals" ON service_intervals FOR DELETE U
 -- SERVICE RECORDS
 -- ============================================
 CREATE TABLE service_records (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   service_interval_id UUID REFERENCES service_intervals(id) ON DELETE SET NULL,
   bike_id UUID NOT NULL REFERENCES bikes(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -195,7 +195,7 @@ CREATE POLICY "Users can delete own records" ON service_records FOR DELETE USING
 -- BIKE SETUP
 -- ============================================
 CREATE TABLE bike_setup (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   bike_id UUID NOT NULL REFERENCES bikes(id) ON DELETE CASCADE UNIQUE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   -- Tire pressure
@@ -239,7 +239,7 @@ CREATE POLICY "Users can delete own setup" ON bike_setup FOR DELETE USING (auth.
 -- STRAVA CONNECTIONS
 -- ============================================
 CREATE TABLE strava_connections (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE UNIQUE,
   strava_athlete_id BIGINT NOT NULL,
   access_token TEXT NOT NULL,
@@ -261,7 +261,7 @@ CREATE POLICY "Users can delete own strava" ON strava_connections FOR DELETE USI
 -- RIDES
 -- ============================================
 CREATE TABLE rides (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   bike_id UUID REFERENCES bikes(id) ON DELETE SET NULL,
   strava_activity_id BIGINT,
@@ -290,7 +290,7 @@ CREATE POLICY "Users can delete own rides" ON rides FOR DELETE USING (auth.uid()
 -- DOCUMENTS
 -- ============================================
 CREATE TABLE documents (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   bike_id UUID REFERENCES bikes(id) ON DELETE SET NULL,
   component_id UUID REFERENCES components(id) ON DELETE SET NULL,
