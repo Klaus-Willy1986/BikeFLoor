@@ -430,11 +430,43 @@
         "description": "Aero-Setup, Scheibenrad, Aufsätze — jedes Detail zählt gegen die Uhr."
       }
     },
+    "pricing": {
+      "title": "Einfache, faire Preise",
+      "subtitle": "Starte kostenlos — upgrade wenn du mehr brauchst.",
+      "earlyBird": "Early Bird — jetzt alles kostenlos!",
+      "earlyBirdFree": "Early Bird — kostenlos!",
+      "popular": "Beliebteste Wahl",
+      "perMonth": "/ Monat",
+      "free": {
+        "name": "Free",
+        "description": "Perfekt zum Ausprobieren mit einem Bike.",
+        "cta": "Kostenlos starten"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Für ambitionierte Fahrer mit mehreren Bikes.",
+        "cta": "Jetzt Early Bird sichern"
+      },
+      "fleet": {
+        "name": "Fleet",
+        "description": "Für die volle Garage — ohne Limits.",
+        "cta": "Jetzt Early Bird sichern"
+      },
+      "features": {
+        "bikes": "{count, plural, =1 {1 Fahrrad} other {Bis zu # Fahrräder}}",
+        "bikesUnlimited": "Unbegrenzt Fahrräder",
+        "components": "Komponenten-Tracking",
+        "maintenance": "Wartungsplanung",
+        "strava": "Strava-Sync",
+        "workshop": "Werkstatt-Anfragen",
+        "export": "Daten-Export"
+      }
+    },
     "stats": {
       "parts": "150+ Teile im Katalog",
       "categories": "10+ Kategorien",
       "strava": "Strava-connected",
-      "freeStart": "Kostenlos starten — Pro ab 4,99 €/Monat"
+      "freeStart": "Early Bird — alles kostenlos"
     },
     "bottomCta": {
       "title": "Bereit für den Überblick?",

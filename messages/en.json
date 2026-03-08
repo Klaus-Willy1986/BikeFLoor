@@ -430,11 +430,43 @@
         "description": "Aero setup, disc wheels, extensions — every detail counts against the clock."
       }
     },
+    "pricing": {
+      "title": "Simple, fair pricing",
+      "subtitle": "Start for free — upgrade when you need more.",
+      "earlyBird": "Early Bird — everything free right now!",
+      "earlyBirdFree": "Early Bird — free!",
+      "popular": "Most popular",
+      "perMonth": "/ month",
+      "free": {
+        "name": "Free",
+        "description": "Perfect to try it out with one bike.",
+        "cta": "Get started free"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "For ambitious riders with multiple bikes.",
+        "cta": "Claim Early Bird now"
+      },
+      "fleet": {
+        "name": "Fleet",
+        "description": "For the full garage — no limits.",
+        "cta": "Claim Early Bird now"
+      },
+      "features": {
+        "bikes": "{count, plural, =1 {1 bike} other {Up to # bikes}}",
+        "bikesUnlimited": "Unlimited bikes",
+        "components": "Component tracking",
+        "maintenance": "Maintenance planning",
+        "strava": "Strava sync",
+        "workshop": "Workshop requests",
+        "export": "Data export"
+      }
+    },
     "stats": {
       "parts": "150+ parts in catalog",
       "categories": "10+ categories",
       "strava": "Strava-connected",
-      "freeStart": "Free to start — Pro from €4.99/month"
+      "freeStart": "Early Bird — everything free"
     },
     "bottomCta": {
       "title": "Ready for the overview?",
