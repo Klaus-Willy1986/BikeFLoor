@@ -37,6 +37,9 @@ import {
   Check,
   ArrowRight,
   Import,
+  Crown,
+  Sparkles,
+  CreditCard,
 } from 'lucide-react';
 import { ShopSettings } from './shop-settings';
 
@@ -203,6 +206,111 @@ export function SettingsPage() {
           >
             {updateProfile.isPending ? '...' : t('common.save')}
           </Button>
+        </CardContent>
+      </Card>
+
+      {/* Plan */}
+      <Card className="border-border/50">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base flex items-center gap-2">
+            <CreditCard className="h-4 w-4" />
+            {t('settings.plan')}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <Badge
+                variant={profile?.plan === 'free' ? 'secondary' : 'default'}
+                className={
+                  profile?.plan === 'pro'
+                    ? 'bg-primary text-primary-foreground'
+                    : profile?.plan === 'fleet'
+                      ? 'bg-amber-600 text-white'
+                      : ''
+                }
+              >
+                {profile?.plan === 'pro' && <Crown className="mr-1 h-3 w-3" />}
+                {profile?.plan === 'fleet' && <Sparkles className="mr-1 h-3 w-3" />}
+                {(profile?.plan ?? 'free').charAt(0).toUpperCase() + (profile?.plan ?? 'free').slice(1)}
+              </Badge>
+              {profile?.is_early_bird && (
+                <Badge variant="outline" className="border-amber-500 text-amber-600">
+                  <Sparkles className="mr-1 h-3 w-3" />
+                  Early Bird
+                </Badge>
+              )}
+            </div>
+            {profile?.current_period_end && (
+              <span className="text-xs text-muted-foreground">
+                {t('settings.renewsAt')}{' '}
+                {new Date(profile.current_period_end).toLocaleDateString()}
+              </span>
+            )}
+          </div>
+
+          {profile?.plan === 'free' && !profile?.is_early_bird && (
+            <div className="flex gap-2">
+              <Button
+                size="sm"
+                onClick={async () => {
+                  try {
+                    const res = await fetch('/api/stripe/checkout', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ plan: 'pro' }),
+                    });
+                    const { url } = await res.json();
+                    if (url) window.location.href = url;
+                  } catch {
+                    toast.error(t('settings.upgradeError'));
+                  }
+                }}
+              >
+                <Crown className="mr-2 h-4 w-4" />
+                {t('settings.upgradePro')}
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={async () => {
+                  try {
+                    const res = await fetch('/api/stripe/checkout', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ plan: 'fleet' }),
+                    });
+                    const { url } = await res.json();
+                    if (url) window.location.href = url;
+                  } catch {
+                    toast.error(t('settings.upgradeError'));
+                  }
+                }}
+              >
+                <Sparkles className="mr-2 h-4 w-4" />
+                {t('settings.upgradeFleet')}
+              </Button>
+            </div>
+          )}
+
+          {profile?.stripe_customer_id && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={async () => {
+                try {
+                  const res = await fetch('/api/stripe/portal', { method: 'POST' });
+                  const { url } = await res.json();
+                  if (url) window.location.href = url;
+                } catch {
+                  toast.error(t('settings.portalError'));
+                }
+              }}
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              {t('settings.manageSubscription')}
+            </Button>
+          )}
         </CardContent>
       </Card>
 

@@ -40,7 +40,8 @@
     "services": "Wartung",
     "lager": "Lager",
     "rides": "Fahrten",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "admin": "Admin"
   },
   "auth": {
     "login": "Anmelden",
@@ -105,6 +106,7 @@
     "notes": "Notizen",
     "overview": "Übersicht",
     "noBikes": "Noch keine Fahrräder angelegt",
+    "limitReached": "Limit erreicht ({count})",
     "types": {
       "road": "Rennrad",
       "mtb": "Mountainbike",
@@ -290,6 +292,13 @@
     "dataExport": "Daten-Export",
     "exportDescription": "Exportiere alle deine Daten als Excel-Datei",
     "exportButton": "Als Excel exportieren",
+    "plan": "Abo & Plan",
+    "upgradePro": "Upgrade auf Pro",
+    "upgradeFleet": "Upgrade auf Fleet",
+    "manageSubscription": "Abo verwalten",
+    "renewsAt": "Verlängert am",
+    "upgradeError": "Upgrade fehlgeschlagen",
+    "portalError": "Portal konnte nicht geöffnet werden",
     "dangerZone": "Gefahrenzone",
     "deleteAccount": "Konto löschen",
     "deleteAccountConfirm": "Möchtest du dein Konto wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
@@ -343,6 +352,18 @@
     "catalogOpen": "Katalog durchsuchen",
     "catalogFilter": "Filtern...",
     "catalogPlaceholder": "z.B. Shimano Ultegra Kette, GP 5000..."
+  },
+  "admin": {
+    "title": "Admin",
+    "totalUsers": "Gesamte User",
+    "userManagement": "User-Verwaltung",
+    "user": "Benutzer",
+    "plan": "Plan",
+    "bikes": "Bikes",
+    "statusLabel": "Status",
+    "joined": "Registriert",
+    "userUpdated": "User aktualisiert",
+    "updateError": "Aktualisierung fehlgeschlagen"
   },
   "export": {
     "title": "Export",

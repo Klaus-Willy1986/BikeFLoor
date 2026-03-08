@@ -3,15 +3,17 @@
 import { usePathname } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { useQuery } from '@tanstack/react-query';
+import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
   Bike,
-  Cog,
   Wrench,
   Route,
   Package,
   Settings,
+  Shield,
 } from 'lucide-react';
 
 const navItems = [
@@ -26,6 +28,26 @@ const navItems = [
 export function Sidebar() {
   const pathname = usePathname();
   const t = useTranslations('nav');
+  const supabase = createClient();
+
+  const { data: profile } = useQuery({
+    queryKey: ['profile-role'],
+    queryFn: async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return null;
+      const { data } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+      return data;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const isAdmin = profile?.role === 'admin';
 
   return (
     <aside className="hidden lg:flex lg:flex-col lg:w-[240px] bg-sidebar text-sidebar-foreground">
@@ -72,6 +94,30 @@ export function Sidebar() {
             </Link>
           );
         })}
+        {isAdmin && (
+          <Link
+            href="/admin"
+            className={cn(
+              'group flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-all',
+              pathname === '/admin'
+                ? 'bg-sidebar-accent text-white'
+                : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-white'
+            )}
+          >
+            <Shield
+              className={cn(
+                'h-[18px] w-[18px] shrink-0',
+                pathname === '/admin'
+                  ? 'text-sidebar-primary'
+                  : 'text-sidebar-foreground/50 group-hover:text-sidebar-foreground'
+              )}
+            />
+            {t('admin')}
+            {pathname === '/admin' && (
+              <span className="ml-auto h-1.5 w-1.5 rounded-full bg-sidebar-primary" />
+            )}
+          </Link>
+        )}
       </nav>
 
       {/* Bottom */}

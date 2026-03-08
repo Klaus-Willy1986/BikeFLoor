@@ -40,7 +40,8 @@
     "services": "Services",
     "lager": "Inventory",
     "rides": "Rides",
-    "settings": "Settings"
+    "settings": "Settings",
+    "admin": "Admin"
   },
   "auth": {
     "login": "Log in",
@@ -105,6 +106,7 @@
     "notes": "Notes",
     "overview": "Overview",
     "noBikes": "No bikes added yet",
+    "limitReached": "Limit reached ({count})",
     "types": {
       "road": "Road Bike",
       "mtb": "Mountain Bike",
@@ -290,6 +292,13 @@
     "dataExport": "Data Export",
     "exportDescription": "Export all your data as an Excel file",
     "exportButton": "Export as Excel",
+    "plan": "Subscription & Plan",
+    "upgradePro": "Upgrade to Pro",
+    "upgradeFleet": "Upgrade to Fleet",
+    "manageSubscription": "Manage subscription",
+    "renewsAt": "Renews on",
+    "upgradeError": "Upgrade failed",
+    "portalError": "Could not open portal",
     "dangerZone": "Danger Zone",
     "deleteAccount": "Delete Account",
     "deleteAccountConfirm": "Are you sure you want to delete your account? This action cannot be undone."
@@ -343,6 +352,18 @@
     "catalogOpen": "Browse catalog",
     "catalogFilter": "Filter...",
     "catalogPlaceholder": "e.g. Shimano Ultegra chain, GP 5000..."
+  },
+  "admin": {
+    "title": "Admin",
+    "totalUsers": "Total Users",
+    "userManagement": "User Management",
+    "user": "User",
+    "plan": "Plan",
+    "bikes": "Bikes",
+    "statusLabel": "Status",
+    "joined": "Joined",
+    "userUpdated": "User updated",
+    "updateError": "Update failed"
   },
   "export": {
     "title": "Export",
