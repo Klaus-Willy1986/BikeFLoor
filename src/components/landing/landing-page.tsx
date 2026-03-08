@@ -228,10 +228,6 @@ export function LandingPage() {
       <section id="pricing" className="relative overflow-hidden bg-white py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-50 px-4 py-1.5 text-sm font-semibold text-amber-700">
-              <Sparkles className="h-4 w-4" />
-              {t('pricing.earlyBird')}
-            </div>
             <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
               {t('pricing.title')}
             </h2>
@@ -271,14 +267,9 @@ export function LandingPage() {
                 {t('pricing.popular')}
               </div>
               <h3 className="text-lg font-bold text-zinc-900">{t('pricing.pro.name')}</h3>
-              <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-sm text-zinc-400 line-through">€3,99</span>
-                <span className="text-4xl font-extrabold text-zinc-900">€0</span>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="text-4xl font-extrabold text-zinc-900">€3,99</span>
                 <span className="text-sm text-zinc-500">{t('pricing.perMonth')}</span>
-              </div>
-              <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
-                <Sparkles className="h-3 w-3" />
-                {t('pricing.earlyBirdFree')}
               </div>
               <p className="mt-3 text-sm text-zinc-500">{t('pricing.pro.description')}</p>
               <Link
@@ -300,14 +291,9 @@ export function LandingPage() {
             {/* Fleet */}
             <div className="rounded-2xl border border-zinc-200 bg-white p-8">
               <h3 className="text-lg font-bold text-zinc-900">{t('pricing.fleet.name')}</h3>
-              <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-sm text-zinc-400 line-through">€7,99</span>
-                <span className="text-4xl font-extrabold text-zinc-900">€0</span>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="text-4xl font-extrabold text-zinc-900">€7,99</span>
                 <span className="text-sm text-zinc-500">{t('pricing.perMonth')}</span>
-              </div>
-              <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
-                <Sparkles className="h-3 w-3" />
-                {t('pricing.earlyBirdFree')}
               </div>
               <p className="mt-3 text-sm text-zinc-500">{t('pricing.fleet.description')}</p>
               <Link

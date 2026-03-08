@@ -433,8 +433,6 @@
     "pricing": {
       "title": "Simple, fair pricing",
       "subtitle": "Start for free — upgrade when you need more.",
-      "earlyBird": "Early Bird — everything free right now!",
-      "earlyBirdFree": "Early Bird — free!",
       "popular": "Most popular",
       "perMonth": "/ month",
       "free": {
@@ -445,12 +443,12 @@
       "pro": {
         "name": "Pro",
         "description": "For ambitious riders with multiple bikes.",
-        "cta": "Claim Early Bird now"
+        "cta": "Choose Pro"
       },
       "fleet": {
         "name": "Fleet",
         "description": "For the full garage — no limits.",
-        "cta": "Claim Early Bird now"
+        "cta": "Choose Fleet"
       },
       "features": {
         "bikes": "{count, plural, =1 {1 bike} other {Up to # bikes}}",
