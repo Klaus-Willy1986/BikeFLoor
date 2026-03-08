@@ -115,7 +115,19 @@ export function BikeForm({ bike }: BikeFormProps) {
 
               <div className="space-y-2">
                 <Label htmlFor="manufacturer">{t('bikes.manufacturer')}</Label>
-                <Input id="manufacturer" {...register('manufacturer')} />
+                <Input id="manufacturer" list="manufacturers" {...register('manufacturer')} />
+                <datalist id="manufacturers">
+                  {[
+                    'Basso', 'BMC', 'Cannondale', 'Canyon', 'Cervélo', 'Colnago',
+                    'Cube', 'De Rosa', 'Factor', 'Felt', 'Focus', 'Giant',
+                    'GT', 'Kona', 'Lapierre', 'Liv', 'Look', 'Merida',
+                    'Orbea', 'Pinarello', 'Radon', 'Ridley', 'Rose', 'Santa Cruz',
+                    'Scott', 'Specialized', 'Stevens', 'Storck', 'Trek', 'Wilier',
+                    'YT Industries',
+                  ].map((m) => (
+                    <option key={m} value={m} />
+                  ))}
+                </datalist>
               </div>
 
               <div className="space-y-2">
