@@ -80,6 +80,10 @@
     "maintenanceAlerts": "Wartungs-Alerts",
     "recentRides": "Letzte Fahrten",
     "noAlerts": "Keine anstehenden Wartungen",
+    "componentWear": "Komponenten-Verschleiß",
+    "noWear": "Alle Teile im grünen Bereich",
+    "quickBike": "Bike",
+    "quickRide": "Fahrten",
     "noBikes": "Noch keine Fahrräder angelegt",
     "addFirstBike": "Erstes Fahrrad hinzufügen",
     "overdue": "Überfällig",
@@ -120,6 +124,7 @@
       "overview": "Übersicht",
       "components": "Komponenten",
       "services": "Wartung",
+      "rides": "Fahrten",
       "setup": "Setup",
       "documents": "Dokumente"
     }

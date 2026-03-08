@@ -19,6 +19,7 @@ import { ComponentsList } from '@/components/components/components-list';
 import { ServicesList } from '@/components/services/services-list';
 import { SetupForm } from '@/components/setup/setup-form';
 import { DocumentsList } from '@/components/documents/documents-list';
+import { BikeRides } from '@/components/bikes/bike-rides';
 import { useRef } from 'react';
 import {
   MoreHorizontal,
@@ -290,6 +291,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
           <TabsTrigger value="overview">{t('bikes.tabs.overview')}</TabsTrigger>
           <TabsTrigger value="components">{t('bikes.tabs.components')}</TabsTrigger>
           <TabsTrigger value="services">{t('bikes.tabs.services')}</TabsTrigger>
+          <TabsTrigger value="rides">{t('bikes.tabs.rides')}</TabsTrigger>
           <TabsTrigger value="setup">{t('bikes.tabs.setup')}</TabsTrigger>
           <TabsTrigger value="documents">{t('bikes.tabs.documents')}</TabsTrigger>
         </TabsList>
@@ -399,6 +401,10 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
 
         <TabsContent value="services" className="mt-4">
           <ServicesList bikeId={bikeId} />
+        </TabsContent>
+
+        <TabsContent value="rides" className="mt-4">
+          <BikeRides bikeId={bikeId} />
         </TabsContent>
 
         <TabsContent value="setup" className="mt-4">

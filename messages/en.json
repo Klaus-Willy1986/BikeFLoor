@@ -80,6 +80,10 @@
     "maintenanceAlerts": "Maintenance Alerts",
     "recentRides": "Recent Rides",
     "noAlerts": "No pending maintenance",
+    "componentWear": "Component Wear",
+    "noWear": "All parts in good shape",
+    "quickBike": "Bike",
+    "quickRide": "Rides",
     "noBikes": "No bikes added yet",
     "addFirstBike": "Add your first bike",
     "overdue": "Overdue",
@@ -120,6 +124,7 @@
       "overview": "Overview",
       "components": "Components",
       "services": "Services",
+      "rides": "Rides",
       "setup": "Setup",
       "documents": "Documents"
     }
