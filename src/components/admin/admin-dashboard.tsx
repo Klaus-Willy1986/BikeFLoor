@@ -34,6 +34,11 @@ import {
   Shield,
 } from 'lucide-react';
 
+type AdminBike = {
+  name: string;
+  type: string;
+};
+
 type AdminUser = {
   id: string;
   display_name: string | null;
@@ -43,7 +48,7 @@ type AdminUser = {
   is_early_bird: boolean;
   stripe_customer_id: string | null;
   created_at: string;
-  bikeCount: number;
+  bikes: AdminBike[];
 };
 
 export function AdminDashboard() {
@@ -61,21 +66,22 @@ export function AdminDashboard() {
 
       if (error) throw error;
 
-      // Fetch bike counts per user separately
+      // Fetch bikes per user separately
       const { data: bikes } = await (supabase as any)
         .from('bikes')
-        .select('user_id');
+        .select('user_id, name, type');
 
-      const bikeCounts: Record<string, number> = {};
+      const userBikes: Record<string, AdminBike[]> = {};
       if (bikes) {
         for (const bike of bikes) {
-          bikeCounts[bike.user_id] = (bikeCounts[bike.user_id] || 0) + 1;
+          if (!userBikes[bike.user_id]) userBikes[bike.user_id] = [];
+          userBikes[bike.user_id].push({ name: bike.name, type: bike.type });
         }
       }
 
       return (profiles ?? []).map((p) => ({
         ...p,
-        bikeCount: bikeCounts[p.id] || 0,
+        bikes: userBikes[p.id] || [],
       })) as AdminUser[];
     },
   });
@@ -241,7 +247,20 @@ export function AdminDashboard() {
                       </SelectContent>
                     </Select>
                   </TableCell>
-                  <TableCell>{user.bikeCount}</TableCell>
+                  <TableCell>
+                    <div className="space-y-0.5">
+                      {user.bikes.length > 0 ? (
+                        user.bikes.map((bike, i) => (
+                          <p key={i} className="text-xs">
+                            {bike.name}{' '}
+                            <span className="text-muted-foreground">({bike.type})</span>
+                          </p>
+                        ))
+                      ) : (
+                        <span className="text-xs text-muted-foreground">—</span>
+                      )}
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <Badge
                       variant={
