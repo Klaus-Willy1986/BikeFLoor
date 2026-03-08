@@ -14,16 +14,37 @@ export default async function AuthLayout({
   return (
     <div className="flex min-h-screen">
       {/* Left: Branding panel — hidden on mobile */}
-      <div className="relative hidden w-[45%] overflow-hidden bg-primary lg:flex lg:flex-col lg:justify-between">
-        {/* Decorative circles */}
-        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-white/5" />
-        <div className="absolute -bottom-32 -left-16 h-[500px] w-[500px] rounded-full bg-white/[0.03]" />
-        <div className="absolute right-12 bottom-40 h-48 w-48 rounded-full border border-white/10" />
+      <div className="relative hidden w-[45%] overflow-hidden bg-[#0a0c12] lg:flex lg:flex-col lg:justify-between">
+        {/* Decorative glows */}
+        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] rounded-full bg-amber-500/[0.07] blur-3xl" />
+        <div className="absolute -bottom-40 -left-20 h-[500px] w-[500px] rounded-full bg-amber-500/[0.04] blur-3xl" />
+        <div className="absolute right-12 bottom-40 h-48 w-48 rounded-full border border-amber-500/10" />
+
+        {/* Carbon/topo pattern */}
+        <div className="absolute inset-0 overflow-hidden">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="opacity-[0.15]">
+            <defs>
+              <filter id="topo-auth" x="0" y="0" width="100%" height="100%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                <feTurbulence type="turbulence" baseFrequency="0.008 0.006" numOctaves="5" seed="8" stitchTiles="stitch" result="noise" />
+                <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+                <feComponentTransfer in="gray" result="bands">
+                  <feFuncR type="discrete" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1" />
+                  <feFuncG type="discrete" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1" />
+                  <feFuncB type="discrete" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1" />
+                </feComponentTransfer>
+                <feMorphology operator="erode" radius="1" in="bands" result="thin" />
+                <feComposite operator="out" in="bands" in2="thin" result="edges" />
+                <feColorMatrix type="matrix" in="edges" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 1 0" />
+              </filter>
+            </defs>
+            <rect width="100%" height="100%" filter="url(#topo-auth)" />
+          </svg>
+        </div>
 
         <div className="relative z-10 flex flex-col gap-6 p-10 pt-12">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15 backdrop-blur-sm">
-              <Bike className="h-6 w-6 text-white" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/20 ring-1 ring-amber-500/30">
+              <Bike className="h-6 w-6 text-amber-400" />
             </div>
             <span className="text-xl font-bold tracking-tight text-white">
               BikeFloor
@@ -37,35 +58,19 @@ export default async function AuthLayout({
               Behalte den Verschleiß deiner Komponenten im Blick, plane Wartungen
               rechtzeitig und dokumentiere jede Fahrt.
             </p>
-            <footer className="text-sm font-medium text-white/50">
+            <footer className="text-sm font-medium text-amber-400/60">
               Dein digitaler Werkstatt-Assistent
             </footer>
           </blockquote>
         </div>
-
-        {/* Bike silhouette SVG */}
-        <div className="absolute bottom-0 right-0 opacity-[0.06]">
-          <svg width="420" height="300" viewBox="0 0 420 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="100" cy="200" r="75" stroke="white" strokeWidth="6"/>
-            <circle cx="320" cy="200" r="75" stroke="white" strokeWidth="6"/>
-            <circle cx="100" cy="200" r="8" fill="white"/>
-            <circle cx="320" cy="200" r="8" fill="white"/>
-            <path d="M100 200 L180 80 L240 80 L320 200" stroke="white" strokeWidth="5" strokeLinejoin="round"/>
-            <path d="M180 80 L160 200" stroke="white" strokeWidth="5"/>
-            <path d="M240 80 L320 200" stroke="white" strokeWidth="5"/>
-            <path d="M230 80 L260 50" stroke="white" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M250 50 L270 50" stroke="white" strokeWidth="4" strokeLinecap="round"/>
-            <circle cx="210" cy="80" r="14" stroke="white" strokeWidth="4"/>
-          </svg>
-        </div>
       </div>
 
       {/* Right: Form area */}
-      <div className="flex flex-1 flex-col items-center justify-center bg-background p-6 sm:p-10">
+      <div className="flex flex-1 flex-col items-center justify-center bg-[#f4f5f7] p-6 sm:p-10">
         {/* Mobile logo */}
         <div className="mb-10 flex items-center gap-3 lg:hidden">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-            <Bike className="h-6 w-6 text-primary-foreground" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#0a0c12]">
+            <Bike className="h-6 w-6 text-amber-400" />
           </div>
           <span className="text-xl font-bold tracking-tight">BikeFloor</span>
         </div>
