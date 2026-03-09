@@ -13,6 +13,12 @@ export const SERVICE_INTERVAL_TYPES = ['distance', 'hours', 'days'] as const;
 
 export const DOCUMENT_TYPES = ['invoice', 'receipt', 'warranty', 'manual', 'other'] as const;
 
+export const ROTATION_STATUSES = ['mounted', 'ready', 'needs_maintenance'] as const;
+
+export const DEFAULT_ROTATION_THRESHOLDS: Partial<Record<string, number>> = {
+  chain: 300,
+};
+
 export const WEAR_THRESHOLDS = {
   good: 0.6,
   warning: 0.85,

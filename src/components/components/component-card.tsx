@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Badge } from '@/components/ui/badge';
 import { WearIndicator, getWearInfo } from './wear-indicator';
 import { ComponentPredictionLine } from './component-prediction';
 import { MoreHorizontal, ArrowRightLeft, Trash2 } from 'lucide-react';
@@ -28,6 +29,9 @@ export function ComponentCard({ component, onDelete, onSwap, onClick }: Componen
   );
 
   const categoryKey = component.component_categories?.key;
+  const needsRotation =
+    component.rotation_threshold_km &&
+    Number(component.current_distance_km) >= Number(component.rotation_threshold_km);
 
   return (
     <Card
@@ -47,6 +51,11 @@ export function ComponentCard({ component, onDelete, onSwap, onClick }: Componen
               <span className="text-xs text-muted-foreground">
                 {t(`categories.${categoryKey}`)}
               </span>
+            )}
+            {needsRotation && (
+              <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
+                {t('rotation.needsRotation')}
+              </Badge>
             )}
           </div>
           <div className="mt-1 flex items-center gap-3 text-xs text-muted-foreground">

@@ -153,6 +153,8 @@ export type Database = {
           installed_at: string;
           notes: string | null;
           is_active: boolean;
+          rotation_status: string;
+          rotation_threshold_km: number | null;
           created_at: string;
           updated_at: string;
         };
@@ -170,6 +172,8 @@ export type Database = {
           installed_at?: string;
           notes?: string | null;
           is_active?: boolean;
+          rotation_status?: string;
+          rotation_threshold_km?: number | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -185,6 +189,8 @@ export type Database = {
           installed_at?: string;
           notes?: string | null;
           is_active?: boolean;
+          rotation_status?: string;
+          rotation_threshold_km?: number | null;
           updated_at?: string;
         };
         Relationships: [

@@ -8,6 +8,9 @@ const actionConfig: Record<string, { color: string; label: string }> = {
   installed: { color: 'bg-emerald-500', label: 'timeline.installed' },
   swapped: { color: 'bg-amber-500', label: 'timeline.swapped' },
   removed: { color: 'bg-red-500', label: 'timeline.removed' },
+  rotated_out: { color: 'bg-orange-500', label: 'timeline.rotatedOut' },
+  rotated_in: { color: 'bg-emerald-500', label: 'timeline.rotatedIn' },
+  marked_ready: { color: 'bg-blue-500', label: 'timeline.markedReady' },
 };
 
 export function ComponentTimeline({ componentId }: { componentId: string }) {

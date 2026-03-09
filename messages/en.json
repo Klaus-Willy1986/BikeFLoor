@@ -166,9 +166,27 @@
       "installed": "Installed",
       "swapped": "Swapped",
       "removed": "Removed",
+      "rotatedOut": "Removed (Rotation)",
+      "rotatedIn": "Installed (Rotation)",
+      "markedReady": "Marked ready",
       "from": "From",
       "to": "To",
       "noHistory": "No entries yet"
+    },
+    "rotation": {
+      "rotate": "Rotate",
+      "rotateTitle": "Rotate Component",
+      "mounted": "Mounted",
+      "ready": "Ready",
+      "needsMaintenance": "Needs Maintenance",
+      "markReady": "Mark as ready",
+      "pool": "Pool",
+      "needsRotation": "Rotation due",
+      "rotationThreshold": "Rotation Threshold",
+      "selectReady": "Select ready component",
+      "noReadyComponents": "No ready components",
+      "rotateSuccess": "Rotation successful",
+      "markedReady": "Marked as ready"
     },
     "prediction": {
       "title": "Prediction",

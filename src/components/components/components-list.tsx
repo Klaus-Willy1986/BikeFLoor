@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useComponents, useDeleteComponent } from '@/hooks/use-components';
 import { PageHeader } from '@/components/shared/page-header';
@@ -9,6 +9,7 @@ import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 import { ComponentCard } from './component-card';
 import { ComponentFormDialog } from './component-form-dialog';
 import { ComponentDetailDialog } from './component-detail-dialog';
+import { RotationGroup } from './rotation-group';
 import { SwapDialog } from './swap-dialog';
 import { Button } from '@/components/ui/button';
 import { BulkAddDialog } from './bulk-add-dialog';
@@ -91,19 +92,13 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
           }
         />
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2">
-          {components.map((component) => (
-            <ComponentCard
-              key={component.id}
-              component={component}
-              onDelete={(id) => setDeleteId(id)}
-              onSwap={(id, bikeId, name) =>
-                setSwapComponent({ id, bikeId, name })
-              }
-              onClick={() => setSelectedComponent(component)}
-            />
-          ))}
-        </div>
+        <ComponentGrid
+          components={components}
+          bikeId={bikeId}
+          onComponentClick={(c) => setSelectedComponent(c)}
+          onDelete={(id) => setDeleteId(id)}
+          onSwap={(id, bikeId, name) => setSwapComponent({ id, bikeId, name })}
+        />
       )}
 
       {bikeId && (
@@ -145,6 +140,74 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
         onOpenChange={(open) => !open && setSelectedComponent(null)}
         component={selectedComponent}
       />
+    </div>
+  );
+}
+
+/** Groups components by category; categories with >1 component render as RotationGroup */
+function ComponentGrid({
+  components,
+  bikeId,
+  onComponentClick,
+  onDelete,
+  onSwap,
+}: {
+  components: any[];
+  bikeId?: string;
+  onComponentClick: (c: any) => void;
+  onDelete: (id: string) => void;
+  onSwap: (id: string, bikeId: string, name: string) => void;
+}) {
+  // Group by category_id
+  const { rotationGroups, singles } = useMemo(() => {
+    const byCategory = new Map<string | null, any[]>();
+    for (const comp of components) {
+      const catId = comp.category_id ?? null;
+      if (!byCategory.has(catId)) byCategory.set(catId, []);
+      byCategory.get(catId)!.push(comp);
+    }
+
+    const rotationGroups: { categoryKey: string; categoryId: string; components: any[] }[] = [];
+    const singles: any[] = [];
+
+    for (const [catId, comps] of byCategory) {
+      if (catId && comps.length > 1) {
+        const categoryKey = comps[0].component_categories?.key ?? 'other';
+        rotationGroups.push({ categoryKey, categoryId: catId, components: comps });
+      } else {
+        // Only show mounted/active components as singles
+        singles.push(...comps.filter((c) => c.rotation_status === 'mounted' || c.is_active));
+      }
+    }
+
+    return { rotationGroups, singles };
+  }, [components]);
+
+  return (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {/* Rotation groups span full width */}
+      {rotationGroups.map((group) => (
+        <RotationGroup
+          key={group.categoryId}
+          categoryKey={group.categoryKey}
+          components={group.components}
+          bikeId={bikeId ?? group.components[0]?.bike_id}
+          onComponentClick={onComponentClick}
+          onDelete={onDelete}
+          onSwap={onSwap}
+        />
+      ))}
+
+      {/* Single components */}
+      {singles.map((component) => (
+        <ComponentCard
+          key={component.id}
+          component={component}
+          onDelete={onDelete}
+          onSwap={(id, bikeId, name) => onSwap(id, bikeId, name)}
+          onClick={() => onComponentClick(component)}
+        />
+      ))}
     </div>
   );
 }

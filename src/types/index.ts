@@ -30,7 +30,9 @@ export type DocumentType = 'invoice' | 'receipt' | 'warranty' | 'manual' | 'othe
 
 export type RideSource = 'manual' | 'strava';
 
-export type ComponentAction = 'installed' | 'removed' | 'swapped';
+export type RotationStatus = 'mounted' | 'ready' | 'needs_maintenance';
+
+export type ComponentAction = 'installed' | 'removed' | 'swapped' | 'rotated_out' | 'rotated_in' | 'marked_ready';
 
 export interface WearInfo {
   percentage: number;

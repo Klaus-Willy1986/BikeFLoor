@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DEFAULT_ROTATION_THRESHOLDS } from '@/lib/constants';
 import { toast } from 'sonner';
 
 interface ComponentFormDialogProps {
@@ -71,6 +72,11 @@ export function ComponentFormDialog({
       setValue('name', t(`components.categories.${cat.key}`));
       if (cat.default_max_distance_km) {
         setValue('max_distance_km', cat.default_max_distance_km);
+      }
+      // Auto-fill rotation threshold from defaults
+      const threshold = DEFAULT_ROTATION_THRESHOLDS[cat.key];
+      if (threshold) {
+        setValue('rotation_threshold_km', threshold);
       }
     }
   };
@@ -134,6 +140,16 @@ export function ComponentFormDialog({
                 {...register('installed_at')}
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="rotation_threshold_km">{t('components.rotation.rotationThreshold')} (km)</Label>
+            <Input
+              id="rotation_threshold_km"
+              type="number"
+              placeholder={t('components.rotation.rotationThreshold')}
+              {...register('rotation_threshold_km')}
+            />
           </div>
 
           <div className="space-y-2">

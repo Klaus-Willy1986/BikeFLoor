@@ -13,11 +13,14 @@ export function useComponents(bikeId?: string) {
       let query = supabase
         .from('components')
         .select('*, component_categories(key, default_max_distance_km)')
-        .eq('is_active', true)
         .order('created_at', { ascending: false });
 
       if (bikeId) {
+        // Load ALL components for bike view (mounted + pool)
         query = query.eq('bike_id', bikeId);
+      } else {
+        // Global page: only active/mounted
+        query = query.eq('is_active', true);
       }
 
       const { data, error } = await query;
@@ -263,6 +266,7 @@ export function useUpdateComponent() {
       if (data.brand !== undefined) updates.brand = data.brand;
       if (data.model !== undefined) updates.model = data.model;
       if (data.max_distance_km !== undefined) updates.max_distance_km = data.max_distance_km;
+      if (data.rotation_threshold_km !== undefined) updates.rotation_threshold_km = data.rotation_threshold_km;
       if (data.notes !== undefined) updates.notes = data.notes;
 
       // If current_distance_km changed, recalculate distance_at_install_km
@@ -305,6 +309,107 @@ export function useDeleteComponent() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['components'] });
+    },
+  });
+}
+
+export function useRotateComponent() {
+  const supabase = createClient();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      mountedComponentId,
+      readyComponentId,
+      bikeId,
+      notes,
+    }: {
+      mountedComponentId: string;
+      readyComponentId: string;
+      bikeId: string;
+      notes?: string | null;
+    }) => {
+      // Get bike's current distance
+      const { data: bike } = await supabase
+        .from('bikes')
+        .select('total_distance_km')
+        .eq('id', bikeId)
+        .single();
+
+      const bikeDistance = bike?.total_distance_km ?? 0;
+
+      // 1. Rotate out: mounted → needs_maintenance
+      const { error: outError } = await supabase
+        .from('components')
+        .update({
+          is_active: false,
+          rotation_status: 'needs_maintenance',
+        })
+        .eq('id', mountedComponentId);
+
+      if (outError) throw outError;
+
+      // 2. Rotate in: ready → mounted
+      const { error: inError } = await supabase
+        .from('components')
+        .update({
+          is_active: true,
+          rotation_status: 'mounted',
+          distance_at_install_km: bikeDistance,
+          current_distance_km: 0,
+        })
+        .eq('id', readyComponentId);
+
+      if (inError) throw inError;
+
+      // 3. History entries
+      await supabase.from('component_history').insert([
+        {
+          component_id: mountedComponentId,
+          from_bike_id: bikeId,
+          action: 'rotated_out',
+          distance_at_action_km: bikeDistance,
+          notes,
+        },
+        {
+          component_id: readyComponentId,
+          to_bike_id: bikeId,
+          action: 'rotated_in',
+          distance_at_action_km: bikeDistance,
+          notes,
+        },
+      ]);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['components'] });
+      queryClient.invalidateQueries({ queryKey: ['component-history'] });
+    },
+  });
+}
+
+export function useMarkReady() {
+  const supabase = createClient();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (componentId: string) => {
+      const { error } = await supabase
+        .from('components')
+        .update({ rotation_status: 'ready' })
+        .eq('id', componentId);
+
+      if (error) throw error;
+
+      // History entry
+      await supabase.from('component_history').insert({
+        component_id: componentId,
+        action: 'marked_ready',
+        distance_at_action_km: 0,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['components'] });
+      queryClient.invalidateQueries({ queryKey: ['component-history'] });
     },
   });
 }

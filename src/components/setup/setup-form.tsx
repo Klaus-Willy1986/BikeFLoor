@@ -51,7 +51,15 @@ export function SetupForm({ bikeId }: { bikeId: string }) {
   });
 
   const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<BikeSetupFormData>({
-    resolver: zodResolver(bikeSetupSchema),
+    resolver: async (values, context, options) => {
+      const cleaned = Object.fromEntries(
+        Object.entries(values).map(([k, v]) => [
+          k,
+          v === '' || (typeof v === 'number' && isNaN(v)) ? null : v,
+        ])
+      );
+      return zodResolver(bikeSetupSchema)(cleaned as any, context, options);
+    },
   });
 
   useEffect(() => {
@@ -82,6 +90,9 @@ export function SetupForm({ bikeId }: { bikeId: string }) {
       queryClient.invalidateQueries({ queryKey: ['bike-setup', bikeId] });
       toast.success(t('saved'));
     },
+    onError: () => {
+      toast.error(tc('error'));
+    },
   });
 
   if (isLoading) {
@@ -91,12 +102,12 @@ export function SetupForm({ bikeId }: { bikeId: string }) {
   const numInput = (name: keyof BikeSetupFormData, label: string, unit?: string) => (
     <div className="space-y-1">
       <Label htmlFor={name} className="text-xs">{label}{unit ? ` (${unit})` : ''}</Label>
-      <Input id={name} type="number" step="0.1" {...register(name)} className="h-9" />
+      <Input id={name} type="number" step="0.1" {...register(name, { setValueAs: (v: string) => v === '' ? null : Number(v) })} className="h-9" />
     </div>
   );
 
   return (
-    <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="space-y-6">
+    <form noValidate onSubmit={handleSubmit((data) => mutation.mutate(data), (errors) => { console.error('Setup form validation errors:', errors); toast.error(tc('error')); })} className="space-y-6">
       {/* Tire Pressure */}
       <Card>
         <CardHeader className="pb-3">

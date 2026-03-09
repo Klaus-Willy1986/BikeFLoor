@@ -166,9 +166,27 @@
       "installed": "Eingebaut",
       "swapped": "Getauscht",
       "removed": "Ausgebaut",
+      "rotatedOut": "Ausgebaut (Rotation)",
+      "rotatedIn": "Eingebaut (Rotation)",
+      "markedReady": "Bereit markiert",
       "from": "Von",
       "to": "Nach",
       "noHistory": "Noch keine Einträge"
+    },
+    "rotation": {
+      "rotate": "Rotieren",
+      "rotateTitle": "Komponente rotieren",
+      "mounted": "Montiert",
+      "ready": "Bereit",
+      "needsMaintenance": "Wartung nötig",
+      "markReady": "Als bereit markieren",
+      "pool": "Pool",
+      "needsRotation": "Rotation fällig",
+      "rotationThreshold": "Rotations-Schwelle",
+      "selectReady": "Bereite Komponente wählen",
+      "noReadyComponents": "Keine bereiten Komponenten",
+      "rotateSuccess": "Rotation erfolgreich",
+      "markedReady": "Als bereit markiert"
     },
     "prediction": {
       "title": "Prognose",
