@@ -50,7 +50,7 @@ export function BikeCard({ bike }: { bike: BikeRow }) {
               {t(`types.${bike.type}`)}
             </Badge>
             <span className="font-mono text-sm tabular-nums text-muted-foreground">
-              {Number(bike.total_distance_km).toLocaleString()} km
+              {Math.round(Number(bike.total_distance_km)).toLocaleString()} km
             </span>
           </div>
         </CardContent>

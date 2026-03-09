@@ -59,7 +59,7 @@ export function FleetOverview({ bikes, rides, loading }: FleetOverviewProps) {
 
   const stats = [
     { label: t('totalBikes'), value: String(bikes.length) },
-    { label: t('totalDistance'), value: `${totalDistance.toLocaleString()} km` },
+    { label: t('totalDistance'), value: `${Math.round(totalDistance).toLocaleString()} km` },
     { label: t('servicesThisYear'), value: String(servicesThisYear), sub: totalCosts > 0 ? `${totalCosts.toFixed(0)} €` : undefined },
     { label: t('thisMonth'), value: `${Math.round(distanceThisMonth).toLocaleString()} km` },
   ];

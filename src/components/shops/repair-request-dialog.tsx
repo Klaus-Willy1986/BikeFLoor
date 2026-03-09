@@ -87,7 +87,7 @@ export function RepairRequestDialog({
       '',
       t('shops.repairRequest.intro', {
         bike: bikeLabel,
-        km: Number(bike.total_distance_km).toLocaleString(),
+        km: Math.round(Number(bike.total_distance_km)).toLocaleString(),
       }),
       '',
     ];
