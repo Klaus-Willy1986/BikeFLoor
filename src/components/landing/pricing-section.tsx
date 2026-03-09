@@ -6,8 +6,8 @@ import { Link } from '@/i18n/navigation';
 import { Check, X } from 'lucide-react';
 
 const PRICES = {
-  monthly: { pro: '2,49', fleet: '4,99' },
-  yearly: { pro: '24,90', fleet: '49,90' },
+  monthly: { pro: '3,99', fleet: '7,99' },
+  yearly: { pro: '39,90', fleet: '79,90' },
 };
 
 export function PricingSection() {

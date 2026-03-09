@@ -228,23 +228,23 @@ otp_expiry = 3600
 
 [auth.email.template.confirm]
 subject = "E-Mail bestätigen — BikeFloor"
-content_path = "./templates/confirm.html"
+content_path = "./supabase/templates/confirm.html"
 
 [auth.email.template.recovery]
 subject = "Passwort zurücksetzen — BikeFloor"
-content_path = "./templates/reset.html"
+content_path = "./supabase/templates/reset.html"
 
 [auth.email.template.invite]
 subject = "Einladung zu BikeFloor"
-content_path = "./templates/invite.html"
+content_path = "./supabase/templates/invite.html"
 
 [auth.email.template.magic_link]
 subject = "Dein Login-Link — BikeFloor"
-content_path = "./templates/magic_link.html"
+content_path = "./supabase/templates/magic_link.html"
 
 [auth.email.template.email_change]
 subject = "E-Mail-Adresse ändern — BikeFloor"
-content_path = "./templates/email_change.html"
+content_path = "./supabase/templates/email_change.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.

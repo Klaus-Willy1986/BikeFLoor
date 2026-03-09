@@ -81,7 +81,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
     }
     uploadPhoto.mutate(file, {
       onSuccess: () => toast.success('Foto hochgeladen'),
-      onError: () => toast.error('Fehler beim Upload'),
+      onError: (err: Error) => toast.error(`Upload fehlgeschlagen: ${err.message}`),
     });
   };
 

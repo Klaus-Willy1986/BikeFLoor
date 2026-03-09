@@ -59,32 +59,45 @@ export async function POST(request: Request) {
       );
     }
 
+    // Check if subscription already exists
+    const checkRes = await fetch(
+      `https://www.strava.com/api/v3/push_subscriptions?client_id=${process.env.STRAVA_CLIENT_ID}&client_secret=${process.env.STRAVA_CLIENT_SECRET}`
+    );
+    if (checkRes.ok) {
+      const existing = await checkRes.json();
+      if (Array.isArray(existing) && existing.length > 0) {
+        return NextResponse.json({ active: true, subscription: existing[0] });
+      }
+    }
+
     const callbackUrl = `${appUrl}/api/strava/webhook`;
 
     const res = await fetch('https://www.strava.com/api/v3/push_subscriptions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        client_id: process.env.STRAVA_CLIENT_ID,
-        client_secret: process.env.STRAVA_CLIENT_SECRET,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: process.env.STRAVA_CLIENT_ID!,
+        client_secret: process.env.STRAVA_CLIENT_SECRET!,
         callback_url: callbackUrl,
-        verify_token: process.env.STRAVA_WEBHOOK_VERIFY_TOKEN,
+        verify_token: process.env.STRAVA_WEBHOOK_VERIFY_TOKEN!,
       }),
     });
 
     if (!res.ok) {
-      const error = await res.json();
+      const errorBody = await res.text();
+      console.error('Strava subscribe error:', res.status, errorBody);
       return NextResponse.json(
-        { error: error.message || 'Subscription failed' },
+        { error: `Strava error: ${errorBody}` },
         { status: res.status }
       );
     }
 
     const subscription = await res.json();
     return NextResponse.json({ active: true, subscription });
-  } catch {
+  } catch (error) {
+    console.error('Subscribe error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: String(error) },
       { status: 500 }
     );
   }

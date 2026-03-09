@@ -76,6 +76,7 @@ export function SettingsPage() {
 
   const [displayName, setDisplayName] = useState('');
   const [units, setUnits] = useState('metric');
+  const [billingInterval, setBillingInterval] = useState<'monthly' | 'yearly'>('monthly');
 
   useEffect(() => {
     if (profile) {
@@ -130,8 +131,8 @@ export function SettingsPage() {
       queryClient.invalidateQueries({ queryKey: ['strava-webhook'] });
       toast.success(t('strava.webhookRegistered'));
     },
-    onError: () => {
-      toast.error(t('strava.webhookError'));
+    onError: (err: Error) => {
+      toast.error(err.message || t('strava.webhookError'));
     },
   });
 
@@ -283,46 +284,75 @@ export function SettingsPage() {
           </div>
 
           {profile?.plan === 'free' && !profile?.is_early_bird && (
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                onClick={async () => {
-                  try {
-                    const res = await fetch('/api/stripe/checkout', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ plan: 'pro' }),
-                    });
-                    const { url } = await res.json();
-                    if (url) window.location.href = url;
-                  } catch {
-                    toast.error(t('settings.upgradeError'));
-                  }
-                }}
-              >
-                <Crown className="mr-2 h-4 w-4" />
-                {t('settings.upgradePro')}
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={async () => {
-                  try {
-                    const res = await fetch('/api/stripe/checkout', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ plan: 'fleet' }),
-                    });
-                    const { url } = await res.json();
-                    if (url) window.location.href = url;
-                  } catch {
-                    toast.error(t('settings.upgradeError'));
-                  }
-                }}
-              >
-                <Sparkles className="mr-2 h-4 w-4" />
-                {t('settings.upgradeFleet')}
-              </Button>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setBillingInterval('monthly')}
+                  className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
+                    billingInterval === 'monthly'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {t('pricing.monthly')}
+                </button>
+                <button
+                  onClick={() => setBillingInterval('yearly')}
+                  className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
+                    billingInterval === 'yearly'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {t('pricing.yearly')}
+                </button>
+                {billingInterval === 'yearly' && (
+                  <Badge variant="outline" className="border-emerald-500 text-emerald-600 text-[10px]">
+                    {t('pricing.saveMonths')}
+                  </Badge>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  onClick={async () => {
+                    try {
+                      const res = await fetch('/api/stripe/checkout', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ plan: 'pro', interval: billingInterval }),
+                      });
+                      const { url } = await res.json();
+                      if (url) window.location.href = url;
+                    } catch {
+                      toast.error(t('settings.upgradeError'));
+                    }
+                  }}
+                >
+                  <Crown className="mr-2 h-4 w-4" />
+                  {t('settings.upgradePro')} — {billingInterval === 'yearly' ? '€39,90 ' + t('pricing.perYear') : '€3,99 / mo'}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={async () => {
+                    try {
+                      const res = await fetch('/api/stripe/checkout', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ plan: 'fleet', interval: billingInterval }),
+                      });
+                      const { url } = await res.json();
+                      if (url) window.location.href = url;
+                    } catch {
+                      toast.error(t('settings.upgradeError'));
+                    }
+                  }}
+                >
+                  <Sparkles className="mr-2 h-4 w-4" />
+                  {t('settings.upgradeFleet')} — {billingInterval === 'yearly' ? '€79,90 ' + t('pricing.perYear') : '€7,99 / mo'}
+                </Button>
+              </div>
             </div>
           )}
 
