@@ -93,14 +93,31 @@ export function useCreateComponent(bikeId: string) {
       const bikeDistance = bike?.total_distance_km ?? 0;
       const currentWear = Math.max(bikeDistance - distanceAtInstall, 0);
 
+      // Check if there's already a mounted component in same category
+      // If so, new component goes to pool as "ready"
+      let isPool = false;
+      if (data.category_id) {
+        const { data: existing } = await supabase
+          .from('components')
+          .select('id')
+          .eq('bike_id', bikeId)
+          .eq('category_id', data.category_id)
+          .eq('rotation_status', 'mounted')
+          .limit(1);
+
+        isPool = (existing?.length ?? 0) > 0;
+      }
+
       const { data: component, error } = await supabase
         .from('components')
         .insert({
           ...data,
           bike_id: bikeId,
           user_id: user.id,
-          distance_at_install_km: distanceAtInstall,
-          current_distance_km: currentWear,
+          distance_at_install_km: isPool ? 0 : distanceAtInstall,
+          current_distance_km: isPool ? 0 : currentWear,
+          is_active: !isPool,
+          rotation_status: isPool ? 'ready' : 'mounted',
         })
         .select()
         .single();
@@ -112,7 +129,7 @@ export function useCreateComponent(bikeId: string) {
         component_id: component.id,
         to_bike_id: bikeId,
         action: 'installed',
-        distance_at_action_km: distanceAtInstall,
+        distance_at_action_km: isPool ? 0 : distanceAtInstall,
       });
 
       return component;
