@@ -13,13 +13,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { plan } = (await request.json()) as { plan: string };
+    const { plan, interval = 'monthly' } = (await request.json()) as {
+      plan: string;
+      interval?: 'monthly' | 'yearly';
+    };
 
     if (!plan || !['pro', 'fleet'].includes(plan)) {
       return NextResponse.json({ error: 'Invalid plan' }, { status: 400 });
     }
 
-    const priceId = getPriceId(plan as 'pro' | 'fleet');
+    const priceId = getPriceId(plan as 'pro' | 'fleet', interval);
     if (!priceId) {
       return NextResponse.json({ error: 'Price not configured' }, { status: 400 });
     }

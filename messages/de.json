@@ -492,7 +492,12 @@
       "title": "Einfache, faire Preise",
       "subtitle": "Starte kostenlos — upgrade wenn du mehr brauchst.",
       "popular": "Beliebteste Wahl",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich",
       "perMonth": "/ Monat",
+      "perYear": "/ Jahr",
+      "saveMonths": "2 Monate gratis",
+      "yearlyHint": "statt €{monthly}/Monat",
       "free": {
         "name": "Free",
         "description": "Perfekt zum Ausprobieren mit einem Bike.",

@@ -20,8 +20,16 @@ export const stripe = new Proxy({} as Stripe, {
   },
 });
 
-export function getPriceId(plan: 'pro' | 'fleet'): string | undefined {
-  if (plan === 'pro') return process.env.STRIPE_PRO_PRICE_ID;
-  if (plan === 'fleet') return process.env.STRIPE_FLEET_PRICE_ID;
+export function getPriceId(plan: 'pro' | 'fleet', interval: 'monthly' | 'yearly' = 'monthly'): string | undefined {
+  if (plan === 'pro') {
+    return interval === 'yearly'
+      ? process.env.STRIPE_PRO_YEARLY_PRICE_ID
+      : process.env.STRIPE_PRO_PRICE_ID;
+  }
+  if (plan === 'fleet') {
+    return interval === 'yearly'
+      ? process.env.STRIPE_FLEET_YEARLY_PRICE_ID
+      : process.env.STRIPE_FLEET_PRICE_ID;
+  }
   return undefined;
 }
