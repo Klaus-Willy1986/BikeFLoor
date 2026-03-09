@@ -244,6 +244,53 @@ export function useSwapComponent() {
   });
 }
 
+export function useUpdateComponent() {
+  const supabase = createClient();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      componentId,
+      bikeId,
+      data,
+    }: {
+      componentId: string;
+      bikeId: string;
+      data: Partial<ComponentFormData> & { current_distance_km?: number };
+    }) => {
+      const updates: Record<string, unknown> = {};
+      if (data.name !== undefined) updates.name = data.name;
+      if (data.brand !== undefined) updates.brand = data.brand;
+      if (data.model !== undefined) updates.model = data.model;
+      if (data.max_distance_km !== undefined) updates.max_distance_km = data.max_distance_km;
+      if (data.notes !== undefined) updates.notes = data.notes;
+
+      // If current_distance_km changed, recalculate distance_at_install_km
+      if (data.current_distance_km !== undefined) {
+        const { data: bike } = await supabase
+          .from('bikes')
+          .select('total_distance_km')
+          .eq('id', bikeId)
+          .single();
+
+        const bikeKm = Number(bike?.total_distance_km ?? 0);
+        updates.distance_at_install_km = Math.max(bikeKm - data.current_distance_km, 0);
+        updates.current_distance_km = data.current_distance_km;
+      }
+
+      const { error } = await supabase
+        .from('components')
+        .update(updates)
+        .eq('id', componentId);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['components'] });
+    },
+  });
+}
+
 export function useDeleteComponent() {
   const supabase = createClient();
   const queryClient = useQueryClient();
