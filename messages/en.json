@@ -47,6 +47,8 @@
     "login": "Log in",
     "signup": "Sign up",
     "logout": "Log out",
+    "displayName": "Name",
+    "displayNamePlaceholder": "Your name",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm password",

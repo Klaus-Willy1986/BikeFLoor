@@ -11,6 +11,7 @@ import { Loader2, CheckCircle2 } from 'lucide-react';
 
 export default function SignupPage() {
   const t = useTranslations('auth');
+  const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -40,6 +41,7 @@ export default function SignupPage() {
       password,
       options: {
         emailRedirectTo: `${window.location.origin}/callback`,
+        data: { display_name: displayName.trim() },
       },
     });
 
@@ -86,6 +88,20 @@ export default function SignupPage() {
             {error}
           </div>
         )}
+
+        <div className="space-y-2">
+          <Label htmlFor="displayName">{t('displayName')}</Label>
+          <Input
+            id="displayName"
+            type="text"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            placeholder={t('displayNamePlaceholder')}
+            required
+            autoComplete="name"
+            className="h-11"
+          />
+        </div>
 
         <div className="space-y-2">
           <Label htmlFor="email">{t('email')}</Label>

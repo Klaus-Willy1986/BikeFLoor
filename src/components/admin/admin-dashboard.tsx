@@ -66,10 +66,12 @@ export function AdminDashboard() {
 
       if (error) throw error;
 
-      // Fetch bikes per user separately
-      const { data: bikes } = await (supabase as any)
-        .from('bikes')
-        .select('user_id, name, type');
+      // Fetch bikes per user — needs admin/service role to see all
+      // Using regular client here; admin can only see own bikes via RLS
+      // The admin API route should be used for cross-user data
+      const { data: bikes } = await fetch('/api/admin/bikes')
+        .then(r => r.ok ? r.json() : [])
+        .catch(() => []);
 
       const userBikes: Record<string, AdminBike[]> = {};
       if (bikes) {

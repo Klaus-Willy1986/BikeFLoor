@@ -47,6 +47,8 @@
     "login": "Anmelden",
     "signup": "Registrieren",
     "logout": "Abmelden",
+    "displayName": "Name",
+    "displayNamePlaceholder": "Dein Name",
     "email": "E-Mail",
     "password": "Passwort",
     "confirmPassword": "Passwort bestätigen",
