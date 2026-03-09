@@ -111,6 +111,8 @@
     "overview": "Overview",
     "noBikes": "No bikes added yet",
     "limitReached": "Limit reached ({count})",
+    "viewGrid": "Grid view",
+    "viewGarage": "Garage view",
     "types": {
       "road": "Road Bike",
       "mtb": "Mountain Bike",
@@ -151,6 +153,24 @@
       "overdue": "Overdue"
     },
     "history": "Swap History",
+    "timeline": {
+      "title": "History",
+      "installed": "Installed",
+      "swapped": "Swapped",
+      "removed": "Removed",
+      "from": "From",
+      "to": "To",
+      "noHistory": "No entries yet"
+    },
+    "prediction": {
+      "title": "Prediction",
+      "remaining": "Remaining",
+      "estimatedDate": "Estimated",
+      "overdue": "Overdue",
+      "basis": "Data basis",
+      "fromHistory": "{count} historical replacements",
+      "fromMaxDistance": "Max. lifespan"
+    },
     "noComponents": "No components yet",
     "swapTo": "Swap to",
     "selectBike": "Select bike",
@@ -284,7 +304,12 @@
     "mapGear": "Map Strava gear",
     "excludeIndoor": "Exclude indoor rides",
     "syncSuccess": "Sync successful",
-    "syncError": "Sync failed"
+    "syncError": "Sync failed",
+    "liveSyncActive": "Live-Sync active",
+    "manualSyncOnly": "Manual sync only",
+    "registerWebhook": "Register webhook",
+    "webhookRegistered": "Webhook registered successfully",
+    "webhookError": "Webhook registration failed"
   },
   "settings": {
     "title": "Settings",

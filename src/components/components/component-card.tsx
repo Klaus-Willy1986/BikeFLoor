@@ -10,15 +10,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { WearIndicator, getWearInfo } from './wear-indicator';
+import { ComponentPredictionLine } from './component-prediction';
 import { MoreHorizontal, ArrowRightLeft, Trash2 } from 'lucide-react';
 
 interface ComponentCardProps {
   component: any;
   onDelete: (id: string) => void;
   onSwap: (id: string, bikeId: string, name: string) => void;
+  onClick?: () => void;
 }
 
-export function ComponentCard({ component, onDelete, onSwap }: ComponentCardProps) {
+export function ComponentCard({ component, onDelete, onSwap, onClick }: ComponentCardProps) {
   const t = useTranslations('components');
   const wear = getWearInfo(
     Number(component.current_distance_km),
@@ -28,7 +30,10 @@ export function ComponentCard({ component, onDelete, onSwap }: ComponentCardProp
   const categoryKey = component.component_categories?.key;
 
   return (
-    <Card className="border-border/50">
+    <Card
+      className="border-border/50 cursor-pointer transition-all duration-200 hover:shadow-md hover:ring-1 hover:ring-primary/20"
+      onClick={onClick}
+    >
       <CardContent className="flex items-center gap-4 p-4">
         <WearIndicator
           percentage={wear.percentage}
@@ -59,24 +64,42 @@ export function ComponentCard({ component, onDelete, onSwap }: ComponentCardProp
               {component.brand} {component.model ?? ''}
             </p>
           )}
+          <div className="mt-1">
+            <ComponentPredictionLine
+              componentId={component.id}
+              categoryId={component.category_id}
+              currentDistanceKm={Number(component.current_distance_km)}
+              maxDistanceKm={component.max_distance_km}
+              installedAt={component.installed_at}
+            />
+          </div>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="shrink-0">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="shrink-0"
+              onClick={(e) => e.stopPropagation()}
+            >
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem
-              onClick={() =>
-                onSwap(component.id, component.bike_id, component.name)
-              }
+              onClick={(e) => {
+                e.stopPropagation();
+                onSwap(component.id, component.bike_id, component.name);
+              }}
             >
               <ArrowRightLeft className="mr-2 h-4 w-4" />
               {t('swapComponent')}
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => onDelete(component.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(component.id);
+              }}
               className="text-destructive"
             >
               <Trash2 className="mr-2 h-4 w-4" />

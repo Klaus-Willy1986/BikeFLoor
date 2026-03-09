@@ -40,6 +40,7 @@ import {
   Crown,
   Sparkles,
   CreditCard,
+  Zap,
 } from 'lucide-react';
 import { ShopSettings } from './shop-settings';
 
@@ -62,7 +63,7 @@ export function SettingsPage() {
         .select('*')
         .eq('id', user.id)
         .single();
-      return data;
+      return data as any;
     },
   });
 
@@ -99,6 +100,38 @@ export function SettingsPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profile'] });
       toast.success(t('common.save'));
+    },
+  });
+
+  const { data: webhookStatus } = useQuery({
+    queryKey: ['strava-webhook'],
+    queryFn: async () => {
+      const res = await fetch('/api/strava/subscribe');
+      return res.json() as Promise<{ active: boolean }>;
+    },
+    enabled: !!stravaConnection,
+  });
+
+  const registerWebhook = useMutation({
+    mutationFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+      const res = await fetch('/api/strava/subscribe', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed');
+      }
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['strava-webhook'] });
+      toast.success(t('strava.webhookRegistered'));
+    },
+    onError: () => {
+      toast.error(t('strava.webhookError'));
     },
   });
 
@@ -363,6 +396,35 @@ export function SettingsPage() {
                     {t('strava.disconnect')}
                   </Button>
                 </div>
+              </div>
+
+              {/* Live-Sync status */}
+              <div className="flex items-center gap-3 border-t pt-4">
+                {webhookStatus?.active ? (
+                  <Badge className="bg-emerald-500/10 text-emerald-700 border-0">
+                    <Zap className="mr-1 h-3 w-3" />
+                    {t('strava.liveSyncActive')}
+                  </Badge>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">
+                      {t('strava.manualSyncOnly')}
+                    </span>
+                    {profile?.role === 'admin' && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => registerWebhook.mutate()}
+                        disabled={registerWebhook.isPending}
+                      >
+                        <Zap className="mr-2 h-4 w-4" />
+                        {registerWebhook.isPending
+                          ? '...'
+                          : t('strava.registerWebhook')}
+                      </Button>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Gear mapping */}

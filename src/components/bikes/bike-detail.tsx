@@ -40,7 +40,7 @@ import { Link } from '@/i18n/navigation';
 import { toast } from 'sonner';
 import { useWorkshops } from '@/hooks/use-shops';
 import { RepairRequestDialog } from '@/components/shops/repair-request-dialog';
-import { BIKE_CATALOG } from '@/lib/bike-catalog';
+import { resolveBikeImage } from '@/lib/bike-image';
 import Image from 'next/image';
 
 const typeColors: Record<string, { bg: string; text: string; accent: string }> = {
@@ -67,16 +67,9 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [repairOpen, setRepairOpen] = useState(false);
 
-  // Own photo > catalog image > null
   const bikeImage = useMemo(() => {
     if (!bike) return null;
-    if (bike.photo_url) return bike.photo_url;
-    const entry = BIKE_CATALOG.find(
-      (b) =>
-        b.manufacturer.toLowerCase() === (bike.manufacturer ?? '').toLowerCase() &&
-        b.model.toLowerCase() === (bike.model ?? '').toLowerCase()
-    );
-    return entry?.imageUrl ?? null;
+    return resolveBikeImage(bike);
   }, [bike]);
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -203,7 +196,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
               </div>
               <div className="mt-4 flex items-baseline gap-1">
                 <span className="text-3xl font-bold font-mono tabular-nums tracking-tight">
-                  {Number(bike.total_distance_km).toLocaleString()}
+                  {Math.round(Number(bike.total_distance_km)).toLocaleString()}
                 </span>
                 <span className="text-sm text-muted-foreground">km</span>
               </div>
@@ -233,7 +226,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
                   </div>
                   <div className="mt-4 flex items-baseline gap-1">
                     <span className="text-3xl font-bold font-mono tabular-nums tracking-tight text-white">
-                      {Number(bike.total_distance_km).toLocaleString()}
+                      {Math.round(Number(bike.total_distance_km)).toLocaleString()}
                     </span>
                     <span className="text-sm text-white/60">km</span>
                   </div>
@@ -307,7 +300,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
                   {t('bikes.distance')}
                 </div>
                 <p className="mt-2 text-2xl font-bold font-mono tabular-nums">
-                  {Number(bike.total_distance_km).toLocaleString()} km
+                  {Math.round(Number(bike.total_distance_km)).toLocaleString()} km
                 </p>
               </CardContent>
             </Card>

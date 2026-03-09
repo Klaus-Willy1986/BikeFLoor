@@ -8,6 +8,7 @@ import { EmptyState } from '@/components/shared/empty-state';
 import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 import { ComponentCard } from './component-card';
 import { ComponentFormDialog } from './component-form-dialog';
+import { ComponentDetailDialog } from './component-detail-dialog';
 import { SwapDialog } from './swap-dialog';
 import { Button } from '@/components/ui/button';
 import { BulkAddDialog } from './bulk-add-dialog';
@@ -25,6 +26,7 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
   const [formOpen, setFormOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [bulkOpen, setBulkOpen] = useState(false);
+  const [selectedComponent, setSelectedComponent] = useState<any>(null);
   const [swapComponent, setSwapComponent] = useState<{
     id: string;
     bikeId: string;
@@ -98,6 +100,7 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
               onSwap={(id, bikeId, name) =>
                 setSwapComponent({ id, bikeId, name })
               }
+              onClick={() => setSelectedComponent(component)}
             />
           ))}
         </div>
@@ -136,6 +139,12 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
           componentName={swapComponent.name}
         />
       )}
+
+      <ComponentDetailDialog
+        open={!!selectedComponent}
+        onOpenChange={(open) => !open && setSelectedComponent(null)}
+        component={selectedComponent}
+      />
     </div>
   );
 }
