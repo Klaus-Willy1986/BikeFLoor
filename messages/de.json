@@ -61,6 +61,11 @@
     "forgotTitle": "Passwort vergessen",
     "forgotSubtitle": "Wir senden dir einen Link zum Zurücksetzen",
     "resetSent": "E-Mail gesendet! Überprüfe deinen Posteingang.",
+    "newPassword": "Neues Passwort wählen",
+    "newPasswordSub": "Gib dein neues Passwort ein.",
+    "passwordUpdated": "Passwort geändert",
+    "passwordUpdatedSub": "Dein Passwort wurde erfolgreich aktualisiert.",
+    "toDashboard": "Zum Dashboard",
     "confirmEmail": "Wir haben dir eine Bestätigungs-E-Mail gesendet. Bitte klicke auf den Link in der E-Mail, um dein Konto zu aktivieren.",
     "errors": {
       "invalidCredentials": "Ungültige Anmeldedaten",

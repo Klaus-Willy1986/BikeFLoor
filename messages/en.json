@@ -61,6 +61,11 @@
     "forgotTitle": "Forgot password",
     "forgotSubtitle": "We'll send you a reset link",
     "resetSent": "Email sent! Check your inbox.",
+    "newPassword": "Choose new password",
+    "newPasswordSub": "Enter your new password.",
+    "passwordUpdated": "Password updated",
+    "passwordUpdatedSub": "Your password has been successfully updated.",
+    "toDashboard": "Go to Dashboard",
     "confirmEmail": "We've sent you a confirmation email. Please click the link to activate your account.",
     "errors": {
       "invalidCredentials": "Invalid credentials",
