@@ -61,7 +61,7 @@ export default function SignupPage() {
         </div>
         <div className="space-y-2">
           <h1 className="text-2xl font-bold tracking-tight">{t('signupTitle')}</h1>
-          <p className="text-sm text-muted-foreground">{t('resetSent')}</p>
+          <p className="text-sm text-muted-foreground">{t('confirmEmail')}</p>
         </div>
         <Link
           href="/login"
