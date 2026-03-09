@@ -121,6 +121,36 @@ export async function POST(request: Request) {
       { onConflict: 'strava_activity_id' }
     );
 
+    // Recalculate offset for affected bike to prevent double-counting
+    if (bikeId && activity.gear_id) {
+      const gearRes = await fetch(
+        `https://www.strava.com/api/v3/gear/${activity.gear_id}`,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      if (gearRes.ok) {
+        const gear = await gearRes.json();
+        const stravaDistanceKm = gear.distance / 1000;
+
+        const { data: ridesSum } = await (supabase as any)
+          .from('rides')
+          .select('distance_km')
+          .eq('bike_id', bikeId)
+          .eq('is_indoor', false);
+
+        const localRidesKm = ridesSum?.reduce(
+          (sum: number, r: any) => sum + Number(r.distance_km),
+          0
+        ) ?? 0;
+
+        const newOffset = Math.max(stravaDistanceKm - localRidesKm, 0);
+
+        await (supabase as any)
+          .from('bikes')
+          .update({ distance_offset_km: parseFloat(newOffset.toFixed(2)) })
+          .eq('id', bikeId);
+      }
+    }
+
     return NextResponse.json({ received: true });
   } catch {
     return NextResponse.json({ received: true });

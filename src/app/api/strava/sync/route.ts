@@ -140,6 +140,51 @@ export async function POST() {
       }
     }
 
+    // Recalculate distance_offset_km for Strava-linked bikes
+    // offset = strava_gear_distance - SUM(local rides)
+    // This prevents double-counting when bikes were imported with full Strava distance
+    const athleteRes = await fetch('https://www.strava.com/api/v3/athlete', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    if (athleteRes.ok) {
+      const athlete = await athleteRes.json();
+      const gearList = [...(athlete.bikes ?? [])];
+
+      for (const gear of gearList) {
+        const stravaDistanceKm = gear.distance / 1000;
+        const { data: bike } = await adminDb
+          .from('bikes')
+          .select('id')
+          .eq('strava_gear_id', gear.id)
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (bike) {
+          const { data: ridesSum } = await adminDb
+            .from('rides')
+            .select('distance_km')
+            .eq('bike_id', bike.id)
+            .eq('is_indoor', false);
+
+          const localRidesKm = ridesSum?.reduce(
+            (sum: number, r: any) => sum + Number(r.distance_km),
+            0
+          ) ?? 0;
+
+          const newOffset = Math.max(stravaDistanceKm - localRidesKm, 0);
+
+          await (adminDb as any)
+            .from('bikes')
+            .update({ distance_offset_km: parseFloat(newOffset.toFixed(2)) })
+            .eq('id', bike.id);
+
+          // Trigger recalculation
+          await adminDb.rpc('recalculate_bike_distance', { bike_id_input: bike.id });
+        }
+      }
+    }
+
     // Update last sync time
     await adminDb
       .from('strava_connections')
