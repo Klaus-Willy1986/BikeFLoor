@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Topbar } from '@/components/layout/topbar';
 import { MobileNav } from '@/components/layout/mobile-nav';
+import { FeedbackButton } from '@/components/shared/feedback-button';
 
 export default async function AppLayout({
   children,
@@ -33,6 +34,7 @@ export default async function AppLayout({
           {children}
         </main>
         <MobileNav />
+        <FeedbackButton />
       </div>
     </div>
   );

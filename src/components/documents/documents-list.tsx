@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useDocuments, useUploadDocument, useDeleteDocument } from '@/hooks/use-documents';
 import { EmptyState } from '@/components/shared/empty-state';
@@ -12,6 +12,34 @@ import { DOCUMENT_TYPES } from '@/lib/constants';
 import { Upload, FileText, Trash2, Download, File } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
+
+function DocumentThumbnail({ filePath, fileType }: { filePath: string; fileType: string }) {
+  const [url, setUrl] = useState<string | null>(null);
+  const isImage = fileType.startsWith('image/');
+
+  useEffect(() => {
+    if (!isImage) return;
+    const supabase = createClient();
+    supabase.storage
+      .from('documents')
+      .createSignedUrl(filePath, 300) // 5 min
+      .then(({ data }) => {
+        if (data?.signedUrl) setUrl(data.signedUrl);
+      });
+  }, [filePath, isImage]);
+
+  if (!isImage || !url) {
+    return <File className="h-5 w-5 shrink-0 text-muted-foreground" />;
+  }
+
+  return (
+    <img
+      src={url}
+      alt=""
+      className="h-10 w-10 shrink-0 rounded object-cover"
+    />
+  );
+}
 
 interface DocumentsListProps {
   bikeId?: string;
@@ -37,8 +65,8 @@ export function DocumentsList({ bikeId }: DocumentsListProps) {
         documentType: docType,
       });
       toast.success(t('common.upload'));
-    } catch {
-      toast.error(t('auth.errors.generic'));
+    } catch (err: any) {
+      toast.error(err?.message || t('auth.errors.generic'));
     }
 
     if (fileInputRef.current) {
@@ -65,8 +93,8 @@ export function DocumentsList({ bikeId }: DocumentsListProps) {
       await deleteDoc.mutateAsync(deleteTarget);
       toast.success(t('common.delete'));
       setDeleteTarget(null);
-    } catch {
-      toast.error(t('auth.errors.generic'));
+    } catch (err: any) {
+      toast.error(err?.message || t('auth.errors.generic'));
     }
   };
 
@@ -124,7 +152,7 @@ export function DocumentsList({ bikeId }: DocumentsListProps) {
           {documents.map((doc) => (
             <Card key={doc.id} className="border-border/50">
               <CardContent className="flex items-center gap-3 p-3">
-                <File className="h-5 w-5 shrink-0 text-muted-foreground" />
+                <DocumentThumbnail filePath={doc.file_path} fileType={doc.file_type} />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{doc.name}</p>
                   <p className="text-xs text-muted-foreground">

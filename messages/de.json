@@ -408,7 +408,18 @@
     "catalogSearch": "Teilekatalog",
     "catalogOpen": "Katalog durchsuchen",
     "catalogFilter": "Filtern...",
-    "catalogPlaceholder": "z.B. Shimano Ultegra Kette, GP 5000..."
+    "catalogPlaceholder": "z.B. Shimano Ultegra Kette, GP 5000...",
+    "fromInventory": "Aus Lager",
+    "installFromInventory": "Aus Lager einbauen"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "placeholder": "Was fällt dir auf? Was fehlt? Was nervt?",
+    "send": "Senden",
+    "cancel": "Abbrechen",
+    "sent": "Danke für dein Feedback!",
+    "error": "Feedback konnte nicht gesendet werden",
+    "page": "Seite"
   },
   "admin": {
     "title": "Admin",

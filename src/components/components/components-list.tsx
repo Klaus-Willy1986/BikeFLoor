@@ -11,9 +11,10 @@ import { ComponentFormDialog } from './component-form-dialog';
 import { ComponentDetailDialog } from './component-detail-dialog';
 import { RotationGroup } from './rotation-group';
 import { SwapDialog } from './swap-dialog';
+import { InstallFromInventoryDialog } from './install-from-inventory-dialog';
 import { Button } from '@/components/ui/button';
 import { BulkAddDialog } from './bulk-add-dialog';
-import { Plus, Cog, ListPlus } from 'lucide-react';
+import { Plus, Cog, ListPlus, Package } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ComponentsListProps {
@@ -27,6 +28,7 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
   const [formOpen, setFormOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [bulkOpen, setBulkOpen] = useState(false);
+  const [inventoryOpen, setInventoryOpen] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState<any>(null);
   const [swapComponent, setSwapComponent] = useState<{
     id: string;
@@ -61,6 +63,10 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
       {!bikeId && <PageHeader title={t('components.title')} />}
       {bikeId && (
         <div className="flex justify-end gap-2">
+          <Button size="sm" variant="outline" onClick={() => setInventoryOpen(true)}>
+            <Package className="mr-2 h-4 w-4" />
+            {t('lager.fromInventory')}
+          </Button>
           <Button size="sm" variant="outline" onClick={() => setBulkOpen(true)}>
             <ListPlus className="mr-2 h-4 w-4" />
             {t('components.bulkAdd.fromCatalog')}
@@ -111,6 +117,11 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
           <BulkAddDialog
             open={bulkOpen}
             onOpenChange={setBulkOpen}
+            bikeId={bikeId}
+          />
+          <InstallFromInventoryDialog
+            open={inventoryOpen}
+            onOpenChange={setInventoryOpen}
             bikeId={bikeId}
           />
         </>
@@ -171,11 +182,15 @@ function ComponentGrid({
     const singles: any[] = [];
 
     for (const [catId, comps] of byCategory) {
-      if (catId && comps.length > 1) {
+      const mounted = comps.filter((c) => c.rotation_status === 'mounted');
+      const pool = comps.filter((c) => c.rotation_status === 'ready' || c.rotation_status === 'needs_maintenance');
+
+      // Only show as rotation group when there's a mounted component AND pool components
+      if (catId && mounted.length > 0 && pool.length > 0) {
         const categoryKey = comps[0].component_categories?.key ?? 'other';
         rotationGroups.push({ categoryKey, categoryId: catId, components: comps });
       } else {
-        // Only show mounted/active components as singles
+        // Show mounted/active components as regular cards
         singles.push(...comps.filter((c) => c.rotation_status === 'mounted' || c.is_active));
       }
     }

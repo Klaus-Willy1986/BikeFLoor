@@ -684,6 +684,26 @@ export type Database = {
           },
         ];
       };
+      feedback: {
+        Row: {
+          id: string;
+          user_id: string;
+          page: string | null;
+          message: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          page?: string | null;
+          message: string;
+          created_at?: string;
+        };
+        Update: {
+          message?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {

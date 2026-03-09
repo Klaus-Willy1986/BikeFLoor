@@ -408,7 +408,18 @@
     "catalogSearch": "Parts Catalog",
     "catalogOpen": "Browse catalog",
     "catalogFilter": "Filter...",
-    "catalogPlaceholder": "e.g. Shimano Ultegra chain, GP 5000..."
+    "catalogPlaceholder": "e.g. Shimano Ultegra chain, GP 5000...",
+    "fromInventory": "From Inventory",
+    "installFromInventory": "Install from Inventory"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "placeholder": "What do you notice? What's missing? What's annoying?",
+    "send": "Send",
+    "cancel": "Cancel",
+    "sent": "Thanks for your feedback!",
+    "error": "Could not send feedback",
+    "page": "Page"
   },
   "admin": {
     "title": "Admin",

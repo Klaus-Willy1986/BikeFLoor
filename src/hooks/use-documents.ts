@@ -52,7 +52,10 @@ export function useUploadDocument() {
         .from('documents')
         .upload(filePath, file);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Document upload error:', uploadError);
+        throw uploadError;
+      }
 
       const { data: doc, error } = await supabase
         .from('documents')
