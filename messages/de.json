@@ -144,6 +144,7 @@
     "addComponent": "Komponente hinzufügen",
     "editComponent": "Komponente bearbeiten",
     "deleteComponent": "Komponente löschen",
+    "moveToInventory": "Ins Lager",
     "swapComponent": "Komponente tauschen",
     "deleteConfirm": "Möchtest du diese Komponente wirklich löschen?",
     "name": "Name",
@@ -200,6 +201,7 @@
     "noComponents": "Noch keine Komponenten",
     "swapTo": "Tauschen zu",
     "selectBike": "Fahrrad auswählen",
+    "selectCategory": "Kategorie wählen",
     "swapConfirm": "Komponente tauschen?",
     "bulkAdd": {
       "title": "Komponenten aus Katalog",
@@ -335,7 +337,10 @@
     "manualSyncOnly": "Nur manueller Sync",
     "registerWebhook": "Webhook registrieren",
     "webhookRegistered": "Webhook erfolgreich registriert",
-    "webhookError": "Webhook-Registrierung fehlgeschlagen"
+    "webhookError": "Webhook-Registrierung fehlgeschlagen",
+    "viewOnStrava": "Auf Strava ansehen",
+    "disconnectTitle": "Strava trennen?",
+    "disconnectConfirm": "Alle importierten Fahrten werden gelöscht."
   },
   "settings": {
     "title": "Einstellungen",
@@ -410,7 +415,11 @@
     "catalogFilter": "Filtern...",
     "catalogPlaceholder": "z.B. Shimano Ultegra Kette, GP 5000...",
     "fromInventory": "Aus Lager",
-    "installFromInventory": "Aus Lager einbauen"
+    "installFromInventory": "Aus Lager einbauen",
+    "moveToInventoryTitle": "Ins Lager verschieben",
+    "moveToInventoryConfirm": "Komponente wird vom Bike entfernt und als Ersatzteil ins Lager gelegt.",
+    "movedToInventory": "Ins Lager verschoben",
+    "installAs": "Einbauen als"
   },
   "feedback": {
     "title": "Feedback",

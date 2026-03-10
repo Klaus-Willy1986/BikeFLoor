@@ -43,6 +43,8 @@ import {
   Zap,
 } from 'lucide-react';
 import { ShopSettings } from './shop-settings';
+import { ConfirmDialog } from '@/components/shared/confirm-dialog';
+import { StravaBadge } from '@/components/shared/strava-badge';
 
 export function SettingsPage() {
   const t = useTranslations();
@@ -136,6 +138,7 @@ export function SettingsPage() {
     },
   });
 
+  const [disconnectOpen, setDisconnectOpen] = useState(false);
   const [exporting, setExporting] = useState(false);
   const handleExport = async () => {
     setExporting(true);
@@ -419,7 +422,7 @@ export function SettingsPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => disconnectStrava.mutate()}
+                    onClick={() => setDisconnectOpen(true)}
                     disabled={disconnectStrava.isPending}
                   >
                     <Unplug className="mr-2 h-4 w-4" />
@@ -563,6 +566,23 @@ export function SettingsPage() {
                   <div className="h-16 animate-pulse rounded-lg bg-muted" />
                 </div>
               )}
+              {/* Powered by Strava badge */}
+              <div className="border-t pt-4">
+                <StravaBadge />
+              </div>
+
+              <ConfirmDialog
+                open={disconnectOpen}
+                onOpenChange={setDisconnectOpen}
+                title={t('strava.disconnectTitle')}
+                description={t('strava.disconnectConfirm')}
+                onConfirm={() => {
+                  disconnectStrava.mutate(undefined, {
+                    onSuccess: () => setDisconnectOpen(false),
+                  });
+                }}
+                loading={disconnectStrava.isPending}
+              />
             </>
           ) : (
             <Button onClick={handleConnectStrava} className="bg-[#FC4C02] hover:bg-[#e04400]">

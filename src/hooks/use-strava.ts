@@ -31,6 +31,23 @@ export function useDisconnectStrava() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
+      // Delete all Strava-imported rides
+      const { error: ridesError } = await supabase
+        .from('rides')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('source', 'strava');
+      if (ridesError) throw ridesError;
+
+      // Clear strava_gear_id from all bikes
+      const { error: bikesError } = await (supabase as any)
+        .from('bikes')
+        .update({ strava_gear_id: null })
+        .eq('user_id', user.id)
+        .not('strava_gear_id', 'is', null);
+      if (bikesError) throw bikesError;
+
+      // Delete strava connection
       const { error } = await supabase
         .from('strava_connections')
         .delete()
@@ -40,6 +57,8 @@ export function useDisconnectStrava() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['strava-connection'] });
       queryClient.invalidateQueries({ queryKey: ['strava-gear'] });
+      queryClient.invalidateQueries({ queryKey: ['rides'] });
+      queryClient.invalidateQueries({ queryKey: ['bikes'] });
     },
   });
 }

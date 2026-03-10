@@ -24,8 +24,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Plus, Route } from 'lucide-react';
+import { Plus, Route, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
+import { StravaBadge } from '@/components/shared/strava-badge';
 
 export function RidesList() {
   const t = useTranslations();
@@ -121,11 +122,23 @@ export function RidesList() {
                     <h4 className="font-medium">
                       {ride.title || ride.bikes?.name || 'Ride'}
                     </h4>
-                    <Badge variant="secondary" className="text-xs">
-                      {ride.source === 'strava'
-                        ? t('rides.strava')
-                        : t('rides.manual')}
-                    </Badge>
+                    {ride.source === 'strava' && ride.strava_activity_id ? (
+                      <a
+                        href={`https://www.strava.com/activities/${ride.strava_activity_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 rounded-md bg-[#FC4C02]/10 px-2 py-0.5 text-xs font-medium text-[#FC4C02] hover:bg-[#FC4C02]/20 transition-colors"
+                      >
+                        Strava
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    ) : (
+                      <Badge variant="secondary" className="text-xs">
+                        {ride.source === 'strava'
+                          ? t('rides.strava')
+                          : t('rides.manual')}
+                      </Badge>
+                    )}
                   </div>
                   <p className="text-xs text-muted-foreground">
                     {new Date(ride.date).toLocaleDateString(
@@ -147,6 +160,9 @@ export function RidesList() {
               </CardContent>
             </Card>
           ))}
+          <div className="flex justify-end pt-2">
+            <StravaBadge />
+          </div>
         </div>
       )}
 

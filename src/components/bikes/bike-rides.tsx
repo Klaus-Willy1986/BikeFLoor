@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useRides } from '@/hooks/use-rides';
 import { Card, CardContent } from '@/components/ui/card';
 import { EmptyState } from '@/components/shared/empty-state';
-import { Mountain, Timer, Route } from 'lucide-react';
+import { Mountain, Timer, Route, ExternalLink } from 'lucide-react';
 
 export function BikeRides({ bikeId }: { bikeId: string }) {
   const t = useTranslations('rides');
@@ -50,7 +50,19 @@ export function BikeRides({ bikeId }: { bikeId: string }) {
                     )}
                   </span>
                   {ride.source === 'strava' && (
-                    <span className="text-[11px] text-[#FC4C02] font-medium">Strava</span>
+                    ride.strava_activity_id ? (
+                      <a
+                        href={`https://www.strava.com/activities/${ride.strava_activity_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-0.5 text-[11px] text-[#FC4C02] font-medium hover:underline"
+                      >
+                        Strava
+                        <ExternalLink className="h-2.5 w-2.5" />
+                      </a>
+                    ) : (
+                      <span className="text-[11px] text-[#FC4C02] font-medium">Strava</span>
+                    )
                   )}
                 </div>
               </div>

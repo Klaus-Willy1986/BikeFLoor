@@ -144,6 +144,7 @@
     "addComponent": "Add Component",
     "editComponent": "Edit Component",
     "deleteComponent": "Delete Component",
+    "moveToInventory": "To Inventory",
     "swapComponent": "Swap Component",
     "deleteConfirm": "Are you sure you want to delete this component?",
     "name": "Name",
@@ -200,6 +201,7 @@
     "noComponents": "No components yet",
     "swapTo": "Swap to",
     "selectBike": "Select bike",
+    "selectCategory": "Select category",
     "swapConfirm": "Swap component?",
     "bulkAdd": {
       "title": "Components from Catalog",
@@ -335,7 +337,10 @@
     "manualSyncOnly": "Manual sync only",
     "registerWebhook": "Register webhook",
     "webhookRegistered": "Webhook registered successfully",
-    "webhookError": "Webhook registration failed"
+    "webhookError": "Webhook registration failed",
+    "viewOnStrava": "View on Strava",
+    "disconnectTitle": "Disconnect Strava?",
+    "disconnectConfirm": "All imported rides will be deleted."
   },
   "settings": {
     "title": "Settings",
@@ -410,7 +415,11 @@
     "catalogFilter": "Filter...",
     "catalogPlaceholder": "e.g. Shimano Ultegra chain, GP 5000...",
     "fromInventory": "From Inventory",
-    "installFromInventory": "Install from Inventory"
+    "installFromInventory": "Install from Inventory",
+    "moveToInventoryTitle": "Move to Inventory",
+    "moveToInventoryConfirm": "Component will be removed from the bike and stored as a spare part in inventory.",
+    "movedToInventory": "Moved to inventory",
+    "installAs": "Install as"
   },
   "feedback": {
     "title": "Feedback",
