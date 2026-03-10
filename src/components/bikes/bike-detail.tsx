@@ -20,6 +20,7 @@ import { ServicesList } from '@/components/services/services-list';
 import { SetupForm } from '@/components/setup/setup-form';
 import { DocumentsList } from '@/components/documents/documents-list';
 import { BikeRides } from '@/components/bikes/bike-rides';
+import { BikeSchematic } from '@/components/bikes/bike-schematic';
 import { useRef } from 'react';
 import {
   MoreHorizontal,
@@ -290,6 +291,11 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
         </TabsList>
 
         <TabsContent value="overview" className="mt-4">
+          {bike.type === 'road' && (
+            <div className="mb-6">
+              <BikeSchematic bikeId={bikeId} />
+            </div>
+          )}
           <div className="grid gap-4 sm:grid-cols-3">
             <Card>
               <CardContent className="p-4">
