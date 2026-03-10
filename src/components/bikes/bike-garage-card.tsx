@@ -35,7 +35,7 @@ export function BikeGarageCard({ bike }: { bike: BikeRow }) {
 
   return (
     <Link href={`/bikes/${bike.id}`}>
-      <div className="group relative aspect-[4/3] overflow-hidden rounded-xl border bg-card cursor-pointer">
+      <div className="group relative aspect-[16/9] overflow-hidden rounded-xl border bg-card cursor-pointer">
         {/* Background */}
         {image ? (
           <Image
