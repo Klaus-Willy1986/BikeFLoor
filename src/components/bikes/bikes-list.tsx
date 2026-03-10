@@ -135,7 +135,7 @@ export function BikesList() {
           }
         />
       ) : view === 'garage' ? (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {bikes.map((bike) => (
             <BikeGarageCard key={bike.id} bike={bike} />
           ))}
