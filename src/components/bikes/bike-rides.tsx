@@ -5,6 +5,7 @@ import { useRides } from '@/hooks/use-rides';
 import { Card, CardContent } from '@/components/ui/card';
 import { EmptyState } from '@/components/shared/empty-state';
 import { Mountain, Timer, Route, ExternalLink } from 'lucide-react';
+import { StravaBadge } from '@/components/shared/strava-badge';
 
 export function BikeRides({ bikeId }: { bikeId: string }) {
   const t = useTranslations('rides');
@@ -89,6 +90,11 @@ export function BikeRides({ bikeId }: { bikeId: string }) {
           </CardContent>
         </Card>
       ))}
+      {rides.some((r) => r.source === 'strava') && (
+        <div className="flex justify-end pt-2">
+          <StravaBadge />
+        </div>
+      )}
     </div>
   );
 }
