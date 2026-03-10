@@ -460,6 +460,13 @@
       "cta": "Get started free",
       "features": "Explore features"
     },
+    "preview": {
+      "title": "See BikeFloor in action",
+      "subtitle": "Real screenshots from the app — no mockups, no placeholders.",
+      "garage": "Your Garage",
+      "components": "Wear at a glance",
+      "rides": "Strava Live Sync"
+    },
     "features": {
       "title": "Everything your workshop needs",
       "subtitle": "Six reasons why BikeFloor revolutionizes your bike management.",

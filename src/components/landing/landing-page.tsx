@@ -17,6 +17,7 @@ import {
   Images,
 } from 'lucide-react';
 import { PricingSection } from './pricing-section';
+import Image from 'next/image';
 
 export function LandingPage() {
   const t = useTranslations('landing');
@@ -91,6 +92,73 @@ export function LandingPage() {
               >
                 {t('hero.features')}
               </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── App Preview ── */}
+      <section className="relative bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+              {t('preview.title')}
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-base text-zinc-500">
+              {t('preview.subtitle')}
+            </p>
+          </div>
+
+          <div className="space-y-12">
+            {/* Garage */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="h-1 w-6 rounded-full bg-amber-500" />
+                <span className="text-sm font-semibold text-zinc-900">{t('preview.garage')}</span>
+              </div>
+              <div className="overflow-hidden rounded-xl border border-zinc-200 shadow-xl shadow-zinc-200/50">
+                <Image
+                  src="/screenshots/garage.png"
+                  alt="BikeFloor Garage"
+                  width={1920}
+                  height={1080}
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+
+            {/* Components + Rides side by side */}
+            <div className="grid gap-8 lg:grid-cols-2">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-1 w-6 rounded-full bg-amber-500" />
+                  <span className="text-sm font-semibold text-zinc-900">{t('preview.components')}</span>
+                </div>
+                <div className="overflow-hidden rounded-xl border border-zinc-200 shadow-xl shadow-zinc-200/50">
+                  <Image
+                    src="/screenshots/components.png"
+                    alt="Component Tracking"
+                    width={1920}
+                    height={1080}
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-1 w-6 rounded-full bg-[#FC4C02]" />
+                  <span className="text-sm font-semibold text-zinc-900">{t('preview.rides')}</span>
+                </div>
+                <div className="overflow-hidden rounded-xl border border-zinc-200 shadow-xl shadow-zinc-200/50">
+                  <Image
+                    src="/screenshots/Rides.png"
+                    alt="Strava Rides"
+                    width={1920}
+                    height={1080}
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
