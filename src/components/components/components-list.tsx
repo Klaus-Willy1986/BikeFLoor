@@ -223,8 +223,8 @@ function ComponentGrid({
         const categoryKey = comps[0].component_categories?.key ?? 'other';
         rotationGroups.push({ categoryKey, categoryId: catId, components: comps });
       } else {
-        // Show mounted/active components as regular cards
-        singles.push(...comps.filter((c) => c.rotation_status === 'mounted' || c.is_active));
+        // Show mounted/active/non-rotation components as regular cards
+        singles.push(...comps.filter((c) => c.rotation_status === 'mounted' || c.rotation_status === null || c.is_active));
       }
     }
 
