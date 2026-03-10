@@ -464,28 +464,28 @@
       "title": "Alles, was deine Werkstatt braucht",
       "subtitle": "Sechs Gründe, warum BikeFloor dein Bike-Management revolutioniert.",
       "tracking": {
-        "title": "Komponenten-Tracking",
-        "description": "Verfolge den km-basierten Verschleiß jeder einzelnen Komponente — von der Kette bis zum Reifen."
+        "title": "Verschleiß & Rotation",
+        "description": "Tracke den Verschleiß jeder Komponente. Rotiere Ketten im Pool-System und sieh die Vorhersage, wann der nächste Tausch fällig ist."
       },
       "maintenance": {
         "title": "Wartungsplanung",
-        "description": "Definiere Service-Intervalle und erhalte Erinnerungen, bevor etwas überfällig wird."
+        "description": "Definiere Intervalle nach km, Stunden oder Tagen. BikeFloor warnt dich rechtzeitig — nie wieder eine Inspektion verpassen."
       },
       "strava": {
-        "title": "Strava-Sync",
-        "description": "Verbinde Strava und importiere Fahrten automatisch — Kilometer zählen sich von selbst."
+        "title": "Strava Live-Sync",
+        "description": "Verbinde Strava und importiere Fahrten automatisch per Webhook. Kilometer zählen sich von selbst, Verschleiß wird live aktualisiert."
       },
       "inventory": {
-        "title": "Ersatzteillager",
-        "description": "Verwalte Ersatzteile und baue sie mit einem Klick an dein Bike ein."
+        "title": "Lager & Teilekatalog",
+        "description": "Ersatzteile im Lager verwalten und mit einem Klick ans Bike bauen. Über 150 Teile im Katalog zum schnellen Anlegen."
       },
       "workshop": {
-        "title": "Werkstatt-Anbindung",
-        "description": "Hinterlege deinen Händler und sende Reparatur-Anfragen direkt aus der App."
+        "title": "Lieblingsshops",
+        "description": "Speichere deine Werkstätten mit Kontaktdaten und sende Reparatur-Anfragen mit allen fälligen Wartungen direkt per E-Mail."
       },
       "multibike": {
-        "title": "Multi-Bike",
-        "description": "Rennrad, MTB, Gravel, Pendler — verwalte alle deine Räder an einem Ort."
+        "title": "Garage & Dokumente",
+        "description": "Alle Bikes in einer Garage mit Fotos. Rechnungen, Garantien und Anleitungen direkt am Bike ablegen."
       }
     },
     "steps": {

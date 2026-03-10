@@ -464,28 +464,28 @@
       "title": "Everything your workshop needs",
       "subtitle": "Six reasons why BikeFloor revolutionizes your bike management.",
       "tracking": {
-        "title": "Component Tracking",
-        "description": "Monitor km-based wear for every single component — from chain to tire."
+        "title": "Wear & Rotation",
+        "description": "Track wear on every component. Rotate chains in a pool system and see predictions for when the next swap is due."
       },
       "maintenance": {
         "title": "Maintenance Planning",
-        "description": "Define service intervals and get reminders before anything becomes overdue."
+        "description": "Set intervals by km, hours, or days. BikeFloor warns you in time — never miss a service again."
       },
       "strava": {
-        "title": "Strava Sync",
-        "description": "Connect Strava and import rides automatically — kilometers count themselves."
+        "title": "Strava Live Sync",
+        "description": "Connect Strava and import rides automatically via webhook. Kilometers count themselves, wear updates in real time."
       },
       "inventory": {
-        "title": "Parts Inventory",
-        "description": "Manage spare parts and install them on your bike with a single click."
+        "title": "Inventory & Parts Catalog",
+        "description": "Manage spare parts in your inventory and install them on your bike with one click. Over 150 parts in the catalog for quick setup."
       },
       "workshop": {
-        "title": "Workshop Connection",
-        "description": "Save your dealer and send repair requests directly from the app."
+        "title": "Favorite Shops",
+        "description": "Save your workshops with contact details and send repair requests with all due services directly via email."
       },
       "multibike": {
-        "title": "Multi-Bike",
-        "description": "Road, MTB, gravel, commuter — manage all your bikes in one place."
+        "title": "Garage & Documents",
+        "description": "All bikes in one garage with photos. Store invoices, warranties, and manuals right on the bike."
       }
     },
     "steps": {

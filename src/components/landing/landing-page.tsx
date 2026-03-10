@@ -2,11 +2,11 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import {
   Bike,
-  Wrench,
+  RefreshCw,
   CalendarCheck,
   Activity,
   Package,
-  Store,
+  ShoppingBag,
   ArrowRight,
   CheckCircle2,
   Mountain,
@@ -14,6 +14,7 @@ import {
   Building2,
   Timer,
   Sparkles,
+  Images,
 } from 'lucide-react';
 import { PricingSection } from './pricing-section';
 
@@ -110,7 +111,7 @@ export function LandingPage() {
 
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <FeatureCard
-              icon={<Wrench className="h-5 w-5" />}
+              icon={<RefreshCw className="h-5 w-5" />}
               title={t('features.tracking.title')}
               description={t('features.tracking.description')}
             />
@@ -130,12 +131,12 @@ export function LandingPage() {
               description={t('features.inventory.description')}
             />
             <FeatureCard
-              icon={<Store className="h-5 w-5" />}
+              icon={<ShoppingBag className="h-5 w-5" />}
               title={t('features.workshop.title')}
               description={t('features.workshop.description')}
             />
             <FeatureCard
-              icon={<Bike className="h-5 w-5" />}
+              icon={<Images className="h-5 w-5" />}
               title={t('features.multibike.title')}
               description={t('features.multibike.description')}
             />
