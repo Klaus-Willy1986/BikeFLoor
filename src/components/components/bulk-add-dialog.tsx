@@ -80,9 +80,8 @@ export function BulkAddDialog({ open, onOpenChange, bikeId }: BulkAddDialogProps
     return { components: items, source: 'defaults' as const };
   }, [bike]);
 
-  // Initialize all selected when components first load
+  // Initialize with nothing selected when components first load
   if (components.length > 0 && !initialized) {
-    setSelected(new Set(components.map((c) => c.id)));
     setInitialized(true);
   }
 
