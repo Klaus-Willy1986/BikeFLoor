@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { ComponentCard } from './component-card';
 import { RotationDialog } from './rotation-dialog';
 import { useMarkReady } from '@/hooks/use-components';
-import { RefreshCw, Check, Wrench } from 'lucide-react';
+import { RefreshCw, Check, Wrench, Package } from 'lucide-react';
 import { toast } from 'sonner';
 import type { RotationStatus } from '@/types';
 
@@ -19,6 +19,7 @@ interface RotationGroupProps {
   onComponentClick: (component: any) => void;
   onDelete: (id: string) => void;
   onSwap: (id: string, bikeId: string, name: string) => void;
+  onMoveToInventory: (component: any) => void;
 }
 
 export function RotationGroup({
@@ -28,6 +29,7 @@ export function RotationGroup({
   onComponentClick,
   onDelete,
   onSwap,
+  onMoveToInventory,
 }: RotationGroupProps) {
   const t = useTranslations('components');
   const tc = useTranslations('common');
@@ -78,6 +80,7 @@ export function RotationGroup({
               component={mountedComponent}
               onDelete={onDelete}
               onSwap={onSwap}
+              onMoveToInventory={onMoveToInventory}
               onClick={() => onComponentClick(mountedComponent)}
             />
           )}
@@ -127,6 +130,18 @@ export function RotationGroup({
                           {t('rotation.ready')}
                         </Button>
                       )}
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-7 px-2 text-xs text-muted-foreground"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onMoveToInventory(comp);
+                        }}
+                      >
+                        <Package className="mr-1 h-3 w-3" />
+                        {t('moveToInventory')}
+                      </Button>
                     </div>
                   </div>
                 );

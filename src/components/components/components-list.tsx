@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useComponents, useDeleteComponent } from '@/hooks/use-components';
+import { useMoveToInventory } from '@/hooks/use-inventory';
 import { PageHeader } from '@/components/shared/page-header';
 import { EmptyState } from '@/components/shared/empty-state';
 import { ConfirmDialog } from '@/components/shared/confirm-dialog';
@@ -25,8 +26,10 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
   const t = useTranslations();
   const { data: components, isLoading } = useComponents(bikeId);
   const deleteComponent = useDeleteComponent();
+  const moveToInventory = useMoveToInventory();
   const [formOpen, setFormOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [moveToInvComponent, setMoveToInvComponent] = useState<any>(null);
   const [bulkOpen, setBulkOpen] = useState(false);
   const [inventoryOpen, setInventoryOpen] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState<any>(null);
@@ -42,6 +45,24 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
       await deleteComponent.mutateAsync(deleteId);
       toast.success(t('common.delete'));
       setDeleteId(null);
+    } catch {
+      toast.error(t('auth.errors.generic'));
+    }
+  };
+
+  const handleMoveToInventory = async () => {
+    if (!moveToInvComponent) return;
+    try {
+      await moveToInventory.mutateAsync({
+        id: moveToInvComponent.id,
+        bike_id: moveToInvComponent.bike_id,
+        name: moveToInvComponent.name,
+        brand: moveToInvComponent.brand,
+        model: moveToInvComponent.model,
+        category_id: moveToInvComponent.category_id,
+      });
+      toast.success(t('lager.movedToInventory'));
+      setMoveToInvComponent(null);
     } catch {
       toast.error(t('auth.errors.generic'));
     }
@@ -104,6 +125,7 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
           onComponentClick={(c) => setSelectedComponent(c)}
           onDelete={(id) => setDeleteId(id)}
           onSwap={(id, bikeId, name) => setSwapComponent({ id, bikeId, name })}
+          onMoveToInventory={(c) => setMoveToInvComponent(c)}
         />
       )}
 
@@ -136,6 +158,15 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
         loading={deleteComponent.isPending}
       />
 
+      <ConfirmDialog
+        open={!!moveToInvComponent}
+        onOpenChange={(open) => !open && setMoveToInvComponent(null)}
+        title={t('lager.moveToInventoryTitle')}
+        description={t('lager.moveToInventoryConfirm')}
+        onConfirm={handleMoveToInventory}
+        loading={moveToInventory.isPending}
+      />
+
       {swapComponent && (
         <SwapDialog
           open={!!swapComponent}
@@ -162,12 +193,14 @@ function ComponentGrid({
   onComponentClick,
   onDelete,
   onSwap,
+  onMoveToInventory,
 }: {
   components: any[];
   bikeId?: string;
   onComponentClick: (c: any) => void;
   onDelete: (id: string) => void;
   onSwap: (id: string, bikeId: string, name: string) => void;
+  onMoveToInventory: (component: any) => void;
 }) {
   // Group by category_id
   const { rotationGroups, singles } = useMemo(() => {
@@ -210,6 +243,7 @@ function ComponentGrid({
           onComponentClick={onComponentClick}
           onDelete={onDelete}
           onSwap={onSwap}
+          onMoveToInventory={onMoveToInventory}
         />
       ))}
 
@@ -220,6 +254,7 @@ function ComponentGrid({
           component={component}
           onDelete={onDelete}
           onSwap={(id, bikeId, name) => onSwap(id, bikeId, name)}
+          onMoveToInventory={onMoveToInventory}
           onClick={() => onComponentClick(component)}
         />
       ))}

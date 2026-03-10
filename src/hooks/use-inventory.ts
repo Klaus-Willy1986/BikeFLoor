@@ -87,6 +87,72 @@ export function useDeleteInventoryItem() {
   });
 }
 
+export function useMoveToInventory() {
+  const supabase = createClient();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (component: {
+      id: string;
+      bike_id: string;
+      name: string;
+      brand: string | null;
+      model: string | null;
+      category_id: string | null;
+    }) => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      // Get bike distance for history
+      const { data: bike } = await supabase
+        .from('bikes')
+        .select('total_distance_km')
+        .eq('id', component.bike_id)
+        .single();
+
+      const bikeDistance = bike?.total_distance_km ?? 0;
+
+      // Create inventory item from component (no category — chosen at install time)
+      const { error: invError } = await (supabase as any)
+        .from('inventory_items')
+        .insert({
+          user_id: user.id,
+          name: component.name,
+          brand: component.brand,
+          model: component.model,
+          category_id: null,
+          quantity: 1,
+          suitable_bike_ids: [component.bike_id],
+        });
+
+      if (invError) throw invError;
+
+      // Log removal in history
+      await supabase.from('component_history').insert({
+        component_id: component.id,
+        from_bike_id: component.bike_id,
+        action: 'removed',
+        distance_at_action_km: bikeDistance,
+        notes: 'Moved to inventory',
+      });
+
+      // Delete the component
+      const { error: delError } = await supabase
+        .from('components')
+        .delete()
+        .eq('id', component.id);
+
+      if (delError) throw delError;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['inventory'] });
+      queryClient.invalidateQueries({ queryKey: ['components'] });
+    },
+  });
+}
+
 export function useInstallFromInventory() {
   const supabase = createClient();
   const queryClient = useQueryClient();

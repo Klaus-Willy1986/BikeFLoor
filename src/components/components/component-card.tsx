@@ -12,16 +12,17 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { WearIndicator, getWearInfo } from './wear-indicator';
 import { ComponentPredictionLine } from './component-prediction';
-import { MoreHorizontal, ArrowRightLeft, Trash2 } from 'lucide-react';
+import { MoreHorizontal, ArrowRightLeft, Trash2, Package } from 'lucide-react';
 
 interface ComponentCardProps {
   component: any;
   onDelete: (id: string) => void;
   onSwap: (id: string, bikeId: string, name: string) => void;
+  onMoveToInventory?: (component: any) => void;
   onClick?: () => void;
 }
 
-export function ComponentCard({ component, onDelete, onSwap, onClick }: ComponentCardProps) {
+export function ComponentCard({ component, onDelete, onSwap, onMoveToInventory, onClick }: ComponentCardProps) {
   const t = useTranslations('components');
   const wear = getWearInfo(
     Number(component.current_distance_km),
@@ -104,6 +105,17 @@ export function ComponentCard({ component, onDelete, onSwap, onClick }: Componen
               <ArrowRightLeft className="mr-2 h-4 w-4" />
               {t('swapComponent')}
             </DropdownMenuItem>
+            {onMoveToInventory && (
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onMoveToInventory(component);
+                }}
+              >
+                <Package className="mr-2 h-4 w-4" />
+                {t('moveToInventory')}
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem
               onClick={(e) => {
                 e.stopPropagation();
