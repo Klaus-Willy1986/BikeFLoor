@@ -59,7 +59,7 @@ export function ComponentWear() {
           </CardTitle>
           <Link
             href="/bikes"
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors shrink-0"
           >
             {t('viewAll')} →
           </Link>
@@ -82,18 +82,18 @@ export function ComponentWear() {
                 href={`/bikes/${comp.bike_id}`}
                 className="block rounded-lg border p-3 hover:bg-muted/30 transition-colors"
               >
-                <div className="flex items-center justify-between mb-1.5">
+                <div className="flex items-start justify-between gap-2 mb-1.5">
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium truncate">{comp.name}</p>
+                    <p className="text-sm font-medium leading-tight">{comp.name}</p>
                     <div className="flex items-center gap-1 mt-0.5">
-                      <Bike className="h-3 w-3 text-muted-foreground" />
+                      <Bike className="h-3 w-3 text-muted-foreground shrink-0" />
                       <span className="text-[11px] text-muted-foreground">
                         {(comp as any).bikes?.name}
                       </span>
                     </div>
                   </div>
                   <span className={cn(
-                    'text-xs font-medium',
+                    'text-xs font-semibold shrink-0 mt-0.5',
                     comp.wear >= WEAR_THRESHOLDS.critical ? 'text-destructive' :
                     comp.wear >= WEAR_THRESHOLDS.warning ? 'text-amber-600' :
                     'text-emerald-600'

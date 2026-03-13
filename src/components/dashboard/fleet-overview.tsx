@@ -67,10 +67,10 @@ export function FleetOverview({ bikes, rides, loading }: FleetOverviewProps) {
 
   if (loading) {
     return (
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <Card key={i}>
-            <CardContent className="p-5">
+            <CardContent className="p-4">
               <div className="h-4 w-20 animate-pulse rounded bg-muted" />
               <div className="mt-3 h-7 w-16 animate-pulse rounded bg-muted" />
             </CardContent>
@@ -81,23 +81,23 @@ export function FleetOverview({ bikes, rides, loading }: FleetOverviewProps) {
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       {stats.map((stat, i) => {
         const style = statStyles[i];
         const Icon = style.icon;
         return (
           <Link key={stat.label} href={stat.href}>
-            <Card className="hover:border-primary/30 hover:shadow-sm transition-all cursor-pointer">
-              <CardContent className="p-5">
+            <Card className="hover:border-primary/30 hover:shadow-sm transition-all cursor-pointer h-full">
+              <CardContent className="p-4">
                 <div className="flex items-center justify-between">
-                  <p className="text-[13px] font-medium text-muted-foreground">
+                  <p className="text-xs font-medium text-muted-foreground sm:text-[13px]">
                     {stat.label}
                   </p>
-                  <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${style.bg}`}>
-                    <Icon className={`h-[18px] w-[18px] ${style.text}`} />
+                  <div className={`flex h-8 w-8 items-center justify-center rounded-lg sm:h-9 sm:w-9 ${style.bg}`}>
+                    <Icon className={`h-4 w-4 sm:h-[18px] sm:w-[18px] ${style.text}`} />
                   </div>
                 </div>
-                <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight">
+                <p className="mt-1.5 text-xl font-bold tabular-nums tracking-tight sm:mt-2 sm:text-2xl">
                   {stat.value}
                 </p>
                 {stat.sub && (

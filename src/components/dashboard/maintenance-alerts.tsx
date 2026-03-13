@@ -133,7 +133,7 @@ export function MaintenanceAlerts() {
             </CardTitle>
             <Link
               href="/services"
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors shrink-0"
             >
               {t('viewAll')} →
             </Link>
