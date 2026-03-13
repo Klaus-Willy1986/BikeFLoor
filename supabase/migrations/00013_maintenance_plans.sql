@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS maintenance_execution_items (
 -- Auto-update updated_at on maintenance_plans
 CREATE TRIGGER update_maintenance_plans_updated_at
   BEFORE UPDATE ON maintenance_plans
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
 -- Indexes
 CREATE INDEX idx_maintenance_plans_user_id ON maintenance_plans(user_id);
