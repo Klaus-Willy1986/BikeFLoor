@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useComponentPrediction } from '@/hooks/use-component-prediction';
+import { SmartWearInsights } from './smart-wear-insights';
 import { TrendingUp, Calendar, Database } from 'lucide-react';
 
 interface ComponentPredictionProps {
@@ -10,6 +11,8 @@ interface ComponentPredictionProps {
   currentDistanceKm: number;
   maxDistanceKm: number | null;
   installedAt: string | null;
+  bikeType?: string | null;
+  categoryKey?: string | null;
 }
 
 export function ComponentPredictionDisplay({
@@ -18,6 +21,8 @@ export function ComponentPredictionDisplay({
   currentDistanceKm,
   maxDistanceKm,
   installedAt,
+  bikeType,
+  categoryKey,
 }: ComponentPredictionProps) {
   const t = useTranslations('components');
   const { data: prediction, isLoading } = useComponentPrediction(
@@ -25,7 +30,9 @@ export function ComponentPredictionDisplay({
     categoryId,
     currentDistanceKm,
     maxDistanceKm,
-    installedAt
+    installedAt,
+    bikeType,
+    categoryKey
   );
 
   if (isLoading) {
@@ -33,8 +40,19 @@ export function ComponentPredictionDisplay({
   }
 
   if (!prediction?.avgLifespanKm) {
+    // Still show insights even without a full prediction
+    if (prediction?.insights && prediction.insights.length > 0) {
+      return <SmartWearInsights insights={prediction.insights} bikeType={bikeType} />;
+    }
     return null;
   }
+
+  const sourceLabel =
+    prediction.source === 'history'
+      ? t('prediction.fromHistory', { count: prediction.dataPoints })
+      : prediction.source === 'bike_type_default'
+        ? t('smartWear.fromBikeType')
+        : t('prediction.fromMaxDistance');
 
   return (
     <div className="space-y-2.5">
@@ -81,12 +99,15 @@ export function ComponentPredictionDisplay({
             {t('prediction.basis')}
           </span>
           <span className="text-xs text-muted-foreground">
-            {prediction.source === 'history'
-              ? t('prediction.fromHistory', { count: prediction.dataPoints })
-              : t('prediction.fromMaxDistance')}
+            {sourceLabel}
           </span>
         </div>
       </div>
+
+      {/* Smart Insights */}
+      {prediction.insights.length > 0 && (
+        <SmartWearInsights insights={prediction.insights} bikeType={bikeType} />
+      )}
     </div>
   );
 }
@@ -100,14 +121,17 @@ export function ComponentPredictionLine({
   currentDistanceKm,
   maxDistanceKm,
   installedAt,
+  bikeType,
+  categoryKey,
 }: ComponentPredictionProps) {
-  const t = useTranslations('components');
   const { data: prediction } = useComponentPrediction(
     componentId,
     categoryId,
     currentDistanceKm,
     maxDistanceKm,
-    installedAt
+    installedAt,
+    bikeType,
+    categoryKey
   );
 
   if (!prediction?.remainingKm || prediction.remainingKm <= 0) return null;

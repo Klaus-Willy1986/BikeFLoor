@@ -25,12 +25,14 @@ interface ComponentDetailDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   component: any;
+  bikeType?: string | null;
 }
 
 export function ComponentDetailDialog({
   open,
   onOpenChange,
   component,
+  bikeType,
 }: ComponentDetailDialogProps) {
   const t = useTranslations('components');
   const tc = useTranslations('common');
@@ -266,6 +268,8 @@ export function ComponentDetailDialog({
             currentDistanceKm={Number(component.current_distance_km)}
             maxDistanceKm={component.max_distance_km}
             installedAt={component.installed_at}
+            bikeType={bikeType}
+            categoryKey={categoryKey}
           />
 
           <Separator />

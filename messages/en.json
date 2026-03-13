@@ -214,6 +214,14 @@
       "create": "Create {count} components",
       "success": "{count} components created"
     },
+    "smartWear": {
+      "title": "Smart Insights",
+      "historyAverage": "Your parts in this category last {km} km on average",
+      "elevationBrake": "High elevation profile ({value} m/km) — brakes wear faster",
+      "bikeTypeRecommendation": "Recommendation for {type}: {km} km",
+      "fromBikeType": "Bike type recommendation",
+      "recommendation": "Recommendation for this bike type: {km} km"
+    },
     "categories": {
       "chain": "Chain",
       "cassette": "Cassette",
@@ -263,6 +271,37 @@
       "hours": "Every X hours",
       "days": "Every X days"
     }
+  },
+  "maintenance": {
+    "checklists": "Maintenance Checklists",
+    "plans": "Checklist Templates",
+    "createPlan": "Create Checklist",
+    "planName": "Name",
+    "bikeType": "Bike Type",
+    "universal": "Universal",
+    "items": "items",
+    "addItem": "Add item...",
+    "noPlans": "No checklists yet",
+    "clone": "Copy",
+    "cloned": "Checklist copied",
+    "deletePlan": "Delete Checklist",
+    "deleteConfirm": "Are you sure you want to delete this checklist?",
+    "systemPlanHint": "System template — clone it to customize",
+    "startChecklist": "Start Checklist",
+    "selectPlan": "Select checklist",
+    "selectBikeFirst": "Select a bike first",
+    "started": "Checklist started",
+    "progress": "Progress",
+    "completeChecklist": "Complete Checklist",
+    "completeRequired": "Complete required items",
+    "requiredItemsHint": "All required items (★) must be checked",
+    "completed": "Checklist completed — service record created",
+    "history": "Executions",
+    "done": "Done",
+    "inProgress": "In progress",
+    "activeChecklists": "Active Checklists",
+    "noActiveChecklists": "No active checklists",
+    "continueChecklist": "Continue"
   },
   "setup": {
     "title": "Setup",

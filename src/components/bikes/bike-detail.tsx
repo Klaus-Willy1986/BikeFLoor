@@ -389,7 +389,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
         </TabsContent>
 
         <TabsContent value="components" className="mt-4">
-          <ComponentsList bikeId={bikeId} />
+          <ComponentsList bikeId={bikeId} bikeType={bike?.type} />
         </TabsContent>
 
         <TabsContent value="services" className="mt-4">

@@ -2,6 +2,13 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { createClient } from '@/lib/supabase/client';
+import { getRecommendedMaxDistance } from '@/lib/wear-defaults';
+
+export interface SmartInsight {
+  type: 'history_average' | 'elevation_brake' | 'bike_type_recommendation';
+  message: string;
+  value?: number;
+}
 
 export interface ComponentPrediction {
   avgLifespanKm: number | null;
@@ -9,7 +16,9 @@ export interface ComponentPrediction {
   estimatedDate: Date | null;
   kmPerMonth: number | null;
   dataPoints: number;
-  source: 'history' | 'max_distance';
+  source: 'history' | 'max_distance' | 'bike_type_default';
+  recommendedKm: number | null;
+  insights: SmartInsight[];
 }
 
 export function useComponentPrediction(
@@ -17,17 +26,31 @@ export function useComponentPrediction(
   categoryId: string | null,
   currentDistanceKm: number,
   maxDistanceKm: number | null,
-  installedAt: string | null
+  installedAt: string | null,
+  bikeType?: string | null,
+  categoryKey?: string | null
 ) {
   const supabase = createClient();
 
   return useQuery({
-    queryKey: ['component-prediction', componentId, categoryId],
+    queryKey: ['component-prediction', componentId, categoryId, bikeType],
     queryFn: async (): Promise<ComponentPrediction> => {
+      const insights: SmartInsight[] = [];
+
+      // Bike-type recommendation
+      const recommendedKm = getRecommendedMaxDistance(bikeType, categoryKey);
+      if (recommendedKm) {
+        insights.push({
+          type: 'bike_type_recommendation',
+          message: `bike_type_recommendation`,
+          value: recommendedKm,
+        });
+      }
+
       // 1. Get historical lifespans for same category
       let avgLifespan: number | null = null;
       let dataPoints = 0;
-      let source: 'history' | 'max_distance' = 'max_distance';
+      let source: 'history' | 'max_distance' | 'bike_type_default' = 'max_distance';
 
       if (categoryId) {
         // Find all components with the same category that were removed/swapped
@@ -91,13 +114,52 @@ export function useComponentPrediction(
         if (dataPoints >= 3) {
           avgLifespan = lifespans.reduce((a, b) => a + b, 0) / dataPoints;
           source = 'history';
+
+          // Add history insight
+          insights.push({
+            type: 'history_average',
+            message: 'history_average',
+            value: Math.round(avgLifespan),
+          });
         }
       }
 
-      // Fallback to max_distance_km
+      // Check elevation profile for brake wear insight
+      if (categoryKey && ['brake_pads', 'brake_rotors'].includes(categoryKey)) {
+        // Get rides with elevation data for this user
+        const { data: rides } = await supabase
+          .from('rides')
+          .select('distance_km, elevation_m')
+          .not('elevation_m', 'is', null)
+          .gt('distance_km', 0)
+          .order('date', { ascending: false })
+          .limit(50);
+
+        if (rides && rides.length >= 5) {
+          const totalDist = rides.reduce((s, r) => s + Number(r.distance_km), 0);
+          const totalElev = rides.reduce((s, r) => s + Number(r.elevation_m ?? 0), 0);
+          const elevPerKm = totalDist > 0 ? totalElev / totalDist : 0;
+
+          // High elevation profile = more brake wear (>15m/km is hilly)
+          if (elevPerKm > 15) {
+            insights.push({
+              type: 'elevation_brake',
+              message: 'elevation_brake',
+              value: Math.round(elevPerKm),
+            });
+          }
+        }
+      }
+
+      // Fallback to max_distance_km, then bike_type_default
       if (avgLifespan === null && maxDistanceKm && maxDistanceKm > 0) {
         avgLifespan = maxDistanceKm;
         source = 'max_distance';
+      }
+
+      if (avgLifespan === null && recommendedKm) {
+        avgLifespan = recommendedKm;
+        source = 'bike_type_default';
       }
 
       if (avgLifespan === null) {
@@ -108,6 +170,8 @@ export function useComponentPrediction(
           kmPerMonth: null,
           dataPoints,
           source,
+          recommendedKm,
+          insights,
         };
       }
 
@@ -142,6 +206,8 @@ export function useComponentPrediction(
         kmPerMonth,
         dataPoints,
         source,
+        recommendedKm,
+        insights,
       };
     },
     enabled: !!componentId,

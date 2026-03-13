@@ -214,6 +214,14 @@
       "create": "{count} Komponenten anlegen",
       "success": "{count} Komponenten angelegt"
     },
+    "smartWear": {
+      "title": "Smart Insights",
+      "historyAverage": "Deine Teile dieser Kategorie halten im Schnitt {km} km",
+      "elevationBrake": "Hohes Höhenprofil ({value} m/km) — Bremsen verschleißen schneller",
+      "bikeTypeRecommendation": "Empfehlung für {type}: {km} km",
+      "fromBikeType": "Bike-Typ-Empfehlung",
+      "recommendation": "Empfehlung für diesen Bike-Typ: {km} km"
+    },
     "categories": {
       "chain": "Kette",
       "cassette": "Kassette",
@@ -263,6 +271,37 @@
       "hours": "Alle X Stunden",
       "days": "Alle X Tage"
     }
+  },
+  "maintenance": {
+    "checklists": "Wartungs-Checklisten",
+    "plans": "Checklisten-Vorlagen",
+    "createPlan": "Checkliste erstellen",
+    "planName": "Name",
+    "bikeType": "Bike-Typ",
+    "universal": "Universal",
+    "items": "Punkte",
+    "addItem": "Punkt hinzufügen...",
+    "noPlans": "Keine Checklisten vorhanden",
+    "clone": "Kopieren",
+    "cloned": "Checkliste kopiert",
+    "deletePlan": "Checkliste löschen",
+    "deleteConfirm": "Möchtest du diese Checkliste wirklich löschen?",
+    "systemPlanHint": "System-Vorlage — kopiere sie, um sie anzupassen",
+    "startChecklist": "Checkliste starten",
+    "selectPlan": "Checkliste wählen",
+    "selectBikeFirst": "Wähle zuerst ein Fahrrad",
+    "started": "Checkliste gestartet",
+    "progress": "Fortschritt",
+    "completeChecklist": "Checkliste abschließen",
+    "completeRequired": "Pflichtpunkte abschließen",
+    "requiredItemsHint": "Alle Pflichtpunkte (★) müssen erledigt sein",
+    "completed": "Checkliste abgeschlossen — Wartungseintrag erstellt",
+    "history": "Durchführungen",
+    "done": "Erledigt",
+    "inProgress": "Läuft",
+    "activeChecklists": "Laufende Checklisten",
+    "noActiveChecklists": "Keine laufenden Checklisten",
+    "continueChecklist": "Fortsetzen"
   },
   "setup": {
     "title": "Setup",

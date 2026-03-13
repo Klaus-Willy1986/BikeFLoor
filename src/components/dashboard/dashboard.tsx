@@ -11,6 +11,7 @@ import { FleetOverview } from './fleet-overview';
 import { MaintenanceAlerts } from './maintenance-alerts';
 import { RecentRides } from './recent-rides';
 import { ComponentWear } from './component-wear';
+import { ActiveChecklists } from './active-checklists';
 
 export function Dashboard() {
   const t = useTranslations('dashboard');
@@ -43,6 +44,7 @@ export function Dashboard() {
         <MaintenanceAlerts />
         <ComponentWear />
       </div>
+      <ActiveChecklists />
       <RecentRides rides={rides ?? []} loading={ridesLoading} />
     </div>
   );

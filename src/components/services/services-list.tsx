@@ -11,11 +11,14 @@ import { ServiceIntervalDialog } from './service-interval-dialog';
 import { ServiceRecordDialog } from './service-record-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Plus, Wrench, Trash2, ClipboardPlus } from 'lucide-react';
+import { Plus, Wrench, Trash2, ClipboardPlus, ClipboardList } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
 import { de, enUS } from 'date-fns/locale';
 import { useLocale } from 'next-intl';
+import { StartChecklistDialog } from '@/components/maintenance/start-checklist-dialog';
+import { ExecutionDialog } from '@/components/maintenance/execution-dialog';
+import { ExecutionHistory } from '@/components/maintenance/execution-history';
 
 interface ServicesListProps {
   bikeId?: string;
@@ -30,6 +33,11 @@ export function ServicesList({ bikeId }: ServicesListProps) {
   const [intervalOpen, setIntervalOpen] = useState(false);
   const [recordOpen, setRecordOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [checklistOpen, setChecklistOpen] = useState(false);
+  const [activeExec, setActiveExec] = useState<{
+    id: string;
+    planName: string;
+  } | null>(null);
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -67,6 +75,10 @@ export function ServicesList({ bikeId }: ServicesListProps) {
           </h3>
           {bikeId && (
             <div className="flex gap-2">
+              <Button size="sm" variant="outline" onClick={() => setChecklistOpen(true)}>
+                <ClipboardList className="mr-2 h-4 w-4" />
+                {t('maintenance.startChecklist')}
+              </Button>
               <Button size="sm" variant="outline" onClick={() => setRecordOpen(true)}>
                 <ClipboardPlus className="mr-2 h-4 w-4" />
                 {t('services.addRecord')}
@@ -161,6 +173,9 @@ export function ServicesList({ bikeId }: ServicesListProps) {
         </div>
       )}
 
+      {/* Checklist Execution History */}
+      {bikeId && <ExecutionHistory bikeId={bikeId} />}
+
       {bikeId && (
         <>
           <ServiceIntervalDialog
@@ -173,6 +188,23 @@ export function ServicesList({ bikeId }: ServicesListProps) {
             onOpenChange={setRecordOpen}
             bikeId={bikeId}
           />
+          <StartChecklistDialog
+            open={checklistOpen}
+            onOpenChange={setChecklistOpen}
+            preselectedBikeId={bikeId}
+            onStarted={(id, name) => {
+              setActiveExec({ id, planName: name });
+            }}
+          />
+          {activeExec && (
+            <ExecutionDialog
+              open={!!activeExec}
+              onOpenChange={(open) => !open && setActiveExec(null)}
+              executionId={activeExec.id}
+              bikeId={bikeId}
+              planName={activeExec.planName}
+            />
+          )}
         </>
       )}
 

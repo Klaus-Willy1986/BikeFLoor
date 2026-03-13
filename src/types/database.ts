@@ -510,6 +510,8 @@ export type Database = {
           date: string;
           source: string;
           is_indoor: boolean;
+          sport_type: string | null;
+          average_speed_kmh: number | null;
           created_at: string;
         };
         Insert: {
@@ -524,6 +526,8 @@ export type Database = {
           date: string;
           source?: string;
           is_indoor?: boolean;
+          sport_type?: string | null;
+          average_speed_kmh?: number | null;
           created_at?: string;
         };
         Update: {
@@ -536,6 +540,8 @@ export type Database = {
           date?: string;
           source?: string;
           is_indoor?: boolean;
+          sport_type?: string | null;
+          average_speed_kmh?: number | null;
         };
         Relationships: [
           {
@@ -703,6 +709,192 @@ export type Database = {
           message?: string;
         };
         Relationships: [];
+      };
+      bike_type_wear_defaults: {
+        Row: {
+          id: string;
+          bike_type: string;
+          category_key: string;
+          max_distance_km: number;
+        };
+        Insert: {
+          id?: string;
+          bike_type: string;
+          category_key: string;
+          max_distance_km: number;
+        };
+        Update: {
+          bike_type?: string;
+          category_key?: string;
+          max_distance_km?: number;
+        };
+        Relationships: [];
+      };
+      maintenance_plans: {
+        Row: {
+          id: string;
+          user_id: string | null;
+          name: string;
+          description: string | null;
+          bike_type: string | null;
+          service_interval_id: string | null;
+          is_system: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id?: string | null;
+          name: string;
+          description?: string | null;
+          bike_type?: string | null;
+          service_interval_id?: string | null;
+          is_system?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          name?: string;
+          description?: string | null;
+          bike_type?: string | null;
+          service_interval_id?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'maintenance_plans_service_interval_id_fkey';
+            columns: ['service_interval_id'];
+            isOneToOne: false;
+            referencedRelation: 'service_intervals';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      maintenance_plan_items: {
+        Row: {
+          id: string;
+          plan_id: string;
+          title: string;
+          description: string | null;
+          sort_order: number;
+          is_required: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          plan_id: string;
+          title: string;
+          description?: string | null;
+          sort_order?: number;
+          is_required?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          title?: string;
+          description?: string | null;
+          sort_order?: number;
+          is_required?: boolean;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'maintenance_plan_items_plan_id_fkey';
+            columns: ['plan_id'];
+            isOneToOne: false;
+            referencedRelation: 'maintenance_plans';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      maintenance_executions: {
+        Row: {
+          id: string;
+          plan_id: string;
+          bike_id: string;
+          user_id: string;
+          service_record_id: string | null;
+          started_at: string;
+          completed_at: string | null;
+          notes: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          plan_id: string;
+          bike_id: string;
+          user_id: string;
+          service_record_id?: string | null;
+          started_at?: string;
+          completed_at?: string | null;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          service_record_id?: string | null;
+          completed_at?: string | null;
+          notes?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'maintenance_executions_plan_id_fkey';
+            columns: ['plan_id'];
+            isOneToOne: false;
+            referencedRelation: 'maintenance_plans';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'maintenance_executions_bike_id_fkey';
+            columns: ['bike_id'];
+            isOneToOne: false;
+            referencedRelation: 'bikes';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'maintenance_executions_service_record_id_fkey';
+            columns: ['service_record_id'];
+            isOneToOne: false;
+            referencedRelation: 'service_records';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      maintenance_execution_items: {
+        Row: {
+          id: string;
+          execution_id: string;
+          plan_item_id: string;
+          checked: boolean;
+          checked_at: string | null;
+          notes: string | null;
+        };
+        Insert: {
+          id?: string;
+          execution_id: string;
+          plan_item_id: string;
+          checked?: boolean;
+          checked_at?: string | null;
+          notes?: string | null;
+        };
+        Update: {
+          checked?: boolean;
+          checked_at?: string | null;
+          notes?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'maintenance_execution_items_execution_id_fkey';
+            columns: ['execution_id'];
+            isOneToOne: false;
+            referencedRelation: 'maintenance_executions';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'maintenance_execution_items_plan_item_id_fkey';
+            columns: ['plan_item_id'];
+            isOneToOne: false;
+            referencedRelation: 'maintenance_plan_items';
+            referencedColumns: ['id'];
+          },
+        ];
       };
     };
     Views: Record<string, never>;

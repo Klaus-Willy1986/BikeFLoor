@@ -7,14 +7,17 @@ import { createClient } from '@/lib/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, CheckCircle, Check, Bike } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Check, Bike, ClipboardList } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { ServiceRecordDialog } from '@/components/services/service-record-dialog';
+import { StartChecklistDialog } from '@/components/maintenance/start-checklist-dialog';
+import { ExecutionDialog } from '@/components/maintenance/execution-dialog';
 
 export function MaintenanceAlerts() {
   const t = useTranslations('dashboard');
+  const tm = useTranslations('maintenance');
   const queryClient = useQueryClient();
 
   const [recordDialog, setRecordDialog] = useState<{
@@ -22,6 +25,17 @@ export function MaintenanceAlerts() {
     bikeId: string;
     intervalId: string;
     title: string;
+  } | null>(null);
+
+  const [checklistDialog, setChecklistDialog] = useState<{
+    open: boolean;
+    bikeId: string;
+  } | null>(null);
+
+  const [activeExec, setActiveExec] = useState<{
+    id: string;
+    bikeId: string;
+    planName: string;
   } | null>(null);
 
   const { data: intervals, isLoading } = useQuery({
@@ -178,6 +192,20 @@ export function MaintenanceAlerts() {
                     <Button
                       variant="ghost"
                       size="sm"
+                      className="h-8 px-2 text-xs"
+                      onClick={() =>
+                        setChecklistDialog({
+                          open: true,
+                          bikeId: alert.bike_id,
+                        })
+                      }
+                      title={tm('startChecklist')}
+                    >
+                      <ClipboardList className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       className="h-8 px-2 text-xs text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50"
                       onClick={() => markDone.mutate(alert)}
                       disabled={markDone.isPending}
@@ -218,6 +246,32 @@ export function MaintenanceAlerts() {
           bikeId={recordDialog.bikeId}
           preselectedIntervalId={recordDialog.intervalId}
           preselectedTitle={recordDialog.title}
+        />
+      )}
+
+      {/* Start Checklist Dialog */}
+      {checklistDialog && (
+        <StartChecklistDialog
+          open={checklistDialog.open}
+          onOpenChange={(open) => {
+            if (!open) setChecklistDialog(null);
+          }}
+          preselectedBikeId={checklistDialog.bikeId}
+          onStarted={(id, name) => {
+            setChecklistDialog(null);
+            setActiveExec({ id, bikeId: checklistDialog.bikeId, planName: name });
+          }}
+        />
+      )}
+
+      {/* Active Execution Dialog */}
+      {activeExec && (
+        <ExecutionDialog
+          open={!!activeExec}
+          onOpenChange={(open) => !open && setActiveExec(null)}
+          executionId={activeExec.id}
+          bikeId={activeExec.bikeId}
+          planName={activeExec.planName}
         />
       )}
     </>

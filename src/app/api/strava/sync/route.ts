@@ -116,6 +116,10 @@ export async function POST() {
       }
 
       // Upsert ride
+      const avgSpeedKmh = activity.average_speed
+        ? parseFloat((activity.average_speed * 3.6).toFixed(2))
+        : null;
+
       const { error } = await adminDb.from('rides').upsert(
         {
           user_id: user.id,
@@ -128,6 +132,8 @@ export async function POST() {
           date: activity.start_date_local.split('T')[0],
           source: 'strava',
           is_indoor: isIndoor,
+          sport_type: activity.sport_type ?? null,
+          average_speed_kmh: avgSpeedKmh,
         },
         { onConflict: 'strava_activity_id' }
       );

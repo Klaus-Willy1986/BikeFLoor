@@ -23,18 +23,21 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { DEFAULT_ROTATION_THRESHOLDS } from '@/lib/constants';
+import { getRecommendedMaxDistance } from '@/lib/wear-defaults';
 import { toast } from 'sonner';
 
 interface ComponentFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   bikeId: string;
+  bikeType?: string | null;
 }
 
 export function ComponentFormDialog({
   open,
   onOpenChange,
   bikeId,
+  bikeType,
 }: ComponentFormDialogProps) {
   const t = useTranslations();
   const createComponent = useCreateComponent(bikeId);
@@ -65,14 +68,25 @@ export function ComponentFormDialog({
     }
   };
 
+  const selectedCategoryKey = categories?.find(
+    (c) => c.id === watch('category_id')
+  )?.key;
+  const bikeTypeRecommendation = getRecommendedMaxDistance(bikeType, selectedCategoryKey);
+
   const handleCategoryChange = (categoryId: string) => {
     setValue('category_id', categoryId);
     const cat = categories?.find((c) => c.id === categoryId);
     if (cat) {
       setValue('name', t(`components.categories.${cat.key}`));
-      if (cat.default_max_distance_km) {
+
+      // Prefer bike-type-specific default, then category default
+      const recommended = getRecommendedMaxDistance(bikeType, cat.key);
+      if (recommended) {
+        setValue('max_distance_km', recommended);
+      } else if (cat.default_max_distance_km) {
         setValue('max_distance_km', cat.default_max_distance_km);
       }
+
       // Auto-fill rotation threshold from defaults
       const threshold = DEFAULT_ROTATION_THRESHOLDS[cat.key];
       if (threshold) {
@@ -131,6 +145,13 @@ export function ComponentFormDialog({
                 type="number"
                 {...register('max_distance_km')}
               />
+              {bikeTypeRecommendation && (
+                <p className="text-[11px] text-muted-foreground">
+                  {t('components.smartWear.recommendation', {
+                    km: bikeTypeRecommendation.toLocaleString(),
+                  })}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="installed_at">{t('components.installedAt')}</Label>

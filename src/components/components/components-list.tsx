@@ -20,9 +20,10 @@ import { toast } from 'sonner';
 
 interface ComponentsListProps {
   bikeId?: string;
+  bikeType?: string | null;
 }
 
-export function ComponentsList({ bikeId }: ComponentsListProps) {
+export function ComponentsList({ bikeId, bikeType }: ComponentsListProps) {
   const t = useTranslations();
   const { data: components, isLoading } = useComponents(bikeId);
   const deleteComponent = useDeleteComponent();
@@ -135,6 +136,7 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
             open={formOpen}
             onOpenChange={setFormOpen}
             bikeId={bikeId}
+            bikeType={bikeType}
           />
           <BulkAddDialog
             open={bulkOpen}
@@ -181,6 +183,7 @@ export function ComponentsList({ bikeId }: ComponentsListProps) {
         open={!!selectedComponent}
         onOpenChange={(open) => !open && setSelectedComponent(null)}
         component={selectedComponent}
+        bikeType={bikeType}
       />
     </div>
   );
