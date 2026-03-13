@@ -9,11 +9,11 @@ import {
   ShoppingBag,
   ArrowRight,
   CheckCircle2,
+  Check,
   Mountain,
   TreePine,
   Building2,
   Timer,
-  Sparkles,
   Images,
 } from 'lucide-react';
 import { PricingSection } from './pricing-section';
@@ -51,7 +51,7 @@ export function LandingPage() {
       </nav>
 
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-[#0a0c12] pb-24 pt-20 sm:pb-32 sm:pt-28">
+      <section className="relative overflow-hidden bg-[#0a0c12] pb-8 pt-20 sm:pb-12 sm:pt-28">
         {/* Gradient glow effects */}
         <div className="absolute left-1/2 top-0 -translate-x-1/2">
           <div className="h-[500px] w-[800px] rounded-full bg-amber-500/[0.07] blur-[120px]" />
@@ -63,11 +63,11 @@ export function LandingPage() {
           <div className="h-[400px] w-[400px] rounded-full bg-amber-600/[0.04] blur-[100px]" />
         </div>
 
-        {/* Topographic pattern overlay */}
         <TopoPattern />
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-2xl">
+          {/* Centered text */}
+          <div className="mx-auto max-w-3xl text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
               {t('hero.badge')}
@@ -78,7 +78,7 @@ export function LandingPage() {
             <p className="mt-6 text-lg leading-relaxed text-zinc-400 sm:text-xl">
               {t('hero.subline')}
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link
                 href="/signup"
                 className="inline-flex items-center gap-2 rounded-lg bg-[#FC4C02] px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-[#FC4C02]/25 transition-all hover:bg-[#e54400] hover:shadow-[#FC4C02]/35"
@@ -94,78 +94,110 @@ export function LandingPage() {
               </a>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ── App Preview ── */}
-      <section className="relative bg-white py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
-              {t('preview.title')}
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base text-zinc-500">
-              {t('preview.subtitle')}
-            </p>
-          </div>
+          {/* App mockup */}
+          <div className="mt-16 sm:mt-20">
+            <div className="relative mx-auto max-w-5xl">
+              {/* Glow behind mockup */}
+              <div className="absolute -inset-x-8 -inset-y-4 rounded-3xl bg-gradient-to-b from-amber-500/20 via-orange-500/10 to-transparent blur-2xl" />
 
-          <div className="space-y-12">
-            {/* Garage */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <div className="h-1 w-6 rounded-full bg-amber-500" />
-                <span className="text-sm font-semibold text-zinc-900">{t('preview.garage')}</span>
-              </div>
-              <div className="overflow-hidden rounded-xl border border-zinc-200 shadow-xl shadow-zinc-200/50">
+              {/* Browser frame */}
+              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#1a1d27] shadow-2xl shadow-black/50">
+                <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-3">
+                  <div className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+                  <div className="h-3 w-3 rounded-full bg-[#febc2e]" />
+                  <div className="h-3 w-3 rounded-full bg-[#28c840]" />
+                  <div className="ml-4 flex-1 rounded-md bg-white/[0.06] px-3 py-1 text-center text-xs text-zinc-500">
+                    bikefloor.com
+                  </div>
+                </div>
                 <Image
                   src="/screenshots/garage.png"
                   alt="BikeFloor Garage"
                   width={1920}
                   height={1080}
                   className="w-full h-auto"
+                  priority
                 />
-              </div>
-            </div>
-
-            {/* Components + Rides side by side */}
-            <div className="grid gap-8 lg:grid-cols-2">
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="h-1 w-6 rounded-full bg-amber-500" />
-                  <span className="text-sm font-semibold text-zinc-900">{t('preview.components')}</span>
-                </div>
-                <div className="overflow-hidden rounded-xl border border-zinc-200 shadow-xl shadow-zinc-200/50">
-                  <Image
-                    src="/screenshots/components.png"
-                    alt="Component Tracking"
-                    width={1920}
-                    height={1080}
-                    className="w-full h-auto"
-                  />
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="h-1 w-6 rounded-full bg-[#FC4C02]" />
-                  <span className="text-sm font-semibold text-zinc-900">{t('preview.rides')}</span>
-                </div>
-                <div className="overflow-hidden rounded-xl border border-zinc-200 shadow-xl shadow-zinc-200/50">
-                  <Image
-                    src="/screenshots/Rides.png"
-                    alt="Strava Rides"
-                    width={1920}
-                    height={1080}
-                    className="w-full h-auto"
-                  />
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* ── Feature Showcases ── */}
+      <section id="features" className="scroll-mt-16 bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-24">
+          {/* Showcase 1: Components — text left, screenshot right */}
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
+                <RefreshCw className="h-4 w-4" />
+                {t('features.tracking.title')}
+              </div>
+              <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+                {t('showcase.components.title')}
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-zinc-500">
+                {t('showcase.components.description')}
+              </p>
+              <ul className="mt-6 space-y-3">
+                {(['bullet1', 'bullet2', 'bullet3'] as const).map((key) => (
+                  <li key={key} className="flex items-center gap-3 text-sm text-zinc-700">
+                    <Check className="h-5 w-5 flex-shrink-0 text-amber-500" />
+                    {t(`showcase.components.${key}`)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-zinc-200/80 shadow-xl shadow-zinc-200/50">
+              <Image
+                src="/screenshots/components.png"
+                alt="Component Tracking"
+                width={1920}
+                height={1080}
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
+
+          {/* Showcase 2: Strava — screenshot left, text right */}
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="overflow-hidden rounded-xl border border-zinc-200/80 shadow-xl shadow-zinc-200/50 lg:order-1">
+              <Image
+                src="/screenshots/Rides.png"
+                alt="Strava Rides"
+                width={1920}
+                height={1080}
+                className="w-full h-auto"
+              />
+            </div>
+            <div className="lg:order-2">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-sm font-medium text-[#FC4C02]">
+                <Activity className="h-4 w-4" />
+                {t('features.strava.title')}
+              </div>
+              <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+                {t('showcase.rides.title')}
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-zinc-500">
+                {t('showcase.rides.description')}
+              </p>
+              <ul className="mt-6 space-y-3">
+                {(['bullet1', 'bullet2', 'bullet3'] as const).map((key) => (
+                  <li key={key} className="flex items-center gap-3 text-sm text-zinc-700">
+                    <Check className="h-5 w-5 flex-shrink-0 text-[#FC4C02]" />
+                    {t(`showcase.rides.${key}`)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Feature Grid ── */}
-      <section id="features" className="relative scroll-mt-16 bg-[#f4f5f7] py-20 sm:py-24">
+      <section className="relative bg-[#f4f5f7] py-20 sm:py-24">
         <TopoPatternLight />
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center">
@@ -177,21 +209,11 @@ export function LandingPage() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <FeatureCard
-              icon={<RefreshCw className="h-5 w-5" />}
-              title={t('features.tracking.title')}
-              description={t('features.tracking.description')}
-            />
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             <FeatureCard
               icon={<CalendarCheck className="h-5 w-5" />}
               title={t('features.maintenance.title')}
               description={t('features.maintenance.description')}
-            />
-            <FeatureCard
-              icon={<Activity className="h-5 w-5" />}
-              title={t('features.strava.title')}
-              description={t('features.strava.description')}
             />
             <FeatureCard
               icon={<Package className="h-5 w-5" />}
@@ -225,7 +247,6 @@ export function LandingPage() {
           </div>
 
           <div className="relative mt-14">
-            {/* Connector line — desktop only */}
             <div className="absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent sm:block" />
 
             <div className="grid gap-10 sm:grid-cols-3">

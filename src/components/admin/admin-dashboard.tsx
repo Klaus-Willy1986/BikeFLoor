@@ -32,6 +32,8 @@ import {
   Crown,
   ExternalLink,
   Shield,
+  MessageSquare,
+  Trash2,
 } from 'lucide-react';
 
 type AdminBike = {
@@ -49,6 +51,15 @@ type AdminUser = {
   stripe_customer_id: string | null;
   created_at: string;
   bikes: AdminBike[];
+};
+
+type FeedbackItem = {
+  id: string;
+  user_id: string;
+  page: string | null;
+  message: string;
+  created_at: string;
+  user_name: string | null;
 };
 
 export function AdminDashboard() {
@@ -108,6 +119,45 @@ export function AdminDashboard() {
     },
     onError: () => {
       toast.error(t('updateError'));
+    },
+  });
+
+  const { data: feedback } = useQuery({
+    queryKey: ['admin-feedback'],
+    queryFn: async () => {
+      const { data: items, error } = await (supabase as any)
+        .from('feedback')
+        .select('id, user_id, page, message, created_at')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      // Map user_id → display_name from already-loaded users
+      const userMap = new Map<string, string>();
+      if (users) {
+        for (const u of users) {
+          userMap.set(u.id, u.display_name || u.id.slice(0, 8));
+        }
+      }
+
+      return (items ?? []).map((item: any) => ({
+        ...item,
+        user_name: userMap.get(item.user_id) || item.user_id.slice(0, 8),
+      })) as FeedbackItem[];
+    },
+    enabled: !!users,
+  });
+
+  const deleteFeedback = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await (supabase as any)
+        .from('feedback')
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-feedback'] });
     },
   });
 
@@ -295,6 +345,71 @@ export function AdminDashboard() {
               ))}
             </TableBody>
           </Table>
+        </CardContent>
+      </Card>
+
+      {/* Feedback */}
+      <Card className="border-border/50">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base flex items-center gap-2">
+            <MessageSquare className="h-4 w-4" />
+            {t('feedbackTitle')}
+            {feedback && feedback.length > 0 && (
+              <Badge variant="secondary" className="ml-auto text-xs">
+                {feedback.length}
+              </Badge>
+            )}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {!feedback || feedback.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-4 text-center">
+              {t('noFeedback')}
+            </p>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t('feedbackUser')}</TableHead>
+                  <TableHead>{t('feedbackPage')}</TableHead>
+                  <TableHead className="max-w-md">{t('feedbackMessage')}</TableHead>
+                  <TableHead>{t('feedbackDate')}</TableHead>
+                  <TableHead className="w-10" />
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {feedback.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="font-medium text-sm">
+                      {item.user_name}
+                    </TableCell>
+                    <TableCell className="text-xs text-muted-foreground font-mono">
+                      {item.page || '—'}
+                    </TableCell>
+                    <TableCell className="text-sm max-w-md">
+                      <p className="whitespace-pre-wrap break-words">
+                        {item.message}
+                      </p>
+                    </TableCell>
+                    <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
+                      {new Date(item.created_at).toLocaleDateString()}{' '}
+                      {new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-muted-foreground hover:text-destructive"
+                        onClick={() => deleteFeedback.mutate(item.id)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </div>
