@@ -50,7 +50,7 @@ export function Sidebar() {
   const isAdmin = profile?.role === 'admin';
 
   return (
-    <aside className="relative hidden lg:flex lg:flex-col lg:w-[240px] bg-sidebar text-sidebar-foreground overflow-hidden">
+    <aside className="relative hidden lg:flex lg:flex-col lg:w-[240px] shrink-0 bg-sidebar text-sidebar-foreground">
       {/* Topo Pattern */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="opacity-[0.15]">
