@@ -132,6 +132,8 @@
       "ebike": "E-Bike",
       "other": "Other"
     },
+    "cropImage": "Crop image",
+    "photoUploaded": "Photo uploaded",
     "tabs": {
       "overview": "Overview",
       "components": "Components",

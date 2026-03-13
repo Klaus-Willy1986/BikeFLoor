@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { useBike, useDeleteBike, useUploadBikePhoto } from '@/hooks/use-bikes';
 import { ConfirmDialog } from '@/components/shared/confirm-dialog';
+import { ImageCropDialog } from '@/components/bikes/image-crop-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -66,23 +67,35 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [repairOpen, setRepairOpen] = useState(false);
+  const [cropImage, setCropImage] = useState<string | null>(null);
 
   const bikeImage = useMemo(() => {
     if (!bike) return null;
     return resolveBikeImage(bike);
   }, [bike]);
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > 5 * 1024 * 1024) {
       toast.error('Max. 5 MB');
       return;
     }
-    uploadPhoto.mutate(file, {
-      onSuccess: () => toast.success('Foto hochgeladen'),
-      onError: (err: Error) => toast.error(`Upload fehlgeschlagen: ${err.message}`),
+    // Open crop dialog instead of direct upload
+    const objectUrl = URL.createObjectURL(file);
+    setCropImage(objectUrl);
+    // Reset input so the same file can be re-selected
+    e.target.value = '';
+  };
+
+  const handleCropComplete = (croppedFile: File) => {
+    uploadPhoto.mutate(croppedFile, {
+      onSuccess: () => toast.success(t('bikes.photoUploaded')),
+      onError: (err: Error) => toast.error(err.message),
     });
+    // Clean up object URL
+    if (cropImage) URL.revokeObjectURL(cropImage);
+    setCropImage(null);
   };
 
   if (isLoading) {
@@ -146,7 +159,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 className="hidden"
-                onChange={handlePhotoUpload}
+                onChange={handleFileSelect}
               />
             </div>
             <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
@@ -272,7 +285,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
               type="file"
               accept="image/jpeg,image/png,image/webp"
               className="hidden"
-              onChange={handlePhotoUpload}
+              onChange={handleFileSelect}
             />
           </div>
         )}
@@ -432,6 +445,20 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
           />
         );
       })()}
+
+      {cropImage && (
+        <ImageCropDialog
+          open={!!cropImage}
+          onOpenChange={(open) => {
+            if (!open) {
+              URL.revokeObjectURL(cropImage);
+              setCropImage(null);
+            }
+          }}
+          imageSrc={cropImage}
+          onCropComplete={handleCropComplete}
+        />
+      )}
     </div>
   );
 }

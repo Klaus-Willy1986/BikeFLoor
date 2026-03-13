@@ -50,9 +50,29 @@ export function Sidebar() {
   const isAdmin = profile?.role === 'admin';
 
   return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-[240px] bg-sidebar text-sidebar-foreground">
+    <aside className="relative hidden lg:flex lg:flex-col lg:w-[240px] bg-sidebar text-sidebar-foreground overflow-hidden">
+      {/* Topo Pattern */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="opacity-[0.15]">
+          <defs>
+            <filter id="topo-sidebar" x="0" y="0" width="100%" height="100%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+              <feTurbulence type="turbulence" baseFrequency="0.008 0.006" numOctaves="5" seed="8" stitchTiles="stitch" result="noise" />
+              <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+              <feComponentTransfer in="gray" result="bands">
+                <feFuncR type="discrete" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1" />
+                <feFuncG type="discrete" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1" />
+                <feFuncB type="discrete" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1" />
+              </feComponentTransfer>
+              <feMorphology operator="erode" radius="1" in="bands" result="thin" />
+              <feComposite operator="out" in="bands" in2="thin" result="edges" />
+            </filter>
+          </defs>
+          <rect width="100%" height="100%" filter="url(#topo-sidebar)" />
+        </svg>
+      </div>
+
       {/* Logo */}
-      <div className="flex h-16 items-center gap-3 px-5">
+      <div className="relative z-10 flex h-16 items-center gap-3 px-5">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sidebar-primary">
           <Bike className="h-5 w-5 text-sidebar-primary-foreground" />
         </div>
@@ -62,7 +82,7 @@ export function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 pt-2 space-y-0.5">
+      <nav className="relative z-10 flex-1 px-3 pt-2 space-y-0.5">
         {navItems.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -121,7 +141,7 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom */}
-      <div className="px-3 pb-4">
+      <div className="relative z-10 px-3 pb-4">
         <div className="rounded-lg bg-sidebar-accent px-3 py-3">
           <p className="text-[11px] font-medium text-sidebar-foreground/50">
             BikeFloor v0.1.0
