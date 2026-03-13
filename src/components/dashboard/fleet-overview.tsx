@@ -17,10 +17,10 @@ interface FleetOverviewProps {
 }
 
 const statStyles = [
-  { bg: 'bg-emerald-500/10', text: 'text-emerald-600', icon: Bike },
-  { bg: 'bg-blue-500/10', text: 'text-blue-600', icon: Route },
-  { bg: 'bg-amber-500/10', text: 'text-amber-600', icon: Wrench },
-  { bg: 'bg-violet-500/10', text: 'text-violet-600', icon: TrendingUp },
+  { bg: 'bg-emerald-500/10', text: 'text-emerald-600', accent: 'from-emerald-500 to-emerald-600', icon: Bike },
+  { bg: 'bg-blue-500/10', text: 'text-blue-600', accent: 'from-blue-500 to-blue-600', icon: Route },
+  { bg: 'bg-amber-500/10', text: 'text-amber-600', accent: 'from-amber-500 to-amber-600', icon: Wrench },
+  { bg: 'bg-violet-500/10', text: 'text-violet-600', accent: 'from-violet-500 to-violet-600', icon: TrendingUp },
 ];
 
 export function FleetOverview({ bikes, rides, loading }: FleetOverviewProps) {
@@ -87,13 +87,14 @@ export function FleetOverview({ bikes, rides, loading }: FleetOverviewProps) {
         const Icon = style.icon;
         return (
           <Link key={stat.label} href={stat.href}>
-            <Card className="hover:border-primary/30 hover:shadow-sm transition-all cursor-pointer h-full">
-              <CardContent className="p-4">
+            <Card className="group relative overflow-hidden hover:shadow-md transition-all cursor-pointer h-full border-0 card-elevated">
+              <div className={`absolute top-0 left-0 h-full w-1 bg-gradient-to-b ${style.accent}`} />
+              <CardContent className="p-4 pl-5">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-medium text-muted-foreground sm:text-[13px]">
                     {stat.label}
                   </p>
-                  <div className={`flex h-8 w-8 items-center justify-center rounded-lg sm:h-9 sm:w-9 ${style.bg}`}>
+                  <div className={`flex h-8 w-8 items-center justify-center rounded-lg sm:h-9 sm:w-9 ${style.bg} transition-colors group-hover:scale-105`}>
                     <Icon className={`h-4 w-4 sm:h-[18px] sm:w-[18px] ${style.text}`} />
                   </div>
                 </div>

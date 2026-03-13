@@ -280,14 +280,16 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
 
       {/* ─── TABS ─── */}
       <Tabs defaultValue="overview">
-        <TabsList>
-          <TabsTrigger value="overview">{t('bikes.tabs.overview')}</TabsTrigger>
-          <TabsTrigger value="components">{t('bikes.tabs.components')}</TabsTrigger>
-          <TabsTrigger value="services">{t('bikes.tabs.services')}</TabsTrigger>
-          <TabsTrigger value="rides">{t('bikes.tabs.rides')}</TabsTrigger>
-          <TabsTrigger value="setup">{t('bikes.tabs.setup')}</TabsTrigger>
-          <TabsTrigger value="documents">{t('bikes.tabs.documents')}</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <TabsList className="w-max sm:w-auto">
+            <TabsTrigger value="overview">{t('bikes.tabs.overview')}</TabsTrigger>
+            <TabsTrigger value="components">{t('bikes.tabs.components')}</TabsTrigger>
+            <TabsTrigger value="services">{t('bikes.tabs.services')}</TabsTrigger>
+            <TabsTrigger value="rides">{t('bikes.tabs.rides')}</TabsTrigger>
+            <TabsTrigger value="setup">{t('bikes.tabs.setup')}</TabsTrigger>
+            <TabsTrigger value="documents">{t('bikes.tabs.documents')}</TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="overview" className="mt-4">
           <div className="grid gap-4 sm:grid-cols-3">

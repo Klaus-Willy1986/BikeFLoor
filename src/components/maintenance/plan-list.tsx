@@ -63,7 +63,7 @@ export function PlanList() {
   return (
     <div className="space-y-4">
       {/* Header with filter + add */}
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <ClipboardList className="h-4 w-4 text-muted-foreground" />
           <h3 className="text-sm font-semibold">{t('maintenance.plans')}</h3>
@@ -73,7 +73,7 @@ export function PlanList() {
             value={bikeTypeFilter ?? 'all'}
             onValueChange={(v) => setBikeTypeFilter(v === 'all' ? null : v)}
           >
-            <SelectTrigger className="h-8 w-[140px] text-xs">
+            <SelectTrigger className="h-8 w-[110px] text-xs">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -86,8 +86,8 @@ export function PlanList() {
             </SelectContent>
           </Select>
           <Button size="sm" onClick={() => setFormOpen(true)}>
-            <Plus className="mr-1.5 h-3.5 w-3.5" />
-            {t('maintenance.createPlan')}
+            <Plus className="h-3.5 w-3.5 sm:mr-1.5" />
+            <span className="hidden sm:inline">{t('maintenance.createPlan')}</span>
           </Button>
         </div>
       </div>

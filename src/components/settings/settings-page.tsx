@@ -391,16 +391,15 @@ export function SettingsPage() {
           {stravaConnection ? (
             <>
               {/* Connection status + actions */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
                   <Badge className="bg-[#FC4C02] text-white">Strava</Badge>
                   <span className="text-sm text-muted-foreground">
                     {t('strava.connected')}
                   </span>
                   {stravaConnection.last_sync_at && (
                     <span className="text-xs text-muted-foreground">
-                      · Letzter Sync:{' '}
-                      {new Date(stravaConnection.last_sync_at).toLocaleDateString('de-DE', {
+                      · {new Date(stravaConnection.last_sync_at).toLocaleDateString('de-DE', {
                         day: '2-digit',
                         month: '2-digit',
                         hour: '2-digit',
@@ -409,7 +408,7 @@ export function SettingsPage() {
                     </span>
                   )}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button
                     variant="outline"
                     size="sm"
@@ -417,7 +416,7 @@ export function SettingsPage() {
                     disabled={syncStrava.isPending}
                   >
                     <RefreshCw className={`mr-2 h-4 w-4 ${syncStrava.isPending ? 'animate-spin' : ''}`} />
-                    {syncStrava.isPending ? 'Synchronisiere...' : 'Sync'}
+                    {syncStrava.isPending ? '...' : 'Sync'}
                   </Button>
                   <Button
                     variant="outline"
@@ -476,25 +475,27 @@ export function SettingsPage() {
                       return (
                         <div
                           key={stravaBike.id}
-                          className="flex items-center gap-3 rounded-lg border px-3 py-2.5"
+                          className="rounded-lg border px-3 py-2.5 space-y-2"
                         >
                           {/* Strava bike info */}
-                          <div className="flex items-center gap-2 min-w-0 flex-1">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#FC4C02]/10">
+                          <div className="flex items-center gap-2">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#FC4C02]/10 shrink-0">
                               <Bike className="h-4 w-4 text-[#FC4C02]" />
                             </div>
-                            <div className="min-w-0">
+                            <div className="min-w-0 flex-1">
                               <p className="text-sm font-medium truncate">{stravaBike.name}</p>
                               <p className="text-[11px] text-muted-foreground">
                                 {stravaBike.distance_km.toLocaleString()} km auf Strava
                               </p>
                             </div>
+                            {mappedBikeId && (
+                              <Check className="h-4 w-4 text-emerald-500 shrink-0" />
+                            )}
                           </div>
 
-                          <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
-
-                          {/* Local bike selector or import */}
-                          <div className="flex items-center gap-2 flex-1">
+                          {/* Local bike selector */}
+                          <div className="flex items-center gap-2">
+                            <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                             <Select
                               value={mappedBikeId ?? '__none__'}
                               onValueChange={(v) => {
@@ -505,7 +506,7 @@ export function SettingsPage() {
                                 }
                               }}
                             >
-                              <SelectTrigger className="h-9">
+                              <SelectTrigger className="h-9 flex-1">
                                 <SelectValue placeholder="Nicht verknüpft" />
                               </SelectTrigger>
                               <SelectContent>
@@ -537,15 +538,10 @@ export function SettingsPage() {
                                 }}
                               >
                                 <Import className="h-3.5 w-3.5" />
-                                Importieren
+                                Import
                               </Button>
                             )}
                           </div>
-
-                          {/* Status */}
-                          {mappedBikeId && (
-                            <Check className="h-4 w-4 text-emerald-500 shrink-0" />
-                          )}
                         </div>
                       );
                     })}

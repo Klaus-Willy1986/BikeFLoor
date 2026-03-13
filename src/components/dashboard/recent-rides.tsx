@@ -22,7 +22,7 @@ export function RecentRides({ rides, loading }: RecentRidesProps) {
   };
 
   return (
-    <Card className="border-border/50">
+    <Card className="border-0 card-elevated">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base flex items-center gap-2">
