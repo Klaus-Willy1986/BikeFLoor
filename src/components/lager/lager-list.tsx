@@ -98,10 +98,10 @@ export function LagerList() {
               <CardContent className="p-4">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1.5 min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-sm font-semibold truncate">{item.name}</h3>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <h3 className="text-sm font-semibold">{item.name}</h3>
                       {getCategoryLabel(item.category_id) && (
-                        <Badge variant="secondary" className="text-[10px] shrink-0">
+                        <Badge variant="secondary" className="text-[10px]">
                           {getCategoryLabel(item.category_id)}
                         </Badge>
                       )}

@@ -41,7 +41,8 @@
     "lager": "Inventory",
     "rides": "Rides",
     "settings": "Settings",
-    "admin": "Admin"
+    "admin": "Admin",
+    "more": "More"
   },
   "auth": {
     "login": "Log in",

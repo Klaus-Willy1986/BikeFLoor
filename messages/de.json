@@ -41,7 +41,8 @@
     "lager": "Lager",
     "rides": "Fahrten",
     "settings": "Einstellungen",
-    "admin": "Admin"
+    "admin": "Admin",
+    "more": "Mehr"
   },
   "auth": {
     "login": "Anmelden",
