@@ -112,10 +112,18 @@ export function MaintenanceAlerts() {
     <>
       <Card className="border-border/50">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4" />
-            {t('maintenanceAlerts')}
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-base flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4" />
+              {t('maintenanceAlerts')}
+            </CardTitle>
+            <Link
+              href="/services"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {t('viewAll')} →
+            </Link>
+          </div>
         </CardHeader>
         <CardContent>
           {isLoading ? (

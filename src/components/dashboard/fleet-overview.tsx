@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { createClient } from '@/lib/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Bike, Route, Wrench, TrendingUp } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
 import type { Database } from '@/types/database';
 
 type BikeRow = Database['public']['Tables']['bikes']['Row'];
@@ -58,10 +59,10 @@ export function FleetOverview({ bikes, rides, loading }: FleetOverviewProps) {
     .reduce((sum, r) => sum + Number(r.distance_km), 0);
 
   const stats = [
-    { label: t('totalBikes'), value: String(bikes.length) },
-    { label: t('totalDistance'), value: `${Math.round(totalDistance).toLocaleString()} km` },
-    { label: t('servicesThisYear'), value: String(servicesThisYear), sub: totalCosts > 0 ? `${totalCosts.toFixed(0)} €` : undefined },
-    { label: t('thisMonth'), value: `${Math.round(distanceThisMonth).toLocaleString()} km` },
+    { label: t('totalBikes'), value: String(bikes.length), href: '/bikes' as const },
+    { label: t('totalDistance'), value: `${Math.round(totalDistance).toLocaleString()} km`, href: '/rides' as const },
+    { label: t('servicesThisYear'), value: String(servicesThisYear), sub: totalCosts > 0 ? `${totalCosts.toFixed(0)} €` : undefined, href: '/services' as const },
+    { label: t('thisMonth'), value: `${Math.round(distanceThisMonth).toLocaleString()} km`, href: '/rides' as const },
   ];
 
   if (loading) {
@@ -85,24 +86,26 @@ export function FleetOverview({ bikes, rides, loading }: FleetOverviewProps) {
         const style = statStyles[i];
         const Icon = style.icon;
         return (
-          <Card key={stat.label}>
-            <CardContent className="p-5">
-              <div className="flex items-center justify-between">
-                <p className="text-[13px] font-medium text-muted-foreground">
-                  {stat.label}
-                </p>
-                <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${style.bg}`}>
-                  <Icon className={`h-[18px] w-[18px] ${style.text}`} />
+          <Link key={stat.label} href={stat.href}>
+            <Card className="hover:border-primary/30 hover:shadow-sm transition-all cursor-pointer">
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between">
+                  <p className="text-[13px] font-medium text-muted-foreground">
+                    {stat.label}
+                  </p>
+                  <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${style.bg}`}>
+                    <Icon className={`h-[18px] w-[18px] ${style.text}`} />
+                  </div>
                 </div>
-              </div>
-              <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight">
-                {stat.value}
-              </p>
-              {stat.sub && (
-                <p className="text-xs text-muted-foreground mt-0.5">{stat.sub}</p>
-              )}
-            </CardContent>
-          </Card>
+                <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight">
+                  {stat.value}
+                </p>
+                {stat.sub && (
+                  <p className="text-xs text-muted-foreground mt-0.5">{stat.sub}</p>
+                )}
+              </CardContent>
+            </Card>
+          </Link>
         );
       })}
     </div>

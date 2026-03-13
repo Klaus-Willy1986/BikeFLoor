@@ -52,10 +52,18 @@ export function ComponentWear() {
   return (
     <Card className="border-border/50">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base flex items-center gap-2">
-          <Cog className="h-4 w-4" />
-          {t('componentWear')}
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-base flex items-center gap-2">
+            <Cog className="h-4 w-4" />
+            {t('componentWear')}
+          </CardTitle>
+          <Link
+            href="/bikes"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {t('viewAll')} →
+          </Link>
+        </div>
       </CardHeader>
       <CardContent>
         {isLoading ? (

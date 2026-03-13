@@ -24,10 +24,18 @@ export function RecentRides({ rides, loading }: RecentRidesProps) {
   return (
     <Card className="border-border/50">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base flex items-center gap-2">
-          <Route className="h-4 w-4" />
-          {t('recentRides')}
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-base flex items-center gap-2">
+            <Route className="h-4 w-4" />
+            {t('recentRides')}
+          </CardTitle>
+          <Link
+            href="/rides"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {t('viewAll')} →
+          </Link>
+        </div>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -41,9 +49,10 @@ export function RecentRides({ rides, loading }: RecentRidesProps) {
         ) : (
           <div className="space-y-2">
             {rides.slice(0, 5).map((ride) => (
-              <div
+              <Link
                 key={ride.id}
-                className="rounded-lg border p-3 hover:bg-muted/30 transition-colors"
+                href={ride.bike_id ? `/bikes/${ride.bike_id}` : '/rides'}
+                className="block rounded-lg border p-3 hover:bg-muted/30 transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <div className="min-w-0 flex-1">
@@ -58,13 +67,10 @@ export function RecentRides({ rides, loading }: RecentRidesProps) {
                         )}
                       </span>
                       {ride.bike_id && ride.bikes?.name && (
-                        <Link
-                          href={`/bikes/${ride.bike_id}`}
-                          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                        >
+                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
                           <Bike className="h-3 w-3" />
                           {ride.bikes.name}
-                        </Link>
+                        </span>
                       )}
                     </div>
                   </div>
@@ -88,7 +94,7 @@ export function RecentRides({ rides, loading }: RecentRidesProps) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
