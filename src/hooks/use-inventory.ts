@@ -3,6 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createClient } from '@/lib/supabase/client';
 import type { InventoryItemFormData } from '@/lib/validators/inventory';
+import { getRecommendedMaxDistance } from '@/lib/wear-defaults';
 
 export function useInventory() {
   const supabase = createClient();
@@ -177,15 +178,28 @@ export function useInstallFromInventory() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // Get bike's current distance
+      // Get bike's current distance + type for wear defaults
       const { data: bike } = await supabase
         .from('bikes')
-        .select('total_distance_km')
+        .select('total_distance_km, type')
         .eq('id', bikeId)
         .single();
 
       const today = new Date().toISOString().split('T')[0];
       const bikeDistance = bike?.total_distance_km ?? 0;
+
+      // Look up category key for wear default
+      let maxDistanceKm: number | null = null;
+      if (inventoryItem.category_id && bike?.type) {
+        const { data: cat } = await (supabase as any)
+          .from('component_categories')
+          .select('key')
+          .eq('id', inventoryItem.category_id)
+          .single();
+        if (cat?.key) {
+          maxDistanceKm = getRecommendedMaxDistance(bike.type, cat.key);
+        }
+      }
 
       // Create component on bike
       const { data: component, error: compError } = await supabase
@@ -200,6 +214,7 @@ export function useInstallFromInventory() {
           distance_at_install_km: bikeDistance,
           current_distance_km: 0,
           installed_at: today,
+          ...(maxDistanceKm ? { max_distance_km: maxDistanceKm } : {}),
         })
         .select()
         .single();

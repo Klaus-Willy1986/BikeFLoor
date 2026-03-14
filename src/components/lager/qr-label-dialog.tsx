@@ -1,10 +1,7 @@
 'use client';
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, Suspense, lazy } from 'react';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
-
-const QRCode = dynamic(() => import('react-qr-code'), { ssr: false });
 import {
   Dialog,
   DialogContent,
@@ -14,19 +11,22 @@ import {
 import { Button } from '@/components/ui/button';
 import { Printer, Download } from 'lucide-react';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const LazyQRCode = lazy(() =>
+  import('react-qr-code').then((mod) => ({ default: (mod as any).QRCode ?? mod.default }))
+) as any as React.ComponentType<{ value: string; size: number; level: string }>;
+
 interface QrLabelDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   item: { id: string; name: string; brand?: string | null; model?: string | null; quantity: number } | null;
 }
 
-export function QrLabelDialog({ open, onOpenChange, item }: QrLabelDialogProps) {
+function QrLabelContent({ item, onClose }: { item: NonNullable<QrLabelDialogProps['item']>; onClose: () => void }) {
   const t = useTranslations();
   const labelRef = useRef<HTMLDivElement>(null);
 
-  if (!item) return null;
-
-  const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/lager?item=${item.id}`;
+  const url = `${window.location.origin}/lager?item=${item.id}`;
 
   const handlePrint = () => {
     const printWindow = window.open('', '_blank');
@@ -81,39 +81,52 @@ export function QrLabelDialog({ open, onOpenChange, item }: QrLabelDialogProps) 
   }, [item.name]);
 
   return (
+    <>
+      <div
+        ref={labelRef}
+        className="label flex items-center gap-3 rounded-md border p-3"
+      >
+        <Suspense fallback={<div className="h-20 w-20 animate-pulse rounded bg-muted" />}>
+          <LazyQRCode value={url} size={80} level="M" />
+        </Suspense>
+        <div className="info min-w-0 space-y-0.5">
+          <p className="name truncate text-sm font-semibold">{item.name}</p>
+          {(item.brand || item.model) && (
+            <p className="meta truncate text-xs text-muted-foreground">
+              {[item.brand, item.model].filter(Boolean).join(' ')}
+            </p>
+          )}
+          <p className="meta text-xs text-muted-foreground">
+            {item.quantity}x
+          </p>
+        </div>
+      </div>
+
+      <div className="flex gap-2">
+        <Button onClick={handlePrint} className="flex-1">
+          <Printer className="mr-2 h-4 w-4" />
+          {t('lager.printLabel')}
+        </Button>
+        <Button variant="outline" onClick={handleDownload}>
+          <Download className="h-4 w-4" />
+        </Button>
+      </div>
+    </>
+  );
+}
+
+export function QrLabelDialog({ open, onOpenChange, item }: QrLabelDialogProps) {
+  const t = useTranslations();
+
+  return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-xs">
         <DialogHeader>
           <DialogTitle>{t('lager.qrLabel')}</DialogTitle>
         </DialogHeader>
-
-        <div
-          ref={labelRef}
-          className="label flex items-center gap-3 rounded-md border p-3"
-        >
-          <QRCode value={url} size={80} level="M" />
-          <div className="info min-w-0 space-y-0.5">
-            <p className="name truncate text-sm font-semibold">{item.name}</p>
-            {(item.brand || item.model) && (
-              <p className="meta truncate text-xs text-muted-foreground">
-                {[item.brand, item.model].filter(Boolean).join(' ')}
-              </p>
-            )}
-            <p className="meta text-xs text-muted-foreground">
-              {item.quantity}x
-            </p>
-          </div>
-        </div>
-
-        <div className="flex gap-2">
-          <Button onClick={handlePrint} className="flex-1">
-            <Printer className="mr-2 h-4 w-4" />
-            {t('lager.printLabel')}
-          </Button>
-          <Button variant="outline" onClick={handleDownload}>
-            <Download className="h-4 w-4" />
-          </Button>
-        </div>
+        {open && item && (
+          <QrLabelContent item={item} onClose={() => onOpenChange(false)} />
+        )}
       </DialogContent>
     </Dialog>
   );
