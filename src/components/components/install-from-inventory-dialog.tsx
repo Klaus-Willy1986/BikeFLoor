@@ -153,7 +153,7 @@ export function InstallFromInventoryDialog({
               <div
                 key={item.id}
                 className="flex items-center justify-between rounded-md border px-3 py-2.5 cursor-pointer hover:bg-muted/50 transition-colors"
-                onClick={() => setSelectedItem(item)}
+                onClick={() => { setSelectedItem(item); setCategoryId(item.category_id ?? ''); }}
               >
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium truncate">{item.name}</p>
