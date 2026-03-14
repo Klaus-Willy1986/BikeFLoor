@@ -153,7 +153,7 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[85dvh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {isEditing ? t('lager.editItem') : t('lager.addItem')}
