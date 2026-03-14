@@ -232,6 +232,10 @@ export const PARTS_CATALOG: CatalogPart[] = [
   { brand: 'Campagnolo', model: 'Chorus 12v 170mm', category_key: 'crankset', max_distance_km: 50000 },
   { brand: 'Rotor', model: 'ALDHU 170mm', category_key: 'crankset', max_distance_km: 50000 },
   { brand: 'Rotor', model: 'VEGAST 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Cannondale', model: 'HollowGram Si 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Cannondale', model: 'HollowGram SiSL2 172.5mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Cannondale', model: 'HollowGram BB30 83 MTB 170mm', category_key: 'crankset', max_distance_km: 40000 },
+  { brand: 'Cannondale', model: 'OPI SpideRing 34T', category_key: 'crankset', max_distance_km: 50000 },
 
   // ─── Sättel ────────────────────────────────
   { brand: 'Fizik', model: 'Antares Versus Evo R1', category_key: 'saddle' },

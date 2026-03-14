@@ -116,8 +116,8 @@ export function SetupForm({ bikeId }: { bikeId: string }) {
         <CardContent className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {numInput('tire_pressure_front', `${t('front')} ${t('pressure')}`, 'bar')}
           {numInput('tire_pressure_rear', `${t('rear')} ${t('pressure')}`, 'bar')}
-          {numInput('tire_width_front', `${t('front')} ${t('width')}`, 'mm')}
-          {numInput('tire_width_rear', `${t('rear')} ${t('width')}`, 'mm')}
+          {numInput('tire_width_front', `${t('front')} ${t('width')}`, bike?.type === 'mtb' ? t('inches') : 'mm')}
+          {numInput('tire_width_rear', `${t('rear')} ${t('width')}`, bike?.type === 'mtb' ? t('inches') : 'mm')}
         </CardContent>
       </Card>
 

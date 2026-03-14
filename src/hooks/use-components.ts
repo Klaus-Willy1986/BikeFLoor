@@ -306,8 +306,8 @@ export function useUpdateComponent() {
 
       if (error) throw error;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['components'] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['components'] });
     },
   });
 }
