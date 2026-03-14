@@ -2,7 +2,9 @@
 
 import { useRef, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import QRCode from 'react-qr-code';
+import dynamic from 'next/dynamic';
+
+const QRCode = dynamic(() => import('react-qr-code'), { ssr: false });
 import {
   Dialog,
   DialogContent,
