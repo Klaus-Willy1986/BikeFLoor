@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Search } from 'lucide-react';
+import { Search, ScanBarcode } from 'lucide-react';
+import { BarcodeScannerDialog } from './barcode-scanner-dialog';
 import { inventoryItemSchema, type InventoryItemFormData } from '@/lib/validators/inventory';
 import { useCreateInventoryItem, useUpdateInventoryItem } from '@/hooks/use-inventory';
 import { useComponentCategories } from '@/hooks/use-components';
@@ -72,6 +73,7 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
           price: item.price != null ? Number(item.price) : null,
           suitable_bike_ids: item.suitable_bike_ids ?? [],
           notes: item.notes,
+          ean_code: item.ean_code,
         });
       } else {
         reset({
@@ -84,6 +86,7 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
           price: null,
           suitable_bike_ids: [],
           notes: null,
+          ean_code: null,
         });
       }
     }
@@ -92,6 +95,7 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
   const [catalogCategoryKey, setCatalogCategoryKey] = useState<string | null>(null);
   const [catalogQuery, setCatalogQuery] = useState('');
   const [showCatalog, setShowCatalog] = useState(false);
+  const [scannerOpen, setScannerOpen] = useState(false);
 
   // Get grouped category keys from catalog (e.g. "tires" instead of "tires_front"/"tires_rear")
   const catalogCategoryKeys = getCatalogCategories();
@@ -161,28 +165,40 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label>{t('lager.catalogSearch')}</Label>
-                {!showCatalog ? (
+                <div className="flex gap-1.5">
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     className="h-7 text-xs"
-                    onClick={() => setShowCatalog(true)}
+                    onClick={() => setScannerOpen(true)}
                   >
-                    <Search className="mr-1 size-3" />
-                    {t('lager.catalogOpen')}
+                    <ScanBarcode className="mr-1 size-3" />
+                    {t('lager.scanBarcode')}
                   </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="h-7 text-xs"
-                    onClick={() => { setShowCatalog(false); setCatalogCategoryKey(null); setCatalogQuery(''); }}
-                  >
-                    {t('common.close')}
-                  </Button>
-                )}
+                  {!showCatalog ? (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="h-7 text-xs"
+                      onClick={() => setShowCatalog(true)}
+                    >
+                      <Search className="mr-1 size-3" />
+                      {t('lager.catalogOpen')}
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 text-xs"
+                      onClick={() => { setShowCatalog(false); setCatalogCategoryKey(null); setCatalogQuery(''); }}
+                    >
+                      {t('common.close')}
+                    </Button>
+                  )}
+                </div>
               </div>
 
               {showCatalog && (
@@ -349,6 +365,13 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
             </div>
           )}
 
+          {watch('ean_code') && (
+            <div className="space-y-2">
+              <Label htmlFor="inv-ean">{t('lager.eanCode')}</Label>
+              <Input id="inv-ean" {...register('ean_code')} readOnly className="bg-muted/50 text-xs" />
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="inv-notes">{t('common.notes')}</Label>
             <Textarea id="inv-notes" {...register('notes')} rows={2} />
@@ -363,6 +386,19 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
             </Button>
           </div>
         </form>
+
+        <BarcodeScannerDialog
+          open={scannerOpen}
+          onOpenChange={setScannerOpen}
+          onResult={(result) => {
+            setValue('ean_code', result.ean);
+            if (result.name && !watch('name')) setValue('name', result.name);
+            if (result.brand && !watch('brand')) setValue('brand', result.brand);
+            if (result.name) {
+              toast.success(t('lager.productFound'));
+            }
+          }}
+        />
       </DialogContent>
     </Dialog>
   );

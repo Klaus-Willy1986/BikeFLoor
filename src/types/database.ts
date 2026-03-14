@@ -602,6 +602,7 @@ export type Database = {
           price: number | null;
           suitable_bike_ids: string[];
           notes: string | null;
+          ean_code: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -617,6 +618,7 @@ export type Database = {
           price?: number | null;
           suitable_bike_ids?: string[];
           notes?: string | null;
+          ean_code?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -630,6 +632,7 @@ export type Database = {
           price?: number | null;
           suitable_bike_ids?: string[];
           notes?: string | null;
+          ean_code?: string | null;
           updated_at?: string;
         };
         Relationships: [

@@ -10,6 +10,7 @@ export const inventoryItemSchema = z.object({
   price: z.number().min(0).optional().nullable(),
   suitable_bike_ids: z.array(z.string().uuid()).optional(),
   notes: z.string().max(2000).optional().nullable(),
+  ean_code: z.string().max(20).optional().nullable(),
 });
 
 export type InventoryItemFormData = z.infer<typeof inventoryItemSchema>;

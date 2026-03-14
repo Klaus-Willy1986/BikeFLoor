@@ -467,7 +467,14 @@
     "moveToInventoryTitle": "Move to Inventory",
     "moveToInventoryConfirm": "Component will be removed from the bike and stored as a spare part in inventory.",
     "movedToInventory": "Moved to inventory",
-    "installAs": "Install as"
+    "installAs": "Install as",
+    "scanBarcode": "Scan Barcode",
+    "eanCode": "EAN Code",
+    "scanHint": "Hold the barcode in front of the camera",
+    "scanError": "Could not start camera",
+    "qrLabel": "QR Label",
+    "printLabel": "Print Label",
+    "productFound": "Product recognized"
   },
   "feedback": {
     "title": "Feedback",

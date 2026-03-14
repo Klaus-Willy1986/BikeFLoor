@@ -19,8 +19,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Plus, Package, MoreHorizontal, Pencil, Trash2, Wrench, ShoppingCart, Calendar } from 'lucide-react';
+import { Plus, Package, MoreHorizontal, Pencil, Trash2, Wrench, ShoppingCart, Calendar, QrCode } from 'lucide-react';
 import { toast } from 'sonner';
+import { QrLabelDialog } from './qr-label-dialog';
 
 export function LagerList() {
   const t = useTranslations();
@@ -33,6 +34,7 @@ export function LagerList() {
   const [editItem, setEditItem] = useState<any | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [installItem, setInstallItem] = useState<any | null>(null);
+  const [qrItem, setQrItem] = useState<any | null>(null);
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -150,6 +152,10 @@ export function LagerList() {
                         <Wrench className="mr-2 h-4 w-4" />
                         {t('lager.install')}
                       </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setQrItem(item)}>
+                        <QrCode className="mr-2 h-4 w-4" />
+                        {t('lager.qrLabel')}
+                      </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => { setEditItem(item); setFormOpen(true); }}>
                         <Pencil className="mr-2 h-4 w-4" />
                         {t('common.edit')}
@@ -180,6 +186,12 @@ export function LagerList() {
         open={!!installItem}
         onOpenChange={(open) => !open && setInstallItem(null)}
         item={installItem}
+      />
+
+      <QrLabelDialog
+        open={!!qrItem}
+        onOpenChange={(open) => !open && setQrItem(null)}
+        item={qrItem}
       />
 
       <ConfirmDialog

@@ -467,7 +467,14 @@
     "moveToInventoryTitle": "Ins Lager verschieben",
     "moveToInventoryConfirm": "Komponente wird vom Bike entfernt und als Ersatzteil ins Lager gelegt.",
     "movedToInventory": "Ins Lager verschoben",
-    "installAs": "Einbauen als"
+    "installAs": "Einbauen als",
+    "scanBarcode": "Barcode scannen",
+    "eanCode": "EAN-Code",
+    "scanHint": "Halte den Barcode vor die Kamera",
+    "scanError": "Kamera konnte nicht gestartet werden",
+    "qrLabel": "QR-Label",
+    "printLabel": "Label drucken",
+    "productFound": "Produkt erkannt"
   },
   "feedback": {
     "title": "Feedback",
