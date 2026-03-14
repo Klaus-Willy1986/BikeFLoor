@@ -212,6 +212,27 @@ export const PARTS_CATALOG: CatalogPart[] = [
   { brand: 'Crankbrothers', model: 'Candy 7', category_key: 'pedals' },
   { brand: 'Crankbrothers', model: 'Stamp 7', category_key: 'pedals' },
 
+  // ─── Kurbeln ───────────────────────────────
+  { brand: 'Shimano', model: 'FC-R9200 (Dura-Ace) 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Shimano', model: 'FC-R9200 (Dura-Ace) 172.5mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Shimano', model: 'FC-R8100 (Ultegra) 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Shimano', model: 'FC-R8100 (Ultegra) 172.5mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Shimano', model: 'FC-R7100 (105) 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Shimano', model: 'FC-M9100 (XTR) 170mm', category_key: 'crankset', max_distance_km: 40000 },
+  { brand: 'Shimano', model: 'FC-M8100 (XT) 170mm', category_key: 'crankset', max_distance_km: 40000 },
+  { brand: 'Shimano', model: 'FC-M7100 (SLX) 170mm', category_key: 'crankset', max_distance_km: 40000 },
+  { brand: 'SRAM', model: 'Red AXS DUB 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'SRAM', model: 'Force AXS DUB 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'SRAM', model: 'Force AXS DUB 172.5mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'SRAM', model: 'Rival AXS DUB 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'SRAM', model: 'GX Eagle DUB 170mm', category_key: 'crankset', max_distance_km: 40000 },
+  { brand: 'SRAM', model: 'X0 Eagle T-Type DUB 170mm', category_key: 'crankset', max_distance_km: 40000 },
+  { brand: 'Campagnolo', model: 'Super Record 12v 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Campagnolo', model: 'Record 12v 172.5mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Campagnolo', model: 'Chorus 12v 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Rotor', model: 'ALDHU 170mm', category_key: 'crankset', max_distance_km: 50000 },
+  { brand: 'Rotor', model: 'VEGAST 170mm', category_key: 'crankset', max_distance_km: 50000 },
+
   // ─── Sättel ────────────────────────────────
   { brand: 'Fizik', model: 'Antares Versus Evo R1', category_key: 'saddle' },
   { brand: 'Fizik', model: 'Argo Vento R1', category_key: 'saddle' },
