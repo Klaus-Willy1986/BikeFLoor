@@ -228,22 +228,44 @@ export const PARTS_CATALOG: CatalogPart[] = [
   { brand: 'WTB', model: 'Volt', category_key: 'saddle' },
 ];
 
+// Groups: categories that should appear as a single pill in the catalog UI
+// e.g. "tires" groups tires_front + tires_rear
+const CATEGORY_GROUPS: Record<string, string[]> = {
+  tires: ['tires_front', 'tires_rear'],
+  wheels: ['wheels_front', 'wheels_rear'],
+};
+
+// Reverse map: tires_front → tires, tires_rear → tires
+const CATEGORY_TO_GROUP: Record<string, string> = {};
+for (const [group, keys] of Object.entries(CATEGORY_GROUPS)) {
+  for (const key of keys) {
+    CATEGORY_TO_GROUP[key] = group;
+  }
+}
+
+function expandCategoryKey(categoryKey: string): string[] {
+  return CATEGORY_GROUPS[categoryKey] ?? [categoryKey];
+}
+
 /**
  * Get all unique category keys in the catalog.
+ * Groups like tires_front + tires_rear into "tires".
  */
 export function getCatalogCategories(): string[] {
   const keys = new Set<string>();
   for (const part of PARTS_CATALOG) {
-    keys.add(part.category_key);
+    keys.add(CATEGORY_TO_GROUP[part.category_key] ?? part.category_key);
   }
   return Array.from(keys);
 }
 
 /**
  * Get all parts for a given category key.
+ * Supports grouped keys like "tires" → tires_front + tires_rear.
  */
 export function getPartsByCategory(categoryKey: string): CatalogPart[] {
-  return PARTS_CATALOG.filter((p) => p.category_key === categoryKey);
+  const expanded = expandCategoryKey(categoryKey);
+  return PARTS_CATALOG.filter((p) => expanded.includes(p.category_key));
 }
 
 /**
@@ -252,7 +274,7 @@ export function getPartsByCategory(categoryKey: string): CatalogPart[] {
  */
 export function searchPartsCatalog(query: string, categoryKey?: string, limit = 50): CatalogPart[] {
   const source = categoryKey
-    ? PARTS_CATALOG.filter((p) => p.category_key === categoryKey)
+    ? PARTS_CATALOG.filter((p) => expandCategoryKey(categoryKey).includes(p.category_key))
     : PARTS_CATALOG;
 
   const q = query.toLowerCase().trim();

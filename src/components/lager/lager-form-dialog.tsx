@@ -93,9 +93,8 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
   const [catalogQuery, setCatalogQuery] = useState('');
   const [showCatalog, setShowCatalog] = useState(false);
 
-  // Get categories that actually exist in the catalog
+  // Get grouped category keys from catalog (e.g. "tires" instead of "tires_front"/"tires_rear")
   const catalogCategoryKeys = getCatalogCategories();
-  const catalogCategories = categories?.filter((c) => catalogCategoryKeys.includes(c.key)) ?? [];
 
   // Get filtered parts for the selected category
   const catalogResults = catalogCategoryKey
@@ -190,21 +189,21 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
                 <div className="rounded-md border bg-muted/30 p-2 space-y-2">
                   {/* Category pills */}
                   <div className="flex flex-wrap gap-1.5">
-                    {catalogCategories.map((cat) => (
+                    {catalogCategoryKeys.map((key) => (
                       <button
-                        key={cat.id}
+                        key={key}
                         type="button"
                         className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
-                          catalogCategoryKey === cat.key
+                          catalogCategoryKey === key
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-background border hover:bg-accent'
                         }`}
                         onClick={() => {
-                          setCatalogCategoryKey(catalogCategoryKey === cat.key ? null : cat.key);
+                          setCatalogCategoryKey(catalogCategoryKey === key ? null : key);
                           setCatalogQuery('');
                         }}
                       >
-                        {t(`components.categories.${cat.key}`)}
+                        {t(`components.categories.${key}`)}
                       </button>
                     ))}
                   </div>
