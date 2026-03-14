@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useZxing } from 'react-zxing';
 import {
@@ -21,7 +21,7 @@ interface BarcodeScannerDialogProps {
 export function BarcodeScannerDialog({ open, onOpenChange, onResult }: BarcodeScannerDialogProps) {
   const t = useTranslations();
   const [looking, setLooking] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [cameraError, setCameraError] = useState(false);
 
   const handleDecode = useCallback(
     async (result: { getText: () => string }) => {
@@ -29,7 +29,6 @@ export function BarcodeScannerDialog({ open, onOpenChange, onResult }: BarcodeSc
       if (!ean || looking) return;
 
       setLooking(true);
-      setError(null);
 
       try {
         const res = await fetch(`/api/barcode/lookup?ean=${encodeURIComponent(ean)}`);
@@ -42,7 +41,6 @@ export function BarcodeScannerDialog({ open, onOpenChange, onResult }: BarcodeSc
         }
         onOpenChange(false);
       } catch {
-        // API failed — still pass the EAN
         onResult({ ean });
         onOpenChange(false);
       } finally {
@@ -54,28 +52,48 @@ export function BarcodeScannerDialog({ open, onOpenChange, onResult }: BarcodeSc
 
   const { ref } = useZxing({
     paused: !open || looking,
+    constraints: {
+      video: { facingMode: 'environment' },
+      audio: false,
+    },
     onDecodeResult: handleDecode,
-    onError: () => setError(t('lager.scanError')),
   });
 
+  // Check camera permission when dialog opens
+  useEffect(() => {
+    if (!open) {
+      setCameraError(false);
+      setLooking(false);
+      return;
+    }
+
+    navigator.mediaDevices
+      ?.getUserMedia({ video: { facingMode: 'environment' } })
+      .then((stream) => {
+        // Camera access granted — stop this test stream (useZxing manages its own)
+        stream.getTracks().forEach((t) => t.stop());
+        setCameraError(false);
+      })
+      .catch(() => {
+        setCameraError(true);
+      });
+  }, [open]);
+
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(v) => {
-        if (!v) {
-          setLooking(false);
-          setError(null);
-        }
-        onOpenChange(v);
-      }}
-    >
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle>{t('lager.scanBarcode')}</DialogTitle>
         </DialogHeader>
 
         <div className="relative aspect-square w-full overflow-hidden rounded-md bg-black">
-          <video ref={ref} className="h-full w-full object-cover" />
+          <video
+            ref={ref}
+            autoPlay
+            playsInline
+            muted
+            className="h-full w-full object-cover"
+          />
           {looking && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/60">
               <Loader2 className="h-8 w-8 animate-spin text-white" />
@@ -83,7 +101,9 @@ export function BarcodeScannerDialog({ open, onOpenChange, onResult }: BarcodeSc
           )}
         </div>
 
-        {error && <p className="text-xs text-destructive">{error}</p>}
+        {cameraError && (
+          <p className="text-xs text-destructive">{t('lager.scanError')}</p>
+        )}
 
         <p className="text-center text-xs text-muted-foreground">
           {t('lager.scanHint')}

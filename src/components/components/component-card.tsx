@@ -46,15 +46,15 @@ export function ComponentCard({ component, onDelete, onSwap, onMoveToInventory, 
           size={52}
         />
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <h4 className="font-medium truncate">{component.name}</h4>
+          <div className="flex items-baseline gap-2 min-w-0">
+            <h4 className="font-medium truncate min-w-0">{component.name}</h4>
             {categoryKey && (
-              <span className="text-xs text-muted-foreground">
+              <span className="shrink-0 text-xs text-muted-foreground">
                 {t(`categories.${categoryKey}`)}
               </span>
             )}
             {needsRotation && (
-              <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
+              <Badge variant="destructive" className="shrink-0 text-[10px] px-1.5 py-0">
                 {t('rotation.needsRotation')}
               </Badge>
             )}

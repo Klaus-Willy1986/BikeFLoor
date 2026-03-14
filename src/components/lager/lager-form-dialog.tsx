@@ -163,9 +163,7 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
           {/* Catalog: category-first, then parts list */}
           {!isEditing && (
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label>{t('lager.catalogSearch')}</Label>
-                <div className="flex gap-1.5">
+              <div className="flex flex-wrap items-center gap-1.5">
                   <Button
                     type="button"
                     variant="outline"
@@ -198,7 +196,6 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
                       {t('common.close')}
                     </Button>
                   )}
-                </div>
               </div>
 
               {showCatalog && (
