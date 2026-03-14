@@ -14,7 +14,7 @@ export const BIKE_SHOPS: BikeShop[] = [
     id: 'bike-discount',
     name: 'Bike-Discount',
     domain: 'bike-discount.de',
-    searchUrl: 'https://www.bike-discount.de/en/search?sSearch={query}',
+    searchUrl: 'https://www.bike-discount.de/en/search?search={query}',
   },
   {
     id: 'bike24',
@@ -26,7 +26,7 @@ export const BIKE_SHOPS: BikeShop[] = [
     id: 'bike-components',
     name: 'Bike-Components',
     domain: 'bike-components.de',
-    searchUrl: 'https://www.bike-components.de/en/search/?q={query}',
+    searchUrl: 'https://www.bike-components.de/en/s/?keywords={query}',
   },
   {
     id: 'rose',
@@ -37,8 +37,8 @@ export const BIKE_SHOPS: BikeShop[] = [
   {
     id: 'hibike',
     name: 'HIBIKE',
-    domain: 'hibike.de',
-    searchUrl: 'https://www.hibike.de/search?sSearch={query}',
+    domain: 'hibike.com',
+    searchUrl: 'https://hibike.com/?s={query}',
   },
   {
     id: 'amazon',
