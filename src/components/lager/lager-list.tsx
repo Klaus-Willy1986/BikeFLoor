@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useInventory, useDeleteInventoryItem } from '@/hooks/use-inventory';
 import { useBikes } from '@/hooks/use-bikes';
 import { useComponentCategories } from '@/hooks/use-components';
@@ -25,6 +26,8 @@ import { QrLabelDialog } from './qr-label-dialog';
 
 export function LagerList() {
   const t = useTranslations();
+  const searchParams = useSearchParams();
+  const highlightId = searchParams.get('item');
   const { data: items, isLoading } = useInventory();
   const { data: bikes } = useBikes();
   const { data: categories } = useComponentCategories();
@@ -35,6 +38,23 @@ export function LagerList() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [installItem, setInstallItem] = useState<any | null>(null);
   const [qrItem, setQrItem] = useState<any | null>(null);
+  const [activeHighlight, setActiveHighlight] = useState<string | null>(null);
+  const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+
+  const setCardRef = useCallback((id: string, el: HTMLDivElement | null) => {
+    if (el) cardRefs.current.set(id, el);
+    else cardRefs.current.delete(id);
+  }, []);
+
+  useEffect(() => {
+    if (!highlightId || !items?.length) return;
+    const el = cardRefs.current.get(highlightId);
+    if (!el) return;
+    setActiveHighlight(highlightId);
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const timer = setTimeout(() => setActiveHighlight(null), 3000);
+    return () => clearTimeout(timer);
+  }, [highlightId, items]);
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -96,7 +116,11 @@ export function LagerList() {
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">
           {items.map((item: any) => (
-            <Card key={item.id}>
+            <Card
+              key={item.id}
+              ref={(el) => setCardRef(item.id, el)}
+              className={activeHighlight === item.id ? 'ring-2 ring-primary transition-all duration-500' : ''}
+            >
               <CardContent className="p-4">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1.5 min-w-0 flex-1">

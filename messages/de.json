@@ -101,7 +101,10 @@
     "thisWeek": "Diese Woche",
     "thisMonth": "Dieser Monat",
     "thisYear": "Dieses Jahr",
-    "viewAll": "Alle anzeigen"
+    "viewAll": "Alle anzeigen",
+    "inventoryStock": "Lagerbestand",
+    "lowStock": "Niedriger Bestand",
+    "stockOk": "Lager ist gut bestückt"
   },
   "bikes": {
     "title": "Fahrräder",
@@ -409,6 +412,10 @@
     "renewsAt": "Verlängert am",
     "upgradeError": "Upgrade fehlgeschlagen",
     "portalError": "Portal konnte nicht geöffnet werden",
+    "theme": "Design",
+    "themeLight": "Hell",
+    "themeDark": "Dunkel",
+    "themeSystem": "System",
     "dangerZone": "Gefahrenzone",
     "deleteAccount": "Konto löschen",
     "deleteAccountConfirm": "Möchtest du dein Konto wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."

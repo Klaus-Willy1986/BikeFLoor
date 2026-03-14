@@ -101,7 +101,10 @@
     "thisWeek": "This week",
     "thisMonth": "This month",
     "thisYear": "This year",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "inventoryStock": "Inventory Stock",
+    "lowStock": "Low Stock",
+    "stockOk": "Inventory well stocked"
   },
   "bikes": {
     "title": "Bikes",
@@ -409,6 +412,10 @@
     "renewsAt": "Renews on",
     "upgradeError": "Upgrade failed",
     "portalError": "Could not open portal",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
     "dangerZone": "Danger Zone",
     "deleteAccount": "Delete Account",
     "deleteAccountConfirm": "Are you sure you want to delete your account? This action cannot be undone."

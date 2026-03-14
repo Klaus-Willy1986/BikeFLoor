@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { LocaleSwitcher } from './locale-switcher';
+import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { LogOut, User, Bike } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 
@@ -50,6 +51,7 @@ export function Topbar({ userEmail }: TopbarProps) {
       <div className="hidden lg:block" />
 
       <div className="flex items-center gap-2">
+        <ThemeToggle />
         <LocaleSwitcher />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
