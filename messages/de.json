@@ -104,7 +104,11 @@
     "viewAll": "Alle anzeigen",
     "inventoryStock": "Lagerbestand",
     "lowStock": "Niedriger Bestand",
-    "stockOk": "Lager ist gut bestückt"
+    "stockOk": "Lager ist gut bestückt",
+    "upcomingChanges": "Bevorstehende Wechsel",
+    "noUpcoming": "Keine Wechsel in Sicht",
+    "estimatedCost": "Geschätzte Kosten",
+    "next3Months": "Nächste 3 Monate"
   },
   "bikes": {
     "title": "Fahrräder",
@@ -204,7 +208,12 @@
       "overdue": "Überfällig",
       "basis": "Datenbasis",
       "fromHistory": "{count} historische Wechsel",
-      "fromMaxDistance": "Max. Lebensdauer"
+      "fromMaxDistance": "Max. Lebensdauer",
+      "confidence": "Zuverlässigkeit",
+      "confidenceLow": "Gering",
+      "confidenceMedium": "Mittel",
+      "confidenceHigh": "Hoch",
+      "ridingProfile": "Fahrprofil-Anpassung: -{percent}%"
     },
     "noComponents": "Noch keine Komponenten",
     "swapTo": "Tauschen zu",
@@ -311,7 +320,10 @@
     "inProgress": "Läuft",
     "activeChecklists": "Laufende Checklisten",
     "noActiveChecklists": "Keine laufenden Checklisten",
-    "continueChecklist": "Fortsetzen"
+    "continueChecklist": "Fortsetzen",
+    "yourSetup": "Dein Setup",
+    "tirePressure": "Reifendruck",
+    "suspension": "Federung"
   },
   "setup": {
     "title": "Setup",

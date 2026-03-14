@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useComponentPrediction } from '@/hooks/use-component-prediction';
 import { SmartWearInsights } from './smart-wear-insights';
-import { TrendingUp, Calendar, Database } from 'lucide-react';
+import { TrendingUp, Calendar, Database, ShieldCheck } from 'lucide-react';
 
 interface ComponentPredictionProps {
   componentId: string;
@@ -54,6 +54,20 @@ export function ComponentPredictionDisplay({
         ? t('smartWear.fromBikeType')
         : t('prediction.fromMaxDistance');
 
+  const confidenceColor =
+    prediction.confidence === 'high'
+      ? 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-950'
+      : prediction.confidence === 'medium'
+        ? 'text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-950'
+        : 'text-red-500 bg-red-50 dark:text-red-400 dark:bg-red-950';
+
+  const confidenceLabel =
+    prediction.confidence === 'high'
+      ? t('prediction.confidenceHigh')
+      : prediction.confidence === 'medium'
+        ? t('prediction.confidenceMedium')
+        : t('prediction.confidenceLow');
+
   return (
     <div className="space-y-2.5">
       <h4 className="text-sm font-medium flex items-center gap-1.5">
@@ -92,15 +106,21 @@ export function ComponentPredictionDisplay({
           </div>
         )}
 
-        {/* Data basis */}
+        {/* Data basis + confidence */}
         <div className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-1.5">
           <span className="text-xs text-muted-foreground flex items-center gap-1.5">
             <Database className="h-3 w-3" />
             {t('prediction.basis')}
           </span>
-          <span className="text-xs text-muted-foreground">
-            {sourceLabel}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">
+              {sourceLabel}
+            </span>
+            <span className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] font-medium ${confidenceColor}`}>
+              <ShieldCheck className="h-2.5 w-2.5" />
+              {confidenceLabel}
+            </span>
+          </div>
         </div>
       </div>
 

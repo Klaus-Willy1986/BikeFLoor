@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { getRecommendedMaxDistance } from '@/lib/wear-defaults';
 
 export interface SmartInsight {
-  type: 'history_average' | 'elevation_brake' | 'bike_type_recommendation';
+  type: 'history_average' | 'elevation_brake' | 'bike_type_recommendation' | 'riding_profile';
   message: string;
   value?: number;
 }
@@ -19,6 +19,9 @@ export interface ComponentPrediction {
   source: 'history' | 'max_distance' | 'bike_type_default';
   recommendedKm: number | null;
   insights: SmartInsight[];
+  confidence: 'low' | 'medium' | 'high';
+  ridingFactor: number | null;
+  adjustedLifespanKm: number | null;
 }
 
 export function useComponentPrediction(
@@ -124,28 +127,49 @@ export function useComponentPrediction(
         }
       }
 
-      // Check elevation profile for brake wear insight
-      if (categoryKey && ['brake_pads', 'brake_rotors'].includes(categoryKey)) {
-        // Get rides with elevation data for this user
-        const { data: rides } = await supabase
-          .from('rides')
-          .select('distance_km, elevation_m')
-          .not('elevation_m', 'is', null)
-          .gt('distance_km', 0)
-          .order('date', { ascending: false })
-          .limit(50);
+      // Fetch rides for elevation profile and riding factor
+      let ridingFactor: number | null = null;
+      let elevPerKm = 0;
 
-        if (rides && rides.length >= 5) {
-          const totalDist = rides.reduce((s, r) => s + Number(r.distance_km), 0);
-          const totalElev = rides.reduce((s, r) => s + Number(r.elevation_m ?? 0), 0);
-          const elevPerKm = totalDist > 0 ? totalElev / totalDist : 0;
+      const { data: rides } = await supabase
+        .from('rides')
+        .select('distance_km, elevation_m')
+        .not('elevation_m', 'is', null)
+        .gt('distance_km', 0)
+        .order('date', { ascending: false })
+        .limit(50);
 
-          // High elevation profile = more brake wear (>15m/km is hilly)
-          if (elevPerKm > 15) {
+      if (rides && rides.length >= 5) {
+        const totalDist = rides.reduce((s, r) => s + Number(r.distance_km), 0);
+        const totalElev = rides.reduce((s, r) => s + Number(r.elevation_m ?? 0), 0);
+        elevPerKm = totalDist > 0 ? totalElev / totalDist : 0;
+
+        // Elevation brake insight (keep existing)
+        if (categoryKey && ['brake_pads', 'brake_rotors'].includes(categoryKey) && elevPerKm > 15) {
+          insights.push({
+            type: 'elevation_brake',
+            message: 'elevation_brake',
+            value: Math.round(elevPerKm),
+          });
+        }
+
+        // Category-specific riding profile wear factors
+        if (categoryKey) {
+          if (['brake_pads', 'brake_rotors'].includes(categoryKey)) {
+            if (elevPerKm > 25) ridingFactor = 0.65;
+            else if (elevPerKm > 15) ridingFactor = 0.80;
+          } else if (['chain', 'cassette'].includes(categoryKey)) {
+            if (elevPerKm > 15) ridingFactor = 0.90;
+          } else if (categoryKey === 'tires_rear') {
+            if (elevPerKm > 20) ridingFactor = 0.90;
+          }
+
+          if (ridingFactor !== null) {
+            const reductionPercent = Math.round((1 - ridingFactor) * 100);
             insights.push({
-              type: 'elevation_brake',
-              message: 'elevation_brake',
-              value: Math.round(elevPerKm),
+              type: 'riding_profile',
+              message: 'riding_profile',
+              value: reductionPercent,
             });
           }
         }
@@ -162,6 +186,14 @@ export function useComponentPrediction(
         source = 'bike_type_default';
       }
 
+      // Confidence score
+      const confidence: 'low' | 'medium' | 'high' =
+        dataPoints >= 6 && source === 'history'
+          ? 'high'
+          : (dataPoints >= 3 && source === 'history') || source === 'max_distance'
+            ? 'medium'
+            : 'low';
+
       if (avgLifespan === null) {
         return {
           avgLifespanKm: null,
@@ -172,11 +204,18 @@ export function useComponentPrediction(
           source,
           recommendedKm,
           insights,
+          confidence,
+          ridingFactor,
+          adjustedLifespanKm: null,
         };
       }
 
+      // Apply riding factor to lifespan
+      const adjustedLifespanKm = ridingFactor !== null ? avgLifespan * ridingFactor : null;
+      const effectiveLifespan = adjustedLifespanKm ?? avgLifespan;
+
       // 2. Calculate remaining km
-      const remainingKm = Math.max(avgLifespan - currentDistanceKm, 0);
+      const remainingKm = Math.max(effectiveLifespan - currentDistanceKm, 0);
 
       // 3. Estimate date based on km/month rate
       let estimatedDate: Date | null = null;
@@ -208,6 +247,9 @@ export function useComponentPrediction(
         source,
         recommendedKm,
         insights,
+        confidence,
+        ridingFactor,
+        adjustedLifespanKm,
       };
     },
     enabled: !!componentId,

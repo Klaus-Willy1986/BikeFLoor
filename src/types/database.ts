@@ -781,6 +781,7 @@ export type Database = {
           description: string | null;
           sort_order: number;
           is_required: boolean;
+          section: string | null;
           created_at: string;
         };
         Insert: {
@@ -790,6 +791,7 @@ export type Database = {
           description?: string | null;
           sort_order?: number;
           is_required?: boolean;
+          section?: string | null;
           created_at?: string;
         };
         Update: {
@@ -797,6 +799,7 @@ export type Database = {
           description?: string | null;
           sort_order?: number;
           is_required?: boolean;
+          section?: string | null;
         };
         Relationships: [
           {

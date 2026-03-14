@@ -96,7 +96,7 @@ export function useExecutionItems(executionId: string | null) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('maintenance_execution_items')
-        .select('*, maintenance_plan_items(title, description, sort_order, is_required)')
+        .select('*, maintenance_plan_items(title, description, sort_order, is_required, section)')
         .eq('execution_id', executionId!);
       if (error) throw error;
 
@@ -179,6 +179,7 @@ export function useClonePlan() {
           description: item.description,
           sort_order: item.sort_order,
           is_required: item.is_required,
+          section: item.section,
         }));
 
         const { error: itemsError } = await supabase

@@ -104,7 +104,11 @@
     "viewAll": "View all",
     "inventoryStock": "Inventory Stock",
     "lowStock": "Low Stock",
-    "stockOk": "Inventory well stocked"
+    "stockOk": "Inventory well stocked",
+    "upcomingChanges": "Upcoming Changes",
+    "noUpcoming": "No changes upcoming",
+    "estimatedCost": "Estimated Cost",
+    "next3Months": "Next 3 months"
   },
   "bikes": {
     "title": "Bikes",
@@ -204,7 +208,12 @@
       "overdue": "Overdue",
       "basis": "Data basis",
       "fromHistory": "{count} historical replacements",
-      "fromMaxDistance": "Max. lifespan"
+      "fromMaxDistance": "Max. lifespan",
+      "confidence": "Confidence",
+      "confidenceLow": "Low",
+      "confidenceMedium": "Medium",
+      "confidenceHigh": "High",
+      "ridingProfile": "Riding profile adjustment: -{percent}%"
     },
     "noComponents": "No components yet",
     "swapTo": "Swap to",
@@ -311,7 +320,10 @@
     "inProgress": "In progress",
     "activeChecklists": "Active Checklists",
     "noActiveChecklists": "No active checklists",
-    "continueChecklist": "Continue"
+    "continueChecklist": "Continue",
+    "yourSetup": "Your Setup",
+    "tirePressure": "Tire Pressure",
+    "suspension": "Suspension"
   },
   "setup": {
     "title": "Setup",

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { History, Mountain, Lightbulb } from 'lucide-react';
+import { History, Mountain, Lightbulb, Bike } from 'lucide-react';
 import type { SmartInsight } from '@/hooks/use-component-prediction';
 
 interface SmartWearInsightsProps {
@@ -19,12 +19,14 @@ export function SmartWearInsights({ insights, bikeType }: SmartWearInsightsProps
     history_average: History,
     elevation_brake: Mountain,
     bike_type_recommendation: Lightbulb,
+    riding_profile: Bike,
   };
 
   const colorMap: Record<SmartInsight['type'], string> = {
     history_average: 'text-blue-600 bg-blue-50',
     elevation_brake: 'text-amber-600 bg-amber-50',
     bike_type_recommendation: 'text-primary bg-primary/10',
+    riding_profile: 'text-violet-600 bg-violet-50',
   };
 
   const getInsightText = (insight: SmartInsight): string => {
@@ -42,6 +44,10 @@ export function SmartWearInsights({ insights, bikeType }: SmartWearInsightsProps
         return t('smartWear.bikeTypeRecommendation', {
           type: bikeType ? tb(`types.${bikeType}`) : '',
           km: insight.value?.toLocaleString() ?? '?',
+        });
+      case 'riding_profile':
+        return t('prediction.ridingProfile', {
+          percent: insight.value ?? 0,
         });
       default:
         return '';

@@ -13,6 +13,7 @@ import { RecentRides } from './recent-rides';
 import { ComponentWear } from './component-wear';
 import { InventoryStock } from './inventory-stock';
 import { ActiveChecklists } from './active-checklists';
+import { UpcomingChanges } from './upcoming-changes';
 
 export function Dashboard() {
   const t = useTranslations('dashboard');
@@ -46,6 +47,7 @@ export function Dashboard() {
         <ComponentWear />
       </div>
       <InventoryStock />
+      <UpcomingChanges />
       <ActiveChecklists />
       <RecentRides rides={rides ?? []} loading={ridesLoading} />
     </div>
