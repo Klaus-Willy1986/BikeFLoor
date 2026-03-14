@@ -270,11 +270,21 @@ export function LagerFormDialog({ open, onOpenChange, item }: LagerFormDialogPro
                   <SelectValue placeholder="—" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categories?.map((cat) => (
-                    <SelectItem key={cat.id} value={cat.id}>
-                      {t(`components.categories.${cat.key}`)}
-                    </SelectItem>
-                  ))}
+                  {categories
+                    ?.filter((cat: any) => cat.key !== 'tires_rear' && cat.key !== 'wheels_rear')
+                    .map((cat: any) => {
+                      // Show grouped label for front variants
+                      const label = cat.key === 'tires_front'
+                        ? t('components.categories.tires')
+                        : cat.key === 'wheels_front'
+                        ? t('components.categories.wheels')
+                        : t(`components.categories.${cat.key}`);
+                      return (
+                        <SelectItem key={cat.id} value={cat.id}>
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
                 </SelectContent>
               </Select>
             </div>
