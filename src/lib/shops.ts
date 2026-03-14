@@ -20,7 +20,7 @@ export const BIKE_SHOPS: BikeShop[] = [
     id: 'bike24',
     name: 'Bike24',
     domain: 'bike24.de',
-    searchUrl: 'https://www.bike24.de/search?searchTerm={query}',
+    searchUrl: 'https://www.google.com/search?q=site:bike24.de+{query}',
   },
   {
     id: 'bike-components',
@@ -49,7 +49,9 @@ export const BIKE_SHOPS: BikeShop[] = [
 ];
 
 export function getShopSearchUrl(shop: BikeShop, componentName: string, brand?: string | null, model?: string | null): string {
-  const parts = [brand, model ?? componentName].filter(Boolean).join(' ');
+  // Strip parenthesized compatibility notes like "(Dura-Ace/Ultegra)" — they hurt search results
+  const clean = (s: string) => s.replace(/\s*\(.*?\)/g, '').trim();
+  const parts = [brand, clean(model ?? componentName)].filter(Boolean).join(' ');
   const query = encodeURIComponent(parts || componentName);
   return shop.searchUrl.replace('{query}', query);
 }

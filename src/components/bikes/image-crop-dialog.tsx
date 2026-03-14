@@ -166,6 +166,7 @@ export function ImageCropDialog({
             <img
               src={imageSrc}
               alt="Crop preview"
+              crossOrigin="anonymous"
               onLoad={onImageLoad}
               className="max-h-[60vh] object-contain"
             />

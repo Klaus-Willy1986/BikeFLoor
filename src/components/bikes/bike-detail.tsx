@@ -32,6 +32,8 @@ import {
   Weight,
   StickyNote,
   Camera,
+  Crop,
+  ImagePlus,
   Loader2,
   Wrench,
   Mail,
@@ -93,8 +95,8 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
       onSuccess: () => toast.success(t('bikes.photoUploaded')),
       onError: (err: Error) => toast.error(err.message),
     });
-    // Clean up object URL
-    if (cropImage) URL.revokeObjectURL(cropImage);
+    // Only revoke blob: object URLs, not Supabase URLs
+    if (cropImage?.startsWith('blob:')) URL.revokeObjectURL(cropImage);
     setCropImage(null);
   };
 
@@ -135,33 +137,46 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
         {bikeImage ? (
           /* With product image */
           <div className="flex flex-col sm:flex-row">
-            <div
-              className="relative aspect-[4/3] w-full sm:aspect-auto sm:w-[320px] shrink-0 bg-muted group cursor-pointer"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <Image
-                src={bikeImage}
-                alt={bike.name}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, 320px"
-                priority
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-colors">
-                {uploadPhoto.isPending ? (
-                  <Loader2 className="h-6 w-6 text-white animate-spin" />
-                ) : (
-                  <Camera className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                )}
-              </div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                className="hidden"
-                onChange={handleFileSelect}
-              />
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div
+                  className="relative aspect-[4/3] w-full sm:aspect-auto sm:w-[320px] shrink-0 bg-muted group cursor-pointer"
+                >
+                  <Image
+                    src={bikeImage}
+                    alt={bike.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, 320px"
+                    priority
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-colors">
+                    {uploadPhoto.isPending ? (
+                      <Loader2 className="h-6 w-6 text-white animate-spin" />
+                    ) : (
+                      <Camera className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                    )}
+                  </div>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center">
+                <DropdownMenuItem onClick={() => fileInputRef.current?.click()}>
+                  <ImagePlus className="mr-2 h-4 w-4" />
+                  {t('bikes.newPhoto')}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCropImage(bikeImage)}>
+                  <Crop className="mr-2 h-4 w-4" />
+                  {t('bikes.cropImage')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="hidden"
+              onChange={handleFileSelect}
+            />
             <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
               <div>
                 <div className="flex items-start justify-between">
@@ -451,7 +466,7 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
           open={!!cropImage}
           onOpenChange={(open) => {
             if (!open) {
-              URL.revokeObjectURL(cropImage);
+              if (cropImage.startsWith('blob:')) URL.revokeObjectURL(cropImage);
               setCropImage(null);
             }
           }}
