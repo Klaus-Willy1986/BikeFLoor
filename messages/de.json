@@ -574,6 +574,14 @@
       "multibike": {
         "title": "Garage & Dokumente",
         "description": "Alle Bikes in einer Garage mit Fotos. Rechnungen, Garantien und Anleitungen direkt am Bike ablegen."
+      },
+      "prediction": {
+        "title": "Intelligente Verschleiß-Prognose",
+        "description": "BikeFloor analysiert dein Fahrprofil und berechnet, wann jede Komponente fällig ist — mit Konfidenz-Score und Kosten-Prognose."
+      },
+      "raceday": {
+        "title": "Race-Day Checklisten",
+        "description": "Disziplinspezifische Checklisten für Zeitfahren, MTB und Gravel — mit Equipment, Ernährung und deinem persönlichen Setup."
       }
     },
     "steps": {
@@ -673,7 +681,8 @@
         "description": "Verfolge den Verschleiß jeder Komponente. Rotiere Teile zwischen Rädern und lass BikeFloor vorhersagen, wann der nächste Tausch fällig ist.",
         "bullet1": "Automatische Kilometerberechnung",
         "bullet2": "Ketten-Rotation im Pool-System",
-        "bullet3": "Wartungsintervalle & Erinnerungen"
+        "bullet3": "Wartungsintervalle & Erinnerungen",
+        "bullet4": "Smart-Prognose basierend auf deinem Fahrprofil"
       },
       "rides": {
         "title": "Deine Kilometer zählen sich selbst",

@@ -15,6 +15,8 @@ import {
   Building2,
   Timer,
   Images,
+  TrendingUp,
+  ClipboardCheck,
 } from 'lucide-react';
 import { PricingSection } from './pricing-section';
 import Image from 'next/image';
@@ -142,7 +144,7 @@ export function LandingPage() {
                 {t('showcase.components.description')}
               </p>
               <ul className="mt-6 space-y-3">
-                {(['bullet1', 'bullet2', 'bullet3'] as const).map((key) => (
+                {(['bullet1', 'bullet2', 'bullet3', 'bullet4'] as const).map((key) => (
                   <li key={key} className="flex items-center gap-3 text-sm text-zinc-700">
                     <Check className="h-5 w-5 flex-shrink-0 text-amber-500" />
                     {t(`showcase.components.${key}`)}
@@ -209,7 +211,17 @@ export function LandingPage() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <FeatureCard
+              icon={<TrendingUp className="h-5 w-5" />}
+              title={t('features.prediction.title')}
+              description={t('features.prediction.description')}
+            />
+            <FeatureCard
+              icon={<ClipboardCheck className="h-5 w-5" />}
+              title={t('features.raceday.title')}
+              description={t('features.raceday.description')}
+            />
             <FeatureCard
               icon={<CalendarCheck className="h-5 w-5" />}
               title={t('features.maintenance.title')}

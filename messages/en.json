@@ -574,6 +574,14 @@
       "multibike": {
         "title": "Garage & Documents",
         "description": "All bikes in one garage with photos. Store invoices, warranties, and manuals right on the bike."
+      },
+      "prediction": {
+        "title": "Smart Wear Prediction",
+        "description": "BikeFloor analyzes your riding profile and calculates when each component is due — with confidence scoring and cost forecasting."
+      },
+      "raceday": {
+        "title": "Race-Day Checklists",
+        "description": "Discipline-specific checklists for time trials, MTB, and gravel — with equipment, nutrition, and your personal setup."
       }
     },
     "steps": {
@@ -673,7 +681,8 @@
         "description": "Monitor wear on every component. Rotate parts between bikes and let BikeFloor predict when the next swap is due.",
         "bullet1": "Automatic mileage calculation",
         "bullet2": "Chain rotation in pool system",
-        "bullet3": "Service intervals & reminders"
+        "bullet3": "Service intervals & reminders",
+        "bullet4": "Smart prediction based on your riding profile"
       },
       "rides": {
         "title": "Your Kilometers Count Themselves",
