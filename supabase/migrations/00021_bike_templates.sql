@@ -29,7 +29,7 @@ CREATE INDEX idx_bike_templates_search
 -- Auto-update updated_at
 CREATE TRIGGER set_bike_templates_updated_at
   BEFORE UPDATE ON bike_templates
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
 ALTER TABLE bike_templates ENABLE ROW LEVEL SECURITY;
 
