@@ -768,6 +768,12 @@
       "text": "Die Inhalte dieser App wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. BikeFloor dient als Hilfsmittel zur Wartungsplanung — die tatsächliche Überprüfung und Wartung deines Fahrrads obliegt dir."
     }
   },
+  "presets": {
+    "groupset": "Schaltgruppe",
+    "wheels": "Laufräder",
+    "tires": "Reifen",
+    "none": "Standard"
+  },
   "bikeTemplates": {
     "shareSetup": "Setup teilen",
     "shareConfirm": "Dein Setup wird anonym geteilt und hilft anderen {manufacturer} {model} Fahrern.",

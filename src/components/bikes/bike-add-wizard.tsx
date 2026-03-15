@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,7 @@ import { bikeSchema, type BikeFormData } from '@/lib/validators/bike';
 import { useCreateBike } from '@/hooks/use-bikes';
 import { useCreateBulkComponents } from '@/hooks/use-components';
 import { DEFAULT_COMPONENTS, type CatalogBike, type CatalogComponent } from '@/lib/bike-catalog';
+import { buildComponentsFromPresets, GROUPSET_PRESETS, WHEEL_PRESETS, TIRE_PRESETS } from '@/lib/component-presets';
 import { useBikeTemplateSearch, type BikeTemplateResult } from '@/hooks/use-bike-templates';
 import { BIKE_TYPES } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
@@ -59,6 +60,9 @@ export function BikeAddWizard() {
   const [catalogComponents, setCatalogComponents] = useState<CatalogComponent[] | null>(null);
   const [catalogImageUrl, setCatalogImageUrl] = useState<string | null>(null);
   const [autoComponents, setAutoComponents] = useState(true);
+  const [selectedGroupset, setSelectedGroupset] = useState<string | null>(null);
+  const [selectedWheels, setSelectedWheels] = useState<string | null>(null);
+  const [selectedTires, setSelectedTires] = useState<string | null>(null);
   const [createdBikeId, setCreatedBikeId] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -158,9 +162,40 @@ export function BikeAddWizard() {
   }, [selectedIndex]);
 
   const currentType = watch('type') || selectedBikeType;
-  // Prefer bike-specific components (from catalog config), fall back to type defaults
-  const componentTemplates = catalogComponents ?? DEFAULT_COMPONENTS[currentType] ?? DEFAULT_COMPONENTS.other;
   const hasSpecificParts = !!catalogComponents;
+
+  // Filter presets by current bike type
+  const filteredGroupsets = useMemo(
+    () => GROUPSET_PRESETS.filter((g) => g.bikeTypes.includes(currentType)),
+    [currentType],
+  );
+  const filteredWheels = useMemo(
+    () => WHEEL_PRESETS.filter((w) => w.bikeTypes.includes(currentType)),
+    [currentType],
+  );
+  const filteredTires = useMemo(
+    () => TIRE_PRESETS.filter((t) => t.bikeTypes.includes(currentType)),
+    [currentType],
+  );
+
+  // Reset preset selections when they no longer match the bike type
+  useEffect(() => {
+    if (selectedGroupset && !filteredGroupsets.some((g) => g.id === selectedGroupset)) {
+      setSelectedGroupset(null);
+    }
+    if (selectedWheels && !filteredWheels.some((w) => w.id === selectedWheels)) {
+      setSelectedWheels(null);
+    }
+    if (selectedTires && !filteredTires.some((t) => t.id === selectedTires)) {
+      setSelectedTires(null);
+    }
+  }, [filteredGroupsets, filteredWheels, filteredTires, selectedGroupset, selectedWheels, selectedTires]);
+
+  // Prefer bike-specific components (from catalog config), fall back to preset-built list
+  const componentTemplates = useMemo(
+    () => catalogComponents ?? buildComponentsFromPresets(currentType, selectedGroupset, selectedWheels, selectedTires),
+    [catalogComponents, currentType, selectedGroupset, selectedWheels, selectedTires],
+  );
 
   const onSubmit = async (data: BikeFormData) => {
     try {
@@ -525,6 +560,62 @@ export function BikeAddWizard() {
                       </Badge>
                     )}
                   </div>
+                  {/* Preset selectors — only when no catalog match */}
+                  {!hasSpecificParts && autoComponents && (
+                    <div className="mt-3 grid gap-2 sm:grid-cols-3" onClick={(e) => e.stopPropagation()}>
+                      <div className="space-y-1">
+                        <span className="text-[11px] text-muted-foreground">{t('presets.groupset')}</span>
+                        <Select
+                          value={selectedGroupset ?? '_none'}
+                          onValueChange={(v) => setSelectedGroupset(v === '_none' ? null : v)}
+                        >
+                          <SelectTrigger className="h-8 text-xs">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="_none">{t('presets.none')}</SelectItem>
+                            {filteredGroupsets.map((g) => (
+                              <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[11px] text-muted-foreground">{t('presets.wheels')}</span>
+                        <Select
+                          value={selectedWheels ?? '_none'}
+                          onValueChange={(v) => setSelectedWheels(v === '_none' ? null : v)}
+                        >
+                          <SelectTrigger className="h-8 text-xs">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="_none">{t('presets.none')}</SelectItem>
+                            {filteredWheels.map((w) => (
+                              <SelectItem key={w.id} value={w.id}>{w.name}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[11px] text-muted-foreground">{t('presets.tires')}</span>
+                        <Select
+                          value={selectedTires ?? '_none'}
+                          onValueChange={(v) => setSelectedTires(v === '_none' ? null : v)}
+                        >
+                          <SelectTrigger className="h-8 text-xs">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="_none">{t('presets.none')}</SelectItem>
+                            {filteredTires.map((ti) => (
+                              <SelectItem key={ti.id} value={ti.id}>{ti.name}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  )}
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
                     {componentTemplates.map((c) => (
                       <span
