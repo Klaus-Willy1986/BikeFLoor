@@ -381,6 +381,61 @@ export const TIRE_PRESETS: TirePreset[] = [
   },
 ];
 
+// ─── Brand grouping helpers ─────────────────────────────
+
+function extractBrand(name: string): string {
+  // For groupsets: brand is first word (e.g. "Shimano Dura-Ace Di2 12s" → "Shimano")
+  return name.split(' ')[0];
+}
+
+export function getGroupsetBrands(bikeType: string): string[] {
+  const brands = new Set<string>();
+  for (const g of GROUPSET_PRESETS) {
+    if (g.bikeTypes.includes(bikeType)) {
+      brands.add(extractBrand(g.name));
+    }
+  }
+  return Array.from(brands);
+}
+
+export function getGroupsetsByBrand(bikeType: string, brand: string): GroupsetPreset[] {
+  return GROUPSET_PRESETS.filter(
+    (g) => g.bikeTypes.includes(bikeType) && extractBrand(g.name) === brand,
+  );
+}
+
+export function getWheelBrands(bikeType: string): string[] {
+  const brands = new Set<string>();
+  for (const w of WHEEL_PRESETS) {
+    if (w.bikeTypes.includes(bikeType)) {
+      brands.add(w.front.brand);
+    }
+  }
+  return Array.from(brands);
+}
+
+export function getWheelsByBrand(bikeType: string, brand: string): WheelPreset[] {
+  return WHEEL_PRESETS.filter(
+    (w) => w.bikeTypes.includes(bikeType) && w.front.brand === brand,
+  );
+}
+
+export function getTireBrands(bikeType: string): string[] {
+  const brands = new Set<string>();
+  for (const t of TIRE_PRESETS) {
+    if (t.bikeTypes.includes(bikeType)) {
+      brands.add(t.front.brand);
+    }
+  }
+  return Array.from(brands);
+}
+
+export function getTiresByBrand(bikeType: string, brand: string): TirePreset[] {
+  return TIRE_PRESETS.filter(
+    (t) => t.bikeTypes.includes(bikeType) && t.front.brand === brand,
+  );
+}
+
 // ─── Merge function ─────────────────────────────────────
 
 export function buildComponentsFromPresets(

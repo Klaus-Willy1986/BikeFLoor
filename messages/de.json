@@ -772,7 +772,12 @@
     "groupset": "Schaltgruppe",
     "wheels": "Laufräder",
     "tires": "Reifen",
-    "none": "Standard"
+    "none": "Standard",
+    "configure": "Komponenten konfigurieren",
+    "pickBrand": "Welche Marke?",
+    "skip": "Überspringen",
+    "back": "Zurück",
+    "step": "Schritt {current} von {total}"
   },
   "bikeTemplates": {
     "shareSetup": "Setup teilen",

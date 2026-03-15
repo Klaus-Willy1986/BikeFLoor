@@ -772,7 +772,12 @@
     "groupset": "Groupset",
     "wheels": "Wheels",
     "tires": "Tires",
-    "none": "Default"
+    "none": "Default",
+    "configure": "Configure components",
+    "pickBrand": "Which brand?",
+    "skip": "Skip",
+    "back": "Back",
+    "step": "Step {current} of {total}"
   },
   "bikeTemplates": {
     "shareSetup": "Share Setup",

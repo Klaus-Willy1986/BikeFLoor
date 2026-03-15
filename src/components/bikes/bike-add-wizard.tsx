@@ -9,7 +9,8 @@ import { bikeSchema, type BikeFormData } from '@/lib/validators/bike';
 import { useCreateBike } from '@/hooks/use-bikes';
 import { useCreateBulkComponents } from '@/hooks/use-components';
 import { DEFAULT_COMPONENTS, type CatalogBike, type CatalogComponent } from '@/lib/bike-catalog';
-import { buildComponentsFromPresets, GROUPSET_PRESETS, WHEEL_PRESETS, TIRE_PRESETS } from '@/lib/component-presets';
+import { buildComponentsFromPresets } from '@/lib/component-presets';
+import { PresetPickerDialog } from '@/components/bikes/preset-picker-dialog';
 import { useBikeTemplateSearch, type BikeTemplateResult } from '@/hooks/use-bike-templates';
 import { BIKE_TYPES } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
@@ -32,6 +33,7 @@ import {
   Check,
   BadgeCheck,
   Users,
+  Settings2,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -64,6 +66,7 @@ export function BikeAddWizard() {
   const [selectedWheels, setSelectedWheels] = useState<string | null>(null);
   const [selectedTires, setSelectedTires] = useState<string | null>(null);
   const [createdBikeId, setCreatedBikeId] = useState<string | null>(null);
+  const [presetDialogOpen, setPresetDialogOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -163,33 +166,6 @@ export function BikeAddWizard() {
 
   const currentType = watch('type') || selectedBikeType;
   const hasSpecificParts = !!catalogComponents && catalogComponents.length > 0;
-
-  // Filter presets by current bike type
-  const filteredGroupsets = useMemo(
-    () => GROUPSET_PRESETS.filter((g) => g.bikeTypes.includes(currentType)),
-    [currentType],
-  );
-  const filteredWheels = useMemo(
-    () => WHEEL_PRESETS.filter((w) => w.bikeTypes.includes(currentType)),
-    [currentType],
-  );
-  const filteredTires = useMemo(
-    () => TIRE_PRESETS.filter((t) => t.bikeTypes.includes(currentType)),
-    [currentType],
-  );
-
-  // Reset preset selections when they no longer match the bike type
-  useEffect(() => {
-    if (selectedGroupset && !filteredGroupsets.some((g) => g.id === selectedGroupset)) {
-      setSelectedGroupset(null);
-    }
-    if (selectedWheels && !filteredWheels.some((w) => w.id === selectedWheels)) {
-      setSelectedWheels(null);
-    }
-    if (selectedTires && !filteredTires.some((t) => t.id === selectedTires)) {
-      setSelectedTires(null);
-    }
-  }, [filteredGroupsets, filteredWheels, filteredTires, selectedGroupset, selectedWheels, selectedTires]);
 
   // Prefer bike-specific components (from catalog config), fall back to preset-built list
   const componentTemplates = useMemo(
@@ -562,60 +538,32 @@ export function BikeAddWizard() {
                   </div>
                 </div>
               </button>
-              {/* Preset selectors — only when no catalog match */}
+              {/* Preset picker dialog — only when no catalog match */}
               {!hasSpecificParts && autoComponents && (
-                <div className="ml-8 grid gap-2 sm:grid-cols-3">
-                  <div className="space-y-1">
-                    <span className="text-[11px] text-muted-foreground">{t('presets.groupset')}</span>
-                    <Select
-                      value={selectedGroupset ?? '_none'}
-                      onValueChange={(v) => setSelectedGroupset(v === '_none' ? null : v)}
-                    >
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="_none">{t('presets.none')}</SelectItem>
-                        {filteredGroupsets.map((g) => (
-                          <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-[11px] text-muted-foreground">{t('presets.wheels')}</span>
-                    <Select
-                      value={selectedWheels ?? '_none'}
-                      onValueChange={(v) => setSelectedWheels(v === '_none' ? null : v)}
-                    >
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="_none">{t('presets.none')}</SelectItem>
-                        {filteredWheels.map((w) => (
-                          <SelectItem key={w.id} value={w.id}>{w.name}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-[11px] text-muted-foreground">{t('presets.tires')}</span>
-                    <Select
-                      value={selectedTires ?? '_none'}
-                      onValueChange={(v) => setSelectedTires(v === '_none' ? null : v)}
-                    >
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="_none">{t('presets.none')}</SelectItem>
-                        {filteredTires.map((ti) => (
-                          <SelectItem key={ti.id} value={ti.id}>{ti.name}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className="ml-8">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="gap-1.5"
+                    onClick={() => setPresetDialogOpen(true)}
+                  >
+                    <Settings2 className="h-3.5 w-3.5" />
+                    {t('presets.configure')}
+                  </Button>
+                  <PresetPickerDialog
+                    open={presetDialogOpen}
+                    onOpenChange={setPresetDialogOpen}
+                    bikeType={currentType}
+                    initialGroupset={selectedGroupset}
+                    initialWheels={selectedWheels}
+                    initialTires={selectedTires}
+                    onComplete={(gId, wId, tId) => {
+                      setSelectedGroupset(gId);
+                      setSelectedWheels(wId);
+                      setSelectedTires(tId);
+                    }}
+                  />
                 </div>
               )}
               {autoComponents && (
