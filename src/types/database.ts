@@ -512,6 +512,7 @@ export type Database = {
           is_indoor: boolean;
           sport_type: string | null;
           average_speed_kmh: number | null;
+          file_path: string | null;
           created_at: string;
         };
         Insert: {
@@ -528,6 +529,7 @@ export type Database = {
           is_indoor?: boolean;
           sport_type?: string | null;
           average_speed_kmh?: number | null;
+          file_path?: string | null;
           created_at?: string;
         };
         Update: {
@@ -542,6 +544,7 @@ export type Database = {
           is_indoor?: boolean;
           sport_type?: string | null;
           average_speed_kmh?: number | null;
+          file_path?: string | null;
         };
         Relationships: [
           {
@@ -549,6 +552,49 @@ export type Database = {
             columns: ['bike_id'];
             isOneToOne: false;
             referencedRelation: 'bikes';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      ride_tracks: {
+        Row: {
+          id: string;
+          ride_id: string;
+          user_id: string;
+          track_geojson: Record<string, unknown>;
+          bounds_ne_lat: number | null;
+          bounds_ne_lng: number | null;
+          bounds_sw_lat: number | null;
+          bounds_sw_lng: number | null;
+          point_count: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          ride_id: string;
+          user_id: string;
+          track_geojson: Record<string, unknown>;
+          bounds_ne_lat?: number | null;
+          bounds_ne_lng?: number | null;
+          bounds_sw_lat?: number | null;
+          bounds_sw_lng?: number | null;
+          point_count?: number;
+          created_at?: string;
+        };
+        Update: {
+          track_geojson?: Record<string, unknown>;
+          bounds_ne_lat?: number | null;
+          bounds_ne_lng?: number | null;
+          bounds_sw_lat?: number | null;
+          bounds_sw_lng?: number | null;
+          point_count?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ride_tracks_ride_id_fkey';
+            columns: ['ride_id'];
+            isOneToOne: true;
+            referencedRelation: 'rides';
             referencedColumns: ['id'];
           },
         ];

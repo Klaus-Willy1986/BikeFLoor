@@ -17,6 +17,7 @@ import {
   Images,
   TrendingUp,
   ClipboardCheck,
+  FileUp,
 } from 'lucide-react';
 import { PricingSection } from './pricing-section';
 import Image from 'next/image';
@@ -175,9 +176,15 @@ export function LandingPage() {
               />
             </div>
             <div className="lg:order-2">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-sm font-medium text-[#FC4C02]">
-                <Activity className="h-4 w-4" />
-                {t('features.strava.title')}
+              <div className="mb-4 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-sm font-medium text-[#FC4C02]">
+                  <Activity className="h-4 w-4" />
+                  {t('features.strava.title')}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
+                  <FileUp className="h-4 w-4" />
+                  {t('features.gpxImport.title')}
+                </span>
               </div>
               <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
                 {t('showcase.rides.title')}
@@ -186,7 +193,7 @@ export function LandingPage() {
                 {t('showcase.rides.description')}
               </p>
               <ul className="mt-6 space-y-3">
-                {(['bullet1', 'bullet2', 'bullet3'] as const).map((key) => (
+                {(['bullet1', 'bullet2', 'bullet3', 'bullet4'] as const).map((key) => (
                   <li key={key} className="flex items-center gap-3 text-sm text-zinc-700">
                     <Check className="h-5 w-5 flex-shrink-0 text-[#FC4C02]" />
                     {t(`showcase.rides.${key}`)}
@@ -221,6 +228,11 @@ export function LandingPage() {
               icon={<ClipboardCheck className="h-5 w-5" />}
               title={t('features.raceday.title')}
               description={t('features.raceday.description')}
+            />
+            <FeatureCard
+              icon={<FileUp className="h-5 w-5" />}
+              title={t('features.gpxImport.title')}
+              description={t('features.gpxImport.description')}
             />
             <FeatureCard
               icon={<CalendarCheck className="h-5 w-5" />}

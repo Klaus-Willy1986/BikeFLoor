@@ -382,6 +382,19 @@
     "strava": "Strava",
     "noRides": "Keine Fahrten"
   },
+  "gpxImport": {
+    "title": "GPX/FIT importieren",
+    "importButton": "GPX/FIT Import",
+    "dropZone": "GPX- oder FIT-Dateien hierher ziehen",
+    "dropZoneHint": "oder klicken zum Auswählen (max. 10 MB)",
+    "parseError": "Datei konnte nicht gelesen werden: {file}",
+    "rideTitle": "Titel",
+    "noBike": "Kein Fahrrad zugewiesen",
+    "importAll": "{count} Fahrten importieren",
+    "importing": "Importiere...",
+    "importSuccess": "{count} Fahrten importiert",
+    "importErrors": "{count} Fahrten fehlgeschlagen"
+  },
   "strava": {
     "title": "Strava",
     "connect": "Mit Strava verbinden",
@@ -582,6 +595,10 @@
       "raceday": {
         "title": "Race-Day Checklisten",
         "description": "Disziplinspezifische Checklisten für Zeitfahren, MTB und Gravel — mit Equipment, Ernährung und deinem persönlichen Setup."
+      },
+      "gpxImport": {
+        "title": "GPX/FIT Import",
+        "description": "Importiere GPX- und FIT-Dateien per Drag & Drop. Routen werden auf der Karte angezeigt — perfekt für Garmin, Wahoo und Co."
       }
     },
     "steps": {
@@ -686,10 +703,11 @@
       },
       "rides": {
         "title": "Deine Kilometer zählen sich selbst",
-        "description": "Verbinde Strava und deine Fahrten werden automatisch importiert. Verschleiß wird live aktualisiert — du musst nichts manuell eintragen.",
+        "description": "Verbinde Strava oder importiere GPX/FIT-Dateien — deine Fahrten werden automatisch erfasst. Verschleiß wird live aktualisiert.",
         "bullet1": "Automatischer Import per Webhook",
         "bullet2": "Zuordnung per Strava Gear-ID",
-        "bullet3": "Verschleiß-Update in Echtzeit"
+        "bullet3": "Verschleiß-Update in Echtzeit",
+        "bullet4": "GPX/FIT-Import mit Karten-Vorschau"
       }
     }
   },

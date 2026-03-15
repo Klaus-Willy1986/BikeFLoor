@@ -4,6 +4,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useRides } from '@/hooks/use-rides';
 import { Card, CardContent } from '@/components/ui/card';
 import { EmptyState } from '@/components/shared/empty-state';
+import { Badge } from '@/components/ui/badge';
 import { Mountain, Timer, Route, ExternalLink } from 'lucide-react';
 import { StravaBadge } from '@/components/shared/strava-badge';
 
@@ -64,6 +65,11 @@ export function BikeRides({ bikeId }: { bikeId: string }) {
                     ) : (
                       <span className="text-[11px] text-[#FC4C02] font-medium">Strava</span>
                     )
+                  )}
+                  {(ride.source === 'gpx' || ride.source === 'fit') && (
+                    <Badge variant="secondary" className="text-[9px] uppercase px-1.5 py-0">
+                      {ride.source}
+                    </Badge>
                   )}
                 </div>
               </div>

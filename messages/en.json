@@ -382,6 +382,19 @@
     "strava": "Strava",
     "noRides": "No rides"
   },
+  "gpxImport": {
+    "title": "Import GPX/FIT",
+    "importButton": "GPX/FIT Import",
+    "dropZone": "Drag & drop GPX or FIT files here",
+    "dropZoneHint": "or click to browse (max 10 MB)",
+    "parseError": "Failed to parse: {file}",
+    "rideTitle": "Title",
+    "noBike": "No bike assigned",
+    "importAll": "Import {count} rides",
+    "importing": "Importing...",
+    "importSuccess": "{count} rides imported",
+    "importErrors": "{count} rides failed"
+  },
   "strava": {
     "title": "Strava",
     "connect": "Connect with Strava",
@@ -582,6 +595,10 @@
       "raceday": {
         "title": "Race-Day Checklists",
         "description": "Discipline-specific checklists for time trials, MTB, and gravel — with equipment, nutrition, and your personal setup."
+      },
+      "gpxImport": {
+        "title": "GPX/FIT Import",
+        "description": "Import GPX and FIT files via drag & drop. Routes are displayed on the map — perfect for Garmin, Wahoo, and more."
       }
     },
     "steps": {
@@ -686,10 +703,11 @@
       },
       "rides": {
         "title": "Your Kilometers Count Themselves",
-        "description": "Connect Strava and your rides are imported automatically. Wear updates in real-time — no manual entry needed.",
+        "description": "Connect Strava or import GPX/FIT files — your rides are captured automatically. Wear updates in real-time.",
         "bullet1": "Auto-import via webhook",
         "bullet2": "Matching via Strava Gear ID",
-        "bullet3": "Wear updates in real-time"
+        "bullet3": "Wear updates in real-time",
+        "bullet4": "GPX/FIT import with map preview"
       }
     }
   },

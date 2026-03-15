@@ -24,9 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Plus, Route, ExternalLink } from 'lucide-react';
+import { Plus, Route, ExternalLink, FileUp } from 'lucide-react';
 import { toast } from 'sonner';
 import { StravaBadge } from '@/components/shared/strava-badge';
+import { GpxImportDialog } from '@/components/rides/gpx-import-dialog';
 
 export function RidesList() {
   const t = useTranslations();
@@ -35,6 +36,7 @@ export function RidesList() {
   const { data: bikes } = useBikes();
   const createRide = useCreateRide();
   const [formOpen, setFormOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const [form, setForm] = useState({
     bike_id: '',
     title: '',
@@ -94,10 +96,16 @@ export function RidesList() {
       <PageHeader
         title={t('rides.title')}
         action={
-          <Button onClick={() => setFormOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" />
-            {t('rides.addRide')}
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setImportOpen(true)}>
+              <FileUp className="mr-2 h-4 w-4" />
+              {t('gpxImport.importButton')}
+            </Button>
+            <Button onClick={() => setFormOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" />
+              {t('rides.addRide')}
+            </Button>
+          </div>
         }
       />
 
@@ -132,6 +140,10 @@ export function RidesList() {
                         Strava
                         <ExternalLink className="h-3 w-3" />
                       </a>
+                    ) : ride.source === 'gpx' || ride.source === 'fit' ? (
+                      <Badge variant="secondary" className="text-[10px] uppercase">
+                        {ride.source}
+                      </Badge>
                     ) : (
                       <Badge variant="secondary" className="text-xs">
                         {ride.source === 'strava'
@@ -260,6 +272,8 @@ export function RidesList() {
           </form>
         </DialogContent>
       </Dialog>
+
+      <GpxImportDialog open={importOpen} onOpenChange={setImportOpen} />
     </div>
   );
 }
