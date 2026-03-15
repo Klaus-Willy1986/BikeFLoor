@@ -534,7 +534,7 @@ export function BikeAddWizard() {
             </div>
 
             {/* Auto-components toggle */}
-            <div className="rounded-lg border p-4">
+            <div className="rounded-lg border p-4 space-y-3">
               <button
                 type="button"
                 onClick={() => setAutoComponents(!autoComponents)}
@@ -560,77 +560,79 @@ export function BikeAddWizard() {
                       </Badge>
                     )}
                   </div>
-                  {/* Preset selectors — only when no catalog match */}
-                  {!hasSpecificParts && autoComponents && (
-                    <div className="mt-3 grid gap-2 sm:grid-cols-3" onClick={(e) => e.stopPropagation()}>
-                      <div className="space-y-1">
-                        <span className="text-[11px] text-muted-foreground">{t('presets.groupset')}</span>
-                        <Select
-                          value={selectedGroupset ?? '_none'}
-                          onValueChange={(v) => setSelectedGroupset(v === '_none' ? null : v)}
-                        >
-                          <SelectTrigger className="h-8 text-xs">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="_none">{t('presets.none')}</SelectItem>
-                            {filteredGroupsets.map((g) => (
-                              <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-[11px] text-muted-foreground">{t('presets.wheels')}</span>
-                        <Select
-                          value={selectedWheels ?? '_none'}
-                          onValueChange={(v) => setSelectedWheels(v === '_none' ? null : v)}
-                        >
-                          <SelectTrigger className="h-8 text-xs">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="_none">{t('presets.none')}</SelectItem>
-                            {filteredWheels.map((w) => (
-                              <SelectItem key={w.id} value={w.id}>{w.name}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-[11px] text-muted-foreground">{t('presets.tires')}</span>
-                        <Select
-                          value={selectedTires ?? '_none'}
-                          onValueChange={(v) => setSelectedTires(v === '_none' ? null : v)}
-                        >
-                          <SelectTrigger className="h-8 text-xs">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="_none">{t('presets.none')}</SelectItem>
-                            {filteredTires.map((ti) => (
-                              <SelectItem key={ti.id} value={ti.id}>{ti.name}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  )}
-                  <div className="mt-1.5 flex flex-wrap gap-1.5">
-                    {componentTemplates.map((c) => (
-                      <span
-                        key={c.category_key}
-                        className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-[11px] text-muted-foreground"
-                      >
-                        {c.name}
-                        {'brand' in c && (c as any).brand && (
-                          <span className="font-medium text-foreground">{String((c as any).brand)}</span>
-                        )}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </button>
+              {/* Preset selectors — only when no catalog match */}
+              {!hasSpecificParts && autoComponents && (
+                <div className="ml-8 grid gap-2 sm:grid-cols-3">
+                  <div className="space-y-1">
+                    <span className="text-[11px] text-muted-foreground">{t('presets.groupset')}</span>
+                    <Select
+                      value={selectedGroupset ?? '_none'}
+                      onValueChange={(v) => setSelectedGroupset(v === '_none' ? null : v)}
+                    >
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="_none">{t('presets.none')}</SelectItem>
+                        {filteredGroupsets.map((g) => (
+                          <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[11px] text-muted-foreground">{t('presets.wheels')}</span>
+                    <Select
+                      value={selectedWheels ?? '_none'}
+                      onValueChange={(v) => setSelectedWheels(v === '_none' ? null : v)}
+                    >
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="_none">{t('presets.none')}</SelectItem>
+                        {filteredWheels.map((w) => (
+                          <SelectItem key={w.id} value={w.id}>{w.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[11px] text-muted-foreground">{t('presets.tires')}</span>
+                    <Select
+                      value={selectedTires ?? '_none'}
+                      onValueChange={(v) => setSelectedTires(v === '_none' ? null : v)}
+                    >
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="_none">{t('presets.none')}</SelectItem>
+                        {filteredTires.map((ti) => (
+                          <SelectItem key={ti.id} value={ti.id}>{ti.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
+              {autoComponents && (
+                <div className="ml-8 flex flex-wrap gap-1.5">
+                  {componentTemplates.map((c) => (
+                    <span
+                      key={c.category_key}
+                      className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-[11px] text-muted-foreground"
+                    >
+                      {c.name}
+                      {'brand' in c && (c as any).brand && (
+                        <span className="font-medium text-foreground">{String((c as any).brand)}</span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Actions */}
