@@ -759,6 +759,52 @@ export type Database = {
         };
         Relationships: [];
       };
+      bike_templates: {
+        Row: {
+          id: string;
+          manufacturer: string;
+          model: string;
+          year: number | null;
+          type: string;
+          weight_kg: number | null;
+          image_url: string | null;
+          components: Json;
+          contributor_count: number;
+          is_verified: boolean;
+          source: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          manufacturer: string;
+          model: string;
+          year?: number | null;
+          type?: string;
+          weight_kg?: number | null;
+          image_url?: string | null;
+          components?: Json;
+          contributor_count?: number;
+          is_verified?: boolean;
+          source?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          manufacturer?: string;
+          model?: string;
+          year?: number | null;
+          type?: string;
+          weight_kg?: number | null;
+          image_url?: string | null;
+          components?: Json;
+          contributor_count?: number;
+          is_verified?: boolean;
+          source?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       bike_type_wear_defaults: {
         Row: {
           id: string;

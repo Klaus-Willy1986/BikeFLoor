@@ -8,7 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { bikeSchema, type BikeFormData } from '@/lib/validators/bike';
 import { useCreateBike } from '@/hooks/use-bikes';
 import { useCreateBulkComponents } from '@/hooks/use-components';
-import { searchBikeCatalog, DEFAULT_COMPONENTS, type CatalogBike, type CatalogComponent } from '@/lib/bike-catalog';
+import { DEFAULT_COMPONENTS, type CatalogBike, type CatalogComponent } from '@/lib/bike-catalog';
+import { useBikeTemplateSearch, type BikeTemplateResult } from '@/hooks/use-bike-templates';
 import { BIKE_TYPES } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,6 +29,8 @@ import {
   ChevronRight,
   Wrench,
   Check,
+  BadgeCheck,
+  Users,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -49,7 +52,7 @@ export function BikeAddWizard() {
 
   const [step, setStep] = useState<Step>('search');
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<CatalogBike[]>([]);
+  const { results, isLoading: searchLoading } = useBikeTemplateSearch(query);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [prefilled, setPrefilled] = useState(false);
   const [selectedBikeType, setSelectedBikeType] = useState<string>('road');
@@ -74,12 +77,10 @@ export function BikeAddWizard() {
 
   const bulkComponents = useCreateBulkComponents(createdBikeId ?? '');
 
-  // Search on query change
+  // Reset selected index when results change
   useEffect(() => {
-    const res = searchBikeCatalog(query);
-    setResults(res);
     setSelectedIndex(-1);
-  }, [query]);
+  }, [results]);
 
   // Auto-focus search input
   useEffect(() => {
@@ -88,7 +89,7 @@ export function BikeAddWizard() {
     }
   }, [step]);
 
-  const selectBike = useCallback((bike: CatalogBike) => {
+  const selectBike = useCallback((bike: BikeTemplateResult | CatalogBike) => {
     const name = `${bike.manufacturer} ${bike.model}`;
     reset({
       name,
@@ -269,7 +270,7 @@ export function BikeAddWizard() {
             <div ref={listRef} className="max-h-[400px] overflow-y-auto py-1">
               {results.map((bike, i) => (
                 <button
-                  key={`${bike.manufacturer}-${bike.model}`}
+                  key={`${bike.manufacturer}-${bike.model}-${bike.year ?? ''}`}
                   data-result
                   onClick={() => selectBike(bike)}
                   className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors ${
@@ -292,9 +293,12 @@ export function BikeAddWizard() {
                     <span className="text-lg leading-none">{typeIcons[bike.type]}</span>
                   )}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline gap-2">
+                    <div className="flex items-center gap-2">
                       <span className="text-[13px] font-semibold">{bike.manufacturer}</span>
                       <span className="text-[13px] text-muted-foreground">{bike.model}</span>
+                      {bike.is_verified && (
+                        <BadgeCheck className="h-3.5 w-3.5 text-blue-500" />
+                      )}
                     </div>
                     <div className="mt-0.5 flex items-center gap-2 text-[11px] text-muted-foreground">
                       <span>{t(`bikes.types.${bike.type}`)}</span>
@@ -310,6 +314,15 @@ export function BikeAddWizard() {
                           <span className="font-mono tabular-nums">~{bike.weight_kg} kg</span>
                         </>
                       )}
+                      {bike.contributor_count > 1 && (
+                        <>
+                          <span className="text-border">·</span>
+                          <span className="flex items-center gap-0.5">
+                            <Users className="h-3 w-3" />
+                            {t('bikeTemplates.communityCount', { count: bike.contributor_count })}
+                          </span>
+                        </>
+                      )}
                     </div>
                   </div>
                   <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary/60" />
@@ -320,7 +333,7 @@ export function BikeAddWizard() {
         )}
 
         {/* No results, but query entered */}
-        {query.length >= 2 && results.length === 0 && (
+        {query.length >= 2 && results.length === 0 && !searchLoading && (
           <Card>
             <CardContent className="py-8 text-center">
               <Bike className="mx-auto h-8 w-8 text-muted-foreground/40" />

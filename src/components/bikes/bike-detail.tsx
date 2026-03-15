@@ -43,6 +43,7 @@ import { Link } from '@/i18n/navigation';
 import { toast } from 'sonner';
 import { useWorkshops } from '@/hooks/use-shops';
 import { RepairRequestDialog } from '@/components/shops/repair-request-dialog';
+import { ShareSetupButton } from '@/components/bikes/share-setup-button';
 import { resolveBikeImage } from '@/lib/bike-image';
 import Image from 'next/image';
 
@@ -222,11 +223,14 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
                   </DropdownMenu>
                 </div>
               </div>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-3xl font-bold font-mono tabular-nums tracking-tight">
-                  {Math.round(Number(bike.total_distance_km)).toLocaleString()}
-                </span>
-                <span className="text-sm text-muted-foreground">km</span>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-bold font-mono tabular-nums tracking-tight">
+                    {Math.round(Number(bike.total_distance_km)).toLocaleString()}
+                  </span>
+                  <span className="text-sm text-muted-foreground">km</span>
+                </div>
+                <ShareSetupButton bike={bike} />
               </div>
             </div>
           </div>
@@ -252,11 +256,14 @@ export function BikeDetail({ bikeId }: { bikeId: string }) {
                       <span className="text-sm text-white/70 font-mono">{bike.year}</span>
                     )}
                   </div>
-                  <div className="mt-4 flex items-baseline gap-1">
-                    <span className="text-3xl font-bold font-mono tabular-nums tracking-tight text-white">
-                      {Math.round(Number(bike.total_distance_km)).toLocaleString()}
-                    </span>
-                    <span className="text-sm text-white/60">km</span>
+                  <div className="mt-4 flex items-center gap-3">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-bold font-mono tabular-nums tracking-tight text-white">
+                        {Math.round(Number(bike.total_distance_km)).toLocaleString()}
+                      </span>
+                      <span className="text-sm text-white/60">km</span>
+                    </div>
+                    <ShareSetupButton bike={bike} />
                   </div>
                 </div>
                 <DropdownMenu>

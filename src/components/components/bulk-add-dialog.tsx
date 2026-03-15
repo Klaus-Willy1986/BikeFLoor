@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useBike } from '@/hooks/use-bikes';
 import { useCreateBulkComponents } from '@/hooks/use-components';
@@ -17,8 +17,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Package } from 'lucide-react';
 import { toast } from 'sonner';
+import { createClient } from '@/lib/supabase/client';
 import {
-  BIKE_CATALOG,
   DEFAULT_COMPONENTS,
   type CatalogComponent,
   type ComponentTemplate,
@@ -46,19 +46,36 @@ export function BulkAddDialog({ open, onOpenChange, bikeId }: BulkAddDialogProps
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [initialized, setInitialized] = useState(false);
 
-  // Find catalog match or fall back to defaults
+  // Look up bike template from DB, fall back to defaults
+  const [templateComponents, setTemplateComponents] = useState<CatalogComponent[] | null>(null);
+  const [templateLoaded, setTemplateLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!bike || !open) return;
+    setTemplateLoaded(false);
+    setTemplateComponents(null);
+
+    const supabase = createClient();
+    supabase
+      .from('bike_templates')
+      .select('components')
+      .ilike('manufacturer', bike.manufacturer ?? '')
+      .ilike('model', bike.model ?? '')
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.components && Array.isArray(data.components) && data.components.length > 0) {
+          setTemplateComponents(data.components as unknown as CatalogComponent[]);
+        }
+        setTemplateLoaded(true);
+      });
+  }, [bike, open]);
+
   const { components, source } = useMemo(() => {
     if (!bike) return { components: [] as SelectableComponent[], source: 'none' as const };
 
-    // Try catalog match
-    const catalogEntry = BIKE_CATALOG.find(
-      (b) =>
-        b.manufacturer.toLowerCase() === (bike.manufacturer ?? '').toLowerCase() &&
-        b.model.toLowerCase() === (bike.model ?? '').toLowerCase()
-    );
-
-    if (catalogEntry?.components?.length) {
-      const items: SelectableComponent[] = catalogEntry.components.map((c: CatalogComponent, i: number) => ({
+    if (templateComponents?.length) {
+      const items: SelectableComponent[] = templateComponents.map((c: CatalogComponent, i: number) => ({
         id: `catalog-${i}`,
         category_key: c.category_key,
         name: c.name,
@@ -78,7 +95,7 @@ export function BulkAddDialog({ open, onOpenChange, bikeId }: BulkAddDialogProps
       max_distance_km: c.max_distance_km,
     }));
     return { components: items, source: 'defaults' as const };
-  }, [bike]);
+  }, [bike, templateComponents]);
 
   // Initialize with nothing selected when components first load
   if (components.length > 0 && !initialized) {

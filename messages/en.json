@@ -767,5 +767,12 @@
       "title": "Disclaimer",
       "text": "The contents of this app were created with the greatest care. However, we cannot guarantee the accuracy, completeness, or timeliness of the content. BikeFloor serves as a tool for maintenance planning — the actual inspection and maintenance of your bicycle is your responsibility."
     }
+  },
+  "bikeTemplates": {
+    "shareSetup": "Share Setup",
+    "shareConfirm": "Your setup will be shared anonymously and helps other {manufacturer} {model} riders.",
+    "shareSuccess": "Setup shared!",
+    "verified": "Verified",
+    "communityCount": "{count} riders"
   }
 }
