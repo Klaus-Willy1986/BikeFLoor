@@ -162,7 +162,7 @@ export function BikeAddWizard() {
   }, [selectedIndex]);
 
   const currentType = watch('type') || selectedBikeType;
-  const hasSpecificParts = !!catalogComponents;
+  const hasSpecificParts = !!catalogComponents && catalogComponents.length > 0;
 
   // Filter presets by current bike type
   const filteredGroupsets = useMemo(
@@ -193,7 +193,7 @@ export function BikeAddWizard() {
 
   // Prefer bike-specific components (from catalog config), fall back to preset-built list
   const componentTemplates = useMemo(
-    () => catalogComponents ?? buildComponentsFromPresets(currentType, selectedGroupset, selectedWheels, selectedTires),
+    () => (catalogComponents && catalogComponents.length > 0) ? catalogComponents : buildComponentsFromPresets(currentType, selectedGroupset, selectedWheels, selectedTires),
     [catalogComponents, currentType, selectedGroupset, selectedWheels, selectedTires],
   );
 
