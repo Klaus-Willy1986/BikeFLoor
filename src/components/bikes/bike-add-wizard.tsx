@@ -167,10 +167,15 @@ export function BikeAddWizard() {
   const currentType = watch('type') || selectedBikeType;
   const hasSpecificParts = !!catalogComponents && catalogComponents.length > 0;
 
-  // Prefer bike-specific components (from catalog config), fall back to preset-built list
+  // Use preset-built list if user selected any presets, otherwise fall back to catalog/defaults
+  const hasPresetSelection = !!(selectedGroupset || selectedWheels || selectedTires);
   const componentTemplates = useMemo(
-    () => (catalogComponents && catalogComponents.length > 0) ? catalogComponents : buildComponentsFromPresets(currentType, selectedGroupset, selectedWheels, selectedTires),
-    [catalogComponents, currentType, selectedGroupset, selectedWheels, selectedTires],
+    () => hasPresetSelection
+      ? buildComponentsFromPresets(currentType, selectedGroupset, selectedWheels, selectedTires)
+      : (catalogComponents && catalogComponents.length > 0)
+        ? catalogComponents
+        : buildComponentsFromPresets(currentType, null, null, null),
+    [catalogComponents, currentType, selectedGroupset, selectedWheels, selectedTires, hasPresetSelection],
   );
 
   const onSubmit = async (data: BikeFormData) => {
@@ -538,8 +543,8 @@ export function BikeAddWizard() {
                   </div>
                 </div>
               </button>
-              {/* Preset picker dialog — only when no catalog match */}
-              {!hasSpecificParts && autoComponents && (
+              {/* Preset picker dialog — always available when auto-components enabled */}
+              {autoComponents && (
                 <div className="ml-8">
                   <Button
                     type="button"
