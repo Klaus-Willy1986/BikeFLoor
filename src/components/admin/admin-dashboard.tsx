@@ -34,6 +34,13 @@ import {
   Shield,
   MessageSquare,
   Trash2,
+  Bike,
+  Wrench,
+  Route,
+  BarChart3,
+  Package,
+  FileText,
+  Link2,
 } from 'lucide-react';
 
 type AdminBike = {
@@ -60,6 +67,26 @@ type FeedbackItem = {
   message: string;
   created_at: string;
   user_name: string | null;
+};
+
+type UsageStats = {
+  bikes: { total: number; byType: Record<string, number>; totalDistanceKm: number };
+  components: { total: number; active: number };
+  rides: { total: number; totalDistanceKm: number; bySource: Record<string, number> };
+  services: { total: number; totalCost: number };
+  strava: { connections: number };
+  documents: { total: number };
+  inventory: { total: number };
+};
+
+const BIKE_TYPE_LABELS: Record<string, string> = {
+  road: 'Rennrad',
+  mtb: 'MTB',
+  gravel: 'Gravel',
+  city: 'City',
+  tt: 'TT/Tri',
+  ebike: 'E-Bike',
+  other: 'Sonstige',
 };
 
 export function AdminDashboard() {
@@ -161,6 +188,15 @@ export function AdminDashboard() {
     },
   });
 
+  const { data: usageStats } = useQuery<UsageStats | null>({
+    queryKey: ['admin-usage-stats'],
+    queryFn: async () => {
+      const res = await fetch('/api/admin/stats');
+      if (!res.ok) return null;
+      return res.json();
+    },
+  });
+
   const stats = users
     ? {
         total: users.length,
@@ -255,6 +291,95 @@ export function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Anonymous Usage Stats */}
+      {usageStats && (
+        <Card className="border-border/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              Nutzungsstatistik (anonym)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {/* Bikes */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <Bike className="h-4 w-4 text-primary" />
+                  {usageStats.bikes.total} Fahrräder
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {Object.entries(usageStats.bikes.byType).map(([type, count]) => (
+                    <Badge key={type} variant="secondary" className="text-[10px]">
+                      {BIKE_TYPE_LABELS[type] || type} {count}
+                    </Badge>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {usageStats.bikes.totalDistanceKm.toLocaleString()} km gesamt
+                </p>
+              </div>
+
+              {/* Components */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <Wrench className="h-4 w-4 text-primary" />
+                  {usageStats.components.total} Komponenten
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {usageStats.components.active} aktiv montiert
+                </p>
+              </div>
+
+              {/* Rides */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <Route className="h-4 w-4 text-primary" />
+                  {usageStats.rides.total} Fahrten
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {Object.entries(usageStats.rides.bySource).map(([source, count]) => (
+                    <Badge key={source} variant="secondary" className="text-[10px]">
+                      {source === 'strava' ? 'Strava' : source === 'gpx' ? 'GPX/FIT' : 'Manuell'} {count}
+                    </Badge>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {usageStats.rides.totalDistanceKm.toLocaleString()} km gefahren
+                </p>
+              </div>
+
+              {/* Services & more */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <Wrench className="h-4 w-4 text-primary" />
+                  {usageStats.services.total} Wartungen
+                </div>
+                {usageStats.services.totalCost > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    {usageStats.services.totalCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })} Kosten
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-2 pt-1 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <Link2 className="h-3 w-3" />
+                    {usageStats.strava.connections} Strava
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <FileText className="h-3 w-3" />
+                    {usageStats.documents.total} Docs
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Package className="h-3 w-3" />
+                    {usageStats.inventory.total} Lager
+                  </span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* User Table */}
       <Card className="border-border/50">
