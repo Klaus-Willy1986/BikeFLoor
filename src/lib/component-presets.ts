@@ -235,12 +235,62 @@ export const GROUPSET_PRESETS: GroupsetPreset[] = [
       { category_key: 'crankset', name: 'Kurbel', brand: 'Campagnolo', model: 'Record UT', max_distance_km: 50000 },
     ],
   },
+  {
+    id: 'campagnolo-ekar-13s',
+    name: 'Campagnolo Ekar 13s',
+    bikeTypes: ['gravel'],
+    components: [
+      { category_key: 'chain', name: 'Kette', brand: 'Campagnolo', model: 'C13 Ekar', max_distance_km: 5000 },
+      { category_key: 'cassette', name: 'Kassette', brand: 'Campagnolo', model: 'Ekar 9-42', max_distance_km: 12000 },
+      { category_key: 'brake_pads', name: 'Bremsbeläge', brand: 'Campagnolo', model: 'DB-310 Organic', max_distance_km: 2500 },
+      { category_key: 'brake_rotors', name: 'Bremsscheiben', brand: 'Campagnolo', model: 'AFS Disc', max_distance_km: 18000 },
+      { category_key: 'bottom_bracket', name: 'Tretlager', brand: 'Campagnolo', model: 'Ultra-Torque', max_distance_km: 25000 },
+      { category_key: 'crankset', name: 'Kurbel', brand: 'Campagnolo', model: 'Ekar UT', max_distance_km: 50000 },
+    ],
+  },
+  // Shimano City/eBike
+  {
+    id: 'shimano-nexus-8s',
+    name: 'Shimano Nexus 8s',
+    bikeTypes: ['city', 'ebike'],
+    components: [
+      { category_key: 'chain', name: 'Kette', brand: 'Shimano', model: 'CN-NX10', max_distance_km: 5000 },
+      { category_key: 'brake_pads', name: 'Bremsbeläge', brand: 'Shimano', model: 'Rollenbremse', max_distance_km: 8000 },
+      { category_key: 'bottom_bracket', name: 'Tretlager', brand: 'Shimano', model: 'SM-BB52', max_distance_km: 25000 },
+      { category_key: 'crankset', name: 'Kurbel', brand: 'Shimano', model: 'FC-E5010', max_distance_km: 60000 },
+    ],
+  },
+  {
+    id: 'shimano-alfine-11s',
+    name: 'Shimano Alfine 11s',
+    bikeTypes: ['city'],
+    components: [
+      { category_key: 'chain', name: 'Kette', brand: 'Shimano', model: 'CN-HG701', max_distance_km: 5000 },
+      { category_key: 'brake_pads', name: 'Bremsbeläge', brand: 'Shimano', model: 'L03A Resin', max_distance_km: 4000 },
+      { category_key: 'brake_rotors', name: 'Bremsscheiben', brand: 'Shimano', model: 'RT-CL800', max_distance_km: 20000 },
+      { category_key: 'bottom_bracket', name: 'Tretlager', brand: 'Shimano', model: 'SM-BB52', max_distance_km: 25000 },
+      { category_key: 'crankset', name: 'Kurbel', brand: 'Shimano', model: 'FC-S501', max_distance_km: 60000 },
+    ],
+  },
+  {
+    id: 'shimano-cues-9s',
+    name: 'Shimano CUES 9s',
+    bikeTypes: ['city', 'ebike'],
+    components: [
+      { category_key: 'chain', name: 'Kette', brand: 'Shimano', model: 'CN-LG500', max_distance_km: 4000 },
+      { category_key: 'cassette', name: 'Kassette', brand: 'Shimano', model: 'CS-LG400', max_distance_km: 10000 },
+      { category_key: 'brake_pads', name: 'Bremsbeläge', brand: 'Shimano', model: 'B05S Resin', max_distance_km: 3000 },
+      { category_key: 'brake_rotors', name: 'Bremsscheiben', brand: 'Shimano', model: 'RT-MT410', max_distance_km: 15000 },
+      { category_key: 'bottom_bracket', name: 'Tretlager', brand: 'Shimano', model: 'SM-BB52', max_distance_km: 20000 },
+      { category_key: 'crankset', name: 'Kurbel', brand: 'Shimano', model: 'FC-U4000', max_distance_km: 50000 },
+    ],
+  },
 ];
 
 // ─── Wheel Presets ──────────────────────────────────────
 
 export const WHEEL_PRESETS: WheelPreset[] = [
-  // DT Swiss
+  // ── DT Swiss ──
   {
     id: 'dt-swiss-arc-1400',
     name: 'DT Swiss ARC 1400 DICUT 48',
@@ -256,11 +306,25 @@ export const WHEEL_PRESETS: WheelPreset[] = [
     rear: { brand: 'DT Swiss', model: 'ERC 1400 DICUT 35', max_distance_km: 35000 },
   },
   {
-    id: 'dt-swiss-xr-1501',
-    name: 'DT Swiss XR 1501 Spline ONE',
-    bikeTypes: ['mtb'],
-    front: { brand: 'DT Swiss', model: 'XR 1501 Spline ONE', max_distance_km: 35000 },
-    rear: { brand: 'DT Swiss', model: 'XR 1501 Spline ONE', max_distance_km: 30000 },
+    id: 'dt-swiss-pr-1600',
+    name: 'DT Swiss PR 1600 Spline 32',
+    bikeTypes: ['road'],
+    front: { brand: 'DT Swiss', model: 'PR 1600 Spline 32', max_distance_km: 50000 },
+    rear: { brand: 'DT Swiss', model: 'PR 1600 Spline 32', max_distance_km: 45000 },
+  },
+  {
+    id: 'dt-swiss-grc-1400',
+    name: 'DT Swiss GRC 1400 Spline 42',
+    bikeTypes: ['gravel'],
+    front: { brand: 'DT Swiss', model: 'GRC 1400 Spline 42', max_distance_km: 40000 },
+    rear: { brand: 'DT Swiss', model: 'GRC 1400 Spline 42', max_distance_km: 35000 },
+  },
+  {
+    id: 'dt-swiss-g-1800',
+    name: 'DT Swiss G 1800 Spline 25',
+    bikeTypes: ['gravel', 'city'],
+    front: { brand: 'DT Swiss', model: 'G 1800 Spline 25', max_distance_km: 50000 },
+    rear: { brand: 'DT Swiss', model: 'G 1800 Spline 25', max_distance_km: 45000 },
   },
   {
     id: 'dt-swiss-xrc-1200',
@@ -269,7 +333,28 @@ export const WHEEL_PRESETS: WheelPreset[] = [
     front: { brand: 'DT Swiss', model: 'XRC 1200 Spline', max_distance_km: 30000 },
     rear: { brand: 'DT Swiss', model: 'XRC 1200 Spline', max_distance_km: 25000 },
   },
-  // Zipp
+  {
+    id: 'dt-swiss-xr-1501',
+    name: 'DT Swiss XR 1501 Spline ONE',
+    bikeTypes: ['mtb'],
+    front: { brand: 'DT Swiss', model: 'XR 1501 Spline ONE', max_distance_km: 35000 },
+    rear: { brand: 'DT Swiss', model: 'XR 1501 Spline ONE', max_distance_km: 30000 },
+  },
+  {
+    id: 'dt-swiss-m-1900',
+    name: 'DT Swiss M 1900 Spline 30',
+    bikeTypes: ['mtb', 'ebike'],
+    front: { brand: 'DT Swiss', model: 'M 1900 Spline 30', max_distance_km: 40000 },
+    rear: { brand: 'DT Swiss', model: 'M 1900 Spline 30', max_distance_km: 35000 },
+  },
+  {
+    id: 'dt-swiss-h-1900',
+    name: 'DT Swiss H 1900 Spline 30',
+    bikeTypes: ['ebike'],
+    front: { brand: 'DT Swiss', model: 'H 1900 Spline 30', max_distance_km: 40000 },
+    rear: { brand: 'DT Swiss', model: 'H 1900 Spline 30', max_distance_km: 35000 },
+  },
+  // ── Zipp ──
   {
     id: 'zipp-303-s',
     name: 'Zipp 303 S',
@@ -278,48 +363,201 @@ export const WHEEL_PRESETS: WheelPreset[] = [
     rear: { brand: 'Zipp', model: '303 S', max_distance_km: 35000 },
   },
   {
+    id: 'zipp-303-firecrest',
+    name: 'Zipp 303 Firecrest',
+    bikeTypes: ['road', 'gravel'],
+    front: { brand: 'Zipp', model: '303 Firecrest', max_distance_km: 40000 },
+    rear: { brand: 'Zipp', model: '303 Firecrest', max_distance_km: 35000 },
+  },
+  {
     id: 'zipp-404-firecrest',
     name: 'Zipp 404 Firecrest',
     bikeTypes: ['road'],
     front: { brand: 'Zipp', model: '404 Firecrest', max_distance_km: 40000 },
     rear: { brand: 'Zipp', model: '404 Firecrest', max_distance_km: 35000 },
   },
-  // Mavic
+  // ── Mavic ──
   {
     id: 'mavic-cosmic-slr',
-    name: 'Mavic Cosmic SLR',
+    name: 'Mavic Cosmic SLR 45',
     bikeTypes: ['road'],
     front: { brand: 'Mavic', model: 'Cosmic SLR 45', max_distance_km: 40000 },
     rear: { brand: 'Mavic', model: 'Cosmic SLR 45', max_distance_km: 35000 },
   },
   {
     id: 'mavic-ksyrium',
-    name: 'Mavic Ksyrium',
+    name: 'Mavic Ksyrium SL',
     bikeTypes: ['road', 'gravel'],
     front: { brand: 'Mavic', model: 'Ksyrium SL', max_distance_km: 45000 },
     rear: { brand: 'Mavic', model: 'Ksyrium SL', max_distance_km: 40000 },
   },
-  // Fulcrum
+  {
+    id: 'mavic-allroad-sl',
+    name: 'Mavic Allroad SL',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Mavic', model: 'Allroad SL', max_distance_km: 40000 },
+    rear: { brand: 'Mavic', model: 'Allroad SL', max_distance_km: 35000 },
+  },
+  // ── Fulcrum ──
   {
     id: 'fulcrum-racing-zero',
-    name: 'Fulcrum Racing Zero',
+    name: 'Fulcrum Racing Zero DB',
     bikeTypes: ['road'],
     front: { brand: 'Fulcrum', model: 'Racing Zero DB', max_distance_km: 45000 },
     rear: { brand: 'Fulcrum', model: 'Racing Zero DB', max_distance_km: 40000 },
   },
   {
     id: 'fulcrum-speed-40',
-    name: 'Fulcrum Speed 40',
+    name: 'Fulcrum Speed 40 DB',
     bikeTypes: ['road'],
     front: { brand: 'Fulcrum', model: 'Speed 40 DB', max_distance_km: 40000 },
     rear: { brand: 'Fulcrum', model: 'Speed 40 DB', max_distance_km: 35000 },
+  },
+  {
+    id: 'fulcrum-rapid-red-5',
+    name: 'Fulcrum Rapid Red 5 DB',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Fulcrum', model: 'Rapid Red 5 DB', max_distance_km: 45000 },
+    rear: { brand: 'Fulcrum', model: 'Rapid Red 5 DB', max_distance_km: 40000 },
+  },
+  // ── Roval ──
+  {
+    id: 'roval-rapide-clx',
+    name: 'Roval Rapide CLX II',
+    bikeTypes: ['road'],
+    front: { brand: 'Roval', model: 'Rapide CLX II', max_distance_km: 40000 },
+    rear: { brand: 'Roval', model: 'Rapide CLX II', max_distance_km: 35000 },
+  },
+  {
+    id: 'roval-alpinist-clx',
+    name: 'Roval Alpinist CLX II',
+    bikeTypes: ['road'],
+    front: { brand: 'Roval', model: 'Alpinist CLX II', max_distance_km: 40000 },
+    rear: { brand: 'Roval', model: 'Alpinist CLX II', max_distance_km: 35000 },
+  },
+  {
+    id: 'roval-terra-clx',
+    name: 'Roval Terra CLX II',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Roval', model: 'Terra CLX II', max_distance_km: 35000 },
+    rear: { brand: 'Roval', model: 'Terra CLX II', max_distance_km: 30000 },
+  },
+  {
+    id: 'roval-control-sl',
+    name: 'Roval Control SL',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Roval', model: 'Control SL 29', max_distance_km: 30000 },
+    rear: { brand: 'Roval', model: 'Control SL 29', max_distance_km: 25000 },
+  },
+  // ── Bontrager ──
+  {
+    id: 'bontrager-aeolus-rsl-51',
+    name: 'Bontrager Aeolus RSL 51',
+    bikeTypes: ['road'],
+    front: { brand: 'Bontrager', model: 'Aeolus RSL 51', max_distance_km: 40000 },
+    rear: { brand: 'Bontrager', model: 'Aeolus RSL 51', max_distance_km: 35000 },
+  },
+  {
+    id: 'bontrager-aeolus-pro-37',
+    name: 'Bontrager Aeolus Pro 37',
+    bikeTypes: ['road', 'gravel'],
+    front: { brand: 'Bontrager', model: 'Aeolus Pro 37', max_distance_km: 45000 },
+    rear: { brand: 'Bontrager', model: 'Aeolus Pro 37', max_distance_km: 40000 },
+  },
+  {
+    id: 'bontrager-kovee-pro-30',
+    name: 'Bontrager Kovee Pro 30',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Bontrager', model: 'Kovee Pro 30', max_distance_km: 35000 },
+    rear: { brand: 'Bontrager', model: 'Kovee Pro 30', max_distance_km: 30000 },
+  },
+  // ── Hunt ──
+  {
+    id: 'hunt-50-aero-wide',
+    name: 'Hunt 50 Aero Wide',
+    bikeTypes: ['road'],
+    front: { brand: 'Hunt', model: '50 Aero Wide', max_distance_km: 40000 },
+    rear: { brand: 'Hunt', model: '50 Aero Wide', max_distance_km: 35000 },
+  },
+  {
+    id: 'hunt-35-carbon-gravel',
+    name: 'Hunt 35 Carbon Gravel X-Wide',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Hunt', model: '35 Carbon Gravel X-Wide', max_distance_km: 40000 },
+    rear: { brand: 'Hunt', model: '35 Carbon Gravel X-Wide', max_distance_km: 35000 },
+  },
+  {
+    id: 'hunt-trail-wide-mtb',
+    name: 'Hunt Trail Wide MTB',
+    bikeTypes: ['mtb', 'ebike'],
+    front: { brand: 'Hunt', model: 'Trail Wide MTB 29', max_distance_km: 35000 },
+    rear: { brand: 'Hunt', model: 'Trail Wide MTB 29', max_distance_km: 30000 },
+  },
+  // ── Campagnolo ──
+  {
+    id: 'campagnolo-bora-ultra-wto-45',
+    name: 'Campagnolo Bora Ultra WTO 45',
+    bikeTypes: ['road'],
+    front: { brand: 'Campagnolo', model: 'Bora Ultra WTO 45', max_distance_km: 40000 },
+    rear: { brand: 'Campagnolo', model: 'Bora Ultra WTO 45', max_distance_km: 35000 },
+  },
+  {
+    id: 'campagnolo-shamal-carbon',
+    name: 'Campagnolo Shamal Carbon DB',
+    bikeTypes: ['road'],
+    front: { brand: 'Campagnolo', model: 'Shamal Carbon DB', max_distance_km: 45000 },
+    rear: { brand: 'Campagnolo', model: 'Shamal Carbon DB', max_distance_km: 40000 },
+  },
+  // ── Shimano ──
+  {
+    id: 'shimano-dura-ace-c50',
+    name: 'Shimano Dura-Ace C50',
+    bikeTypes: ['road'],
+    front: { brand: 'Shimano', model: 'WH-R9270-C50-TL', max_distance_km: 40000 },
+    rear: { brand: 'Shimano', model: 'WH-R9270-C50-TL', max_distance_km: 35000 },
+  },
+  {
+    id: 'shimano-ultegra-c36',
+    name: 'Shimano Ultegra C36',
+    bikeTypes: ['road'],
+    front: { brand: 'Shimano', model: 'WH-R8170-C36-TL', max_distance_km: 45000 },
+    rear: { brand: 'Shimano', model: 'WH-R8170-C36-TL', max_distance_km: 40000 },
+  },
+  {
+    id: 'shimano-105-c46',
+    name: 'Shimano 105 C46',
+    bikeTypes: ['road'],
+    front: { brand: 'Shimano', model: 'WH-RS710-C46-TL', max_distance_km: 50000 },
+    rear: { brand: 'Shimano', model: 'WH-RS710-C46-TL', max_distance_km: 45000 },
+  },
+  {
+    id: 'shimano-deore-xt-mt800',
+    name: 'Shimano Deore XT MT800',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Shimano', model: 'WH-MT800-TL', max_distance_km: 35000 },
+    rear: { brand: 'Shimano', model: 'WH-MT800-TL', max_distance_km: 30000 },
+  },
+  // ── Newmen ──
+  {
+    id: 'newmen-advanced-sl',
+    name: 'Newmen Advanced SL R.32',
+    bikeTypes: ['road'],
+    front: { brand: 'Newmen', model: 'Advanced SL R.32', max_distance_km: 40000 },
+    rear: { brand: 'Newmen', model: 'Advanced SL R.32', max_distance_km: 35000 },
+  },
+  {
+    id: 'newmen-evolution-sl',
+    name: 'Newmen Evolution SL X.A.30',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Newmen', model: 'Evolution SL X.A.30', max_distance_km: 30000 },
+    rear: { brand: 'Newmen', model: 'Evolution SL X.A.30', max_distance_km: 25000 },
   },
 ];
 
 // ─── Tire Presets ───────────────────────────────────────
 
 export const TIRE_PRESETS: TirePreset[] = [
-  // Continental
+  // ── Continental ──
   {
     id: 'conti-gp5000',
     name: 'Continental GP5000 25mm',
@@ -335,19 +573,68 @@ export const TIRE_PRESETS: TirePreset[] = [
     rear: { brand: 'Continental', model: 'GP5000 S TR 28mm', max_distance_km: 5000 },
   },
   {
+    id: 'conti-gp5000-s-tr-32',
+    name: 'Continental GP5000 S TR 32mm',
+    bikeTypes: ['road', 'gravel'],
+    front: { brand: 'Continental', model: 'GP5000 S TR 32mm', max_distance_km: 6000 },
+    rear: { brand: 'Continental', model: 'GP5000 S TR 32mm', max_distance_km: 5000 },
+  },
+  {
     id: 'conti-terra-speed',
     name: 'Continental Terra Speed 40mm',
     bikeTypes: ['gravel'],
     front: { brand: 'Continental', model: 'Terra Speed 40mm', max_distance_km: 5000 },
     rear: { brand: 'Continental', model: 'Terra Speed 40mm', max_distance_km: 4000 },
   },
-  // Schwalbe
+  {
+    id: 'conti-terra-trail',
+    name: 'Continental Terra Trail 40mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Continental', model: 'Terra Trail 40mm', max_distance_km: 5000 },
+    rear: { brand: 'Continental', model: 'Terra Trail 40mm', max_distance_km: 4000 },
+  },
+  {
+    id: 'conti-contact-urban',
+    name: 'Continental Contact Urban 35mm',
+    bikeTypes: ['city', 'ebike'],
+    front: { brand: 'Continental', model: 'Contact Urban 35mm', max_distance_km: 8000 },
+    rear: { brand: 'Continental', model: 'Contact Urban 35mm', max_distance_km: 6000 },
+  },
+  {
+    id: 'conti-contact-plus',
+    name: 'Continental Contact Plus 37mm',
+    bikeTypes: ['city', 'ebike'],
+    front: { brand: 'Continental', model: 'Contact Plus 37mm', max_distance_km: 10000 },
+    rear: { brand: 'Continental', model: 'Contact Plus 37mm', max_distance_km: 8000 },
+  },
+  // ── Schwalbe ──
   {
     id: 'schwalbe-pro-one',
     name: 'Schwalbe Pro One TLE 28mm',
     bikeTypes: ['road'],
     front: { brand: 'Schwalbe', model: 'Pro One TLE 28mm', max_distance_km: 6000 },
     rear: { brand: 'Schwalbe', model: 'Pro One TLE 28mm', max_distance_km: 5000 },
+  },
+  {
+    id: 'schwalbe-one',
+    name: 'Schwalbe One TLE 25mm',
+    bikeTypes: ['road'],
+    front: { brand: 'Schwalbe', model: 'One TLE 25mm', max_distance_km: 5000 },
+    rear: { brand: 'Schwalbe', model: 'One TLE 25mm', max_distance_km: 4000 },
+  },
+  {
+    id: 'schwalbe-g-one-allround',
+    name: 'Schwalbe G-One Allround 40mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Schwalbe', model: 'G-One Allround 40mm', max_distance_km: 5000 },
+    rear: { brand: 'Schwalbe', model: 'G-One Allround 40mm', max_distance_km: 4000 },
+  },
+  {
+    id: 'schwalbe-g-one-speed',
+    name: 'Schwalbe G-One Speed 38mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Schwalbe', model: 'G-One Speed 38mm', max_distance_km: 4500 },
+    rear: { brand: 'Schwalbe', model: 'G-One Speed 38mm', max_distance_km: 3500 },
   },
   {
     id: 'schwalbe-nobby-nic',
@@ -363,7 +650,92 @@ export const TIRE_PRESETS: TirePreset[] = [
     front: { brand: 'Schwalbe', model: 'Racing Ralph 2.25"', max_distance_km: 4000 },
     rear: { brand: 'Schwalbe', model: 'Racing Ralph 2.25"', max_distance_km: 3000 },
   },
-  // Vittoria
+  {
+    id: 'schwalbe-magic-mary',
+    name: 'Schwalbe Magic Mary 2.4"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Schwalbe', model: 'Magic Mary 2.4"', max_distance_km: 3000 },
+    rear: { brand: 'Schwalbe', model: 'Magic Mary 2.4"', max_distance_km: 2000 },
+  },
+  {
+    id: 'schwalbe-hans-dampf',
+    name: 'Schwalbe Hans Dampf 2.35"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Schwalbe', model: 'Hans Dampf 2.35"', max_distance_km: 3500 },
+    rear: { brand: 'Schwalbe', model: 'Hans Dampf 2.35"', max_distance_km: 2500 },
+  },
+  {
+    id: 'schwalbe-marathon',
+    name: 'Schwalbe Marathon Plus 37mm',
+    bikeTypes: ['city', 'ebike'],
+    front: { brand: 'Schwalbe', model: 'Marathon Plus 37mm', max_distance_km: 12000 },
+    rear: { brand: 'Schwalbe', model: 'Marathon Plus 37mm', max_distance_km: 10000 },
+  },
+  {
+    id: 'schwalbe-smart-sam-plus',
+    name: 'Schwalbe Smart Sam Plus 2.25"',
+    bikeTypes: ['ebike', 'mtb'],
+    front: { brand: 'Schwalbe', model: 'Smart Sam Plus 2.25"', max_distance_km: 6000 },
+    rear: { brand: 'Schwalbe', model: 'Smart Sam Plus 2.25"', max_distance_km: 5000 },
+  },
+  // ── Maxxis ──
+  {
+    id: 'maxxis-minion-dhf',
+    name: 'Maxxis Minion DHF 2.5"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Maxxis', model: 'Minion DHF 2.5" EXO+', max_distance_km: 3500 },
+    rear: { brand: 'Maxxis', model: 'Minion DHF 2.5" EXO+', max_distance_km: 2500 },
+  },
+  {
+    id: 'maxxis-minion-dhr-ii',
+    name: 'Maxxis Minion DHR II 2.4"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Maxxis', model: 'Minion DHR II 2.4" EXO+', max_distance_km: 3500 },
+    rear: { brand: 'Maxxis', model: 'Minion DHR II 2.4" EXO+', max_distance_km: 2500 },
+  },
+  {
+    id: 'maxxis-dissector',
+    name: 'Maxxis Dissector 2.4"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Maxxis', model: 'Dissector 2.4" EXO+', max_distance_km: 3500 },
+    rear: { brand: 'Maxxis', model: 'Dissector 2.4" EXO+', max_distance_km: 2500 },
+  },
+  {
+    id: 'maxxis-assegai',
+    name: 'Maxxis Assegai 2.5"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Maxxis', model: 'Assegai 2.5" EXO+', max_distance_km: 3000 },
+    rear: { brand: 'Maxxis', model: 'Assegai 2.5" EXO+', max_distance_km: 2000 },
+  },
+  {
+    id: 'maxxis-rekon',
+    name: 'Maxxis Rekon 2.4"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Maxxis', model: 'Rekon 2.4" EXO', max_distance_km: 4000 },
+    rear: { brand: 'Maxxis', model: 'Rekon 2.4" EXO', max_distance_km: 3000 },
+  },
+  {
+    id: 'maxxis-ikon',
+    name: 'Maxxis Ikon 2.2"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'Maxxis', model: 'Ikon 2.2" EXO', max_distance_km: 4500 },
+    rear: { brand: 'Maxxis', model: 'Ikon 2.2" EXO', max_distance_km: 3500 },
+  },
+  {
+    id: 'maxxis-receptor',
+    name: 'Maxxis Receptor 40mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Maxxis', model: 'Receptor 40mm EXO', max_distance_km: 5000 },
+    rear: { brand: 'Maxxis', model: 'Receptor 40mm EXO', max_distance_km: 4000 },
+  },
+  {
+    id: 'maxxis-rambler',
+    name: 'Maxxis Rambler 40mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Maxxis', model: 'Rambler 40mm EXO', max_distance_km: 4500 },
+    rear: { brand: 'Maxxis', model: 'Rambler 40mm EXO', max_distance_km: 3500 },
+  },
+  // ── Vittoria ──
   {
     id: 'vittoria-corsa-next',
     name: 'Vittoria Corsa N.EXT 28mm',
@@ -371,13 +743,78 @@ export const TIRE_PRESETS: TirePreset[] = [
     front: { brand: 'Vittoria', model: 'Corsa N.EXT 28mm', max_distance_km: 6000 },
     rear: { brand: 'Vittoria', model: 'Corsa N.EXT 28mm', max_distance_km: 5000 },
   },
-  // Pirelli
+  {
+    id: 'vittoria-corsa-pro',
+    name: 'Vittoria Corsa Pro 28mm',
+    bikeTypes: ['road'],
+    front: { brand: 'Vittoria', model: 'Corsa Pro 28mm', max_distance_km: 5000 },
+    rear: { brand: 'Vittoria', model: 'Corsa Pro 28mm', max_distance_km: 4000 },
+  },
+  {
+    id: 'vittoria-terreno-dry',
+    name: 'Vittoria Terreno Dry 38mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Vittoria', model: 'Terreno Dry 38mm', max_distance_km: 4500 },
+    rear: { brand: 'Vittoria', model: 'Terreno Dry 38mm', max_distance_km: 3500 },
+  },
+  // ── Pirelli ──
   {
     id: 'pirelli-p-zero-race',
     name: 'Pirelli P Zero Race 26mm',
     bikeTypes: ['road'],
     front: { brand: 'Pirelli', model: 'P Zero Race 26mm', max_distance_km: 5000 },
     rear: { brand: 'Pirelli', model: 'P Zero Race 26mm', max_distance_km: 4000 },
+  },
+  {
+    id: 'pirelli-p-zero-race-tlr',
+    name: 'Pirelli P Zero Race TLR 28mm',
+    bikeTypes: ['road'],
+    front: { brand: 'Pirelli', model: 'P Zero Race TLR 28mm', max_distance_km: 5500 },
+    rear: { brand: 'Pirelli', model: 'P Zero Race TLR 28mm', max_distance_km: 4500 },
+  },
+  {
+    id: 'pirelli-cinturato-gravel-h',
+    name: 'Pirelli Cinturato Gravel H 40mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Pirelli', model: 'Cinturato Gravel H 40mm', max_distance_km: 5000 },
+    rear: { brand: 'Pirelli', model: 'Cinturato Gravel H 40mm', max_distance_km: 4000 },
+  },
+  // ── Michelin ──
+  {
+    id: 'michelin-power-road',
+    name: 'Michelin Power Road TLR 28mm',
+    bikeTypes: ['road'],
+    front: { brand: 'Michelin', model: 'Power Road TLR 28mm', max_distance_km: 6000 },
+    rear: { brand: 'Michelin', model: 'Power Road TLR 28mm', max_distance_km: 5000 },
+  },
+  {
+    id: 'michelin-power-gravel',
+    name: 'Michelin Power Gravel 40mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'Michelin', model: 'Power Gravel 40mm', max_distance_km: 5000 },
+    rear: { brand: 'Michelin', model: 'Power Gravel 40mm', max_distance_km: 4000 },
+  },
+  // ── WTB ──
+  {
+    id: 'wtb-riddler',
+    name: 'WTB Riddler 37mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'WTB', model: 'Riddler TCS 37mm', max_distance_km: 5000 },
+    rear: { brand: 'WTB', model: 'Riddler TCS 37mm', max_distance_km: 4000 },
+  },
+  {
+    id: 'wtb-raddler',
+    name: 'WTB Raddler 40mm',
+    bikeTypes: ['gravel'],
+    front: { brand: 'WTB', model: 'Raddler TCS 40mm', max_distance_km: 4500 },
+    rear: { brand: 'WTB', model: 'Raddler TCS 40mm', max_distance_km: 3500 },
+  },
+  {
+    id: 'wtb-vigilante',
+    name: 'WTB Vigilante 2.5"',
+    bikeTypes: ['mtb'],
+    front: { brand: 'WTB', model: 'Vigilante TCS 2.5"', max_distance_km: 3500 },
+    rear: { brand: 'WTB', model: 'Vigilante TCS 2.5"', max_distance_km: 2500 },
   },
 ];
 
