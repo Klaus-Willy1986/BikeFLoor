@@ -534,7 +534,16 @@
     "feedbackDate": "Datum",
     "feedbackUser": "Benutzer",
     "noFeedback": "Noch kein Feedback eingegangen.",
-    "deleteFeedback": "Löschen"
+    "deleteFeedback": "Löschen",
+    "brandMerge": {
+      "title": "Marken zusammenführen",
+      "brand": "Marke",
+      "variants": "Varianten",
+      "count": "Anzahl",
+      "canonicalName": "Kanonischer Name",
+      "merge": "Zusammenführen",
+      "componentsUpdated": "Komponenten aktualisiert"
+    }
   },
   "export": {
     "title": "Export",
@@ -768,6 +777,12 @@
       "text": "Die Inhalte dieser App wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. BikeFloor dient als Hilfsmittel zur Wartungsplanung — die tatsächliche Überprüfung und Wartung deines Fahrrads obliegt dir."
     }
   },
+  "catalog": {
+    "typeOrSelect": "Tippen oder auswählen",
+    "search": "Suchen...",
+    "noResults": "Keine Vorschläge",
+    "useCustomValue": "'{value}' verwenden"
+  },
   "presets": {
     "groupset": "Schaltgruppe",
     "wheels": "Laufräder",
@@ -777,7 +792,8 @@
     "pickBrand": "Welche Marke?",
     "skip": "Überspringen",
     "back": "Zurück",
-    "step": "Schritt {current} von {total}"
+    "step": "Schritt {current} von {total}",
+    "customEntry": "Eigene Eingabe"
   },
   "bikeTemplates": {
     "shareSetup": "Setup teilen",

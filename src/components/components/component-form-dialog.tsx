@@ -24,6 +24,8 @@ import {
 } from '@/components/ui/select';
 import { DEFAULT_ROTATION_THRESHOLDS } from '@/lib/constants';
 import { getRecommendedMaxDistance } from '@/lib/wear-defaults';
+import { useComponentSuggestions } from '@/hooks/use-component-suggestions';
+import { Combobox } from '@/components/shared/combobox';
 import { toast } from 'sonner';
 
 interface ComponentFormDialogProps {
@@ -57,9 +59,22 @@ export function ComponentFormDialog({
     },
   });
 
+  const watchedBrand = watch('brand') ?? '';
+
+  const { data: brandSuggestions = [] } = useComponentSuggestions({ enabled: open });
+  const { data: modelSuggestions = [] } = useComponentSuggestions({
+    brand: watchedBrand,
+    enabled: open && !!watchedBrand,
+  });
+
   const onSubmit = async (data: ComponentFormData) => {
     try {
-      await createComponent.mutateAsync(data);
+      const normalized = {
+        ...data,
+        brand: data.brand?.trim().replace(/\s+/g, ' '),
+        model: data.model?.trim().replace(/\s+/g, ' '),
+      };
+      await createComponent.mutateAsync(normalized);
       toast.success(t('common.save'));
       reset();
       onOpenChange(false);
@@ -128,12 +143,22 @@ export function ComponentFormDialog({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="brand">{t('components.brand')}</Label>
-              <Input id="brand" {...register('brand')} />
+              <Label>{t('components.brand')}</Label>
+              <Combobox
+                value={watchedBrand}
+                onChange={(v) => setValue('brand', v)}
+                suggestions={brandSuggestions}
+                placeholder={t('components.brand')}
+              />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="model">{t('components.model')}</Label>
-              <Input id="model" {...register('model')} />
+              <Label>{t('components.model')}</Label>
+              <Combobox
+                value={watch('model') ?? ''}
+                onChange={(v) => setValue('model', v)}
+                suggestions={modelSuggestions}
+                placeholder={t('components.model')}
+              />
             </div>
           </div>
 

@@ -534,7 +534,16 @@
     "feedbackDate": "Date",
     "feedbackUser": "User",
     "noFeedback": "No feedback received yet.",
-    "deleteFeedback": "Delete"
+    "deleteFeedback": "Delete",
+    "brandMerge": {
+      "title": "Merge Brands",
+      "brand": "Brand",
+      "variants": "Variants",
+      "count": "Count",
+      "canonicalName": "Canonical Name",
+      "merge": "Merge",
+      "componentsUpdated": "components updated"
+    }
   },
   "export": {
     "title": "Export",
@@ -768,6 +777,12 @@
       "text": "The contents of this app were created with the greatest care. However, we cannot guarantee the accuracy, completeness, or timeliness of the content. BikeFloor serves as a tool for maintenance planning — the actual inspection and maintenance of your bicycle is your responsibility."
     }
   },
+  "catalog": {
+    "typeOrSelect": "Type or select",
+    "search": "Search...",
+    "noResults": "No suggestions",
+    "useCustomValue": "Use '{value}'"
+  },
   "presets": {
     "groupset": "Groupset",
     "wheels": "Wheels",
@@ -777,7 +792,8 @@
     "pickBrand": "Which brand?",
     "skip": "Skip",
     "back": "Back",
-    "step": "Step {current} of {total}"
+    "step": "Step {current} of {total}",
+    "customEntry": "Custom entry"
   },
   "bikeTemplates": {
     "shareSetup": "Share Setup",

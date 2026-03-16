@@ -873,6 +873,43 @@ export function getTiresByBrand(bikeType: string, brand: string): TirePreset[] {
   );
 }
 
+// ─── Global preset helpers (for autocomplete) ──────────
+
+export function getAllPresetBrands(): string[] {
+  const brands = new Set<string>();
+  for (const g of GROUPSET_PRESETS) {
+    for (const c of g.components) brands.add(c.brand);
+  }
+  for (const w of WHEEL_PRESETS) {
+    brands.add(w.front.brand);
+    brands.add(w.rear.brand);
+  }
+  for (const t of TIRE_PRESETS) {
+    brands.add(t.front.brand);
+    brands.add(t.rear.brand);
+  }
+  return Array.from(brands).sort();
+}
+
+export function getPresetModelsByBrand(brand: string): string[] {
+  const lower = brand.toLowerCase();
+  const models = new Set<string>();
+  for (const g of GROUPSET_PRESETS) {
+    for (const c of g.components) {
+      if (c.brand.toLowerCase() === lower) models.add(c.model);
+    }
+  }
+  for (const w of WHEEL_PRESETS) {
+    if (w.front.brand.toLowerCase() === lower) models.add(w.front.model);
+    if (w.rear.brand.toLowerCase() === lower) models.add(w.rear.model);
+  }
+  for (const t of TIRE_PRESETS) {
+    if (t.front.brand.toLowerCase() === lower) models.add(t.front.model);
+    if (t.rear.brand.toLowerCase() === lower) models.add(t.rear.model);
+  }
+  return Array.from(models).sort();
+}
+
 // ─── Merge function ─────────────────────────────────────
 
 export function buildComponentsFromPresets(

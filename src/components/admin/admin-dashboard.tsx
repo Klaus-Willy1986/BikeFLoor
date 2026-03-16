@@ -25,6 +25,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Users,
   CreditCard,
@@ -41,6 +43,7 @@ import {
   Package,
   FileText,
   Link2,
+  Merge,
 } from 'lucide-react';
 
 type AdminBike = {
@@ -67,6 +70,12 @@ type FeedbackItem = {
   message: string;
   created_at: string;
   user_name: string | null;
+};
+
+type BrandGroup = {
+  key: string;
+  variants: { name: string; count: number }[];
+  total: number;
 };
 
 type UsageStats = {
@@ -196,6 +205,57 @@ export function AdminDashboard() {
       return res.json();
     },
   });
+
+  // Brand merge
+  const [selectedBrands, setSelectedBrands] = useState<Set<string>>(new Set());
+  const [canonicalName, setCanonicalName] = useState('');
+
+  const { data: brandGroups } = useQuery<BrandGroup[]>({
+    queryKey: ['admin-brand-groups'],
+    queryFn: async () => {
+      const res = await fetch('/api/admin/merge-brands');
+      if (!res.ok) return [];
+      return res.json();
+    },
+  });
+
+  const mergeBrands = useMutation({
+    mutationFn: async ({ variants, canonical }: { variants: string[]; canonical: string }) => {
+      const res = await fetch('/api/admin/merge-brands', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ variants, canonical }),
+      });
+      if (!res.ok) throw new Error();
+      return res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['admin-brand-groups'] });
+      setSelectedBrands(new Set());
+      setCanonicalName('');
+      toast.success(`${data.updated} ${t('brandMerge.componentsUpdated')}`);
+    },
+    onError: () => {
+      toast.error(t('updateError'));
+    },
+  });
+
+  const handleToggleBrand = (name: string) => {
+    setSelectedBrands((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  };
+
+  const handleMerge = () => {
+    if (selectedBrands.size < 2 || !canonicalName.trim()) return;
+    mergeBrands.mutate({
+      variants: Array.from(selectedBrands),
+      canonical: canonicalName.trim(),
+    });
+  };
 
   const stats = users
     ? {
@@ -537,6 +597,96 @@ export function AdminDashboard() {
           )}
         </CardContent>
       </Card>
+
+      {/* Brand Merge */}
+      {brandGroups && brandGroups.length > 0 && (
+        <Card className="border-border/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base flex items-center gap-2">
+              <Merge className="h-4 w-4" />
+              {t('brandMerge.title')}
+              <Badge variant="secondary" className="ml-auto text-xs">
+                {brandGroups.length}
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-10" />
+                  <TableHead>{t('brandMerge.brand')}</TableHead>
+                  <TableHead>{t('brandMerge.variants')}</TableHead>
+                  <TableHead className="text-right">{t('brandMerge.count')}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {brandGroups.map((group) => (
+                  <TableRow key={group.key}>
+                    <TableCell>
+                      <Checkbox
+                        checked={group.variants.every((v) => selectedBrands.has(v.name))}
+                        onCheckedChange={(checked) => {
+                          setSelectedBrands((prev) => {
+                            const next = new Set(prev);
+                            for (const v of group.variants) {
+                              if (checked) next.add(v.name);
+                              else next.delete(v.name);
+                            }
+                            return next;
+                          });
+                          if (checked && !canonicalName) {
+                            setCanonicalName(group.variants[0].name);
+                          }
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {group.variants[0].name}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap gap-1">
+                        {group.variants.map((v) => (
+                          <Badge
+                            key={v.name}
+                            variant={selectedBrands.has(v.name) ? 'default' : 'secondary'}
+                            className="text-xs cursor-pointer"
+                            onClick={() => handleToggleBrand(v.name)}
+                          >
+                            {v.name} ({v.count})
+                          </Badge>
+                        ))}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right text-muted-foreground">
+                      {group.total}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+
+            {selectedBrands.size >= 2 && (
+              <div className="flex items-center gap-3 pt-4 border-t mt-4">
+                <Input
+                  value={canonicalName}
+                  onChange={(e) => setCanonicalName(e.target.value)}
+                  placeholder={t('brandMerge.canonicalName')}
+                  className="max-w-xs"
+                />
+                <Button
+                  size="sm"
+                  disabled={!canonicalName.trim() || mergeBrands.isPending}
+                  onClick={handleMerge}
+                >
+                  <Merge className="mr-1.5 h-3.5 w-3.5" />
+                  {t('brandMerge.merge')}
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

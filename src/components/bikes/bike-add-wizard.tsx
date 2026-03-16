@@ -10,7 +10,7 @@ import { useCreateBike } from '@/hooks/use-bikes';
 import { useCreateBulkComponents } from '@/hooks/use-components';
 import { DEFAULT_COMPONENTS, type CatalogBike, type CatalogComponent } from '@/lib/bike-catalog';
 import { buildComponentsFromPresets } from '@/lib/component-presets';
-import { PresetPickerDialog } from '@/components/bikes/preset-picker-dialog';
+import { PresetPickerDialog, type CustomPresetEntry } from '@/components/bikes/preset-picker-dialog';
 import { useBikeTemplateSearch, type BikeTemplateResult } from '@/hooks/use-bike-templates';
 import { BIKE_TYPES } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
@@ -67,6 +67,7 @@ export function BikeAddWizard() {
   const [selectedTires, setSelectedTires] = useState<string | null>(null);
   const [createdBikeId, setCreatedBikeId] = useState<string | null>(null);
   const [presetDialogOpen, setPresetDialogOpen] = useState(false);
+  const [customPresetEntries, setCustomPresetEntries] = useState<CustomPresetEntry[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -169,14 +170,37 @@ export function BikeAddWizard() {
 
   // Use preset-built list if user selected any presets, otherwise fall back to catalog/defaults
   const hasPresetSelection = !!(selectedGroupset || selectedWheels || selectedTires);
-  const componentTemplates = useMemo(
-    () => hasPresetSelection
+  const componentTemplates = useMemo(() => {
+    let templates = hasPresetSelection
       ? buildComponentsFromPresets(currentType, selectedGroupset, selectedWheels, selectedTires)
       : (catalogComponents && catalogComponents.length > 0)
         ? catalogComponents
-        : buildComponentsFromPresets(currentType, null, null, null),
-    [catalogComponents, currentType, selectedGroupset, selectedWheels, selectedTires, hasPresetSelection],
-  );
+        : buildComponentsFromPresets(currentType, null, null, null);
+
+    // Apply custom entries from preset picker
+    if (customPresetEntries.length > 0) {
+      templates = templates.map((c) => {
+        const custom = customPresetEntries.find((ce) => {
+          if (ce.category === 'groupset') {
+            return ['chain', 'cassette', 'brake_pads', 'brake_rotors', 'bottom_bracket', 'crankset'].includes(c.category_key);
+          }
+          if (ce.category === 'wheels') {
+            return ['wheels_front', 'wheels_rear'].includes(c.category_key);
+          }
+          if (ce.category === 'tires') {
+            return ['tires_front', 'tires_rear'].includes(c.category_key);
+          }
+          return false;
+        });
+        if (custom) {
+          return { ...c, brand: custom.brand, model: custom.model };
+        }
+        return c;
+      });
+    }
+
+    return templates;
+  }, [catalogComponents, currentType, selectedGroupset, selectedWheels, selectedTires, hasPresetSelection, customPresetEntries]);
 
   const onSubmit = async (data: BikeFormData) => {
     try {
@@ -563,10 +587,11 @@ export function BikeAddWizard() {
                     initialGroupset={selectedGroupset}
                     initialWheels={selectedWheels}
                     initialTires={selectedTires}
-                    onComplete={(gId, wId, tId) => {
+                    onComplete={(gId, wId, tId, customs) => {
                       setSelectedGroupset(gId);
                       setSelectedWheels(wId);
                       setSelectedTires(tId);
+                      setCustomPresetEntries(customs ?? []);
                     }}
                   />
                 </div>
